@@ -15,6 +15,8 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
     setHeaderTheme('dark')
   })
 
+  const test = false
+
   return (
     <div
       className="relative -mt-[10.4rem] flex items-center justify-center text-white"
