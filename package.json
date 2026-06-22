@@ -14,7 +14,7 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "ii": "cross-env NODE_OPTIONS=--no-deprecation pnpm --ignore-workspace install",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
-    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation eslint . --fix",
+    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "lint-staged": "lint-staged",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
