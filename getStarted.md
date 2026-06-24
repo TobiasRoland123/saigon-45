@@ -4,7 +4,7 @@
 
 1. First [clone the repo](#clone) if you have not done so already
 2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `POSTGRES_URL` and `BLOB_READ_WRITE_TOKEN` from your Vercel project to your `.env` if you want to use Vercel Blob and the Neon database that was created for you.
-
+- The `BLOB_READ_WRITE_TOKEN` is available on vercel under the enviroments variables for the project, but because we are not paying for vercel, then it will be shered elsewhere
 - The `POSTGRES_URL` can be found in the [Neon branch dashboard](https://console.neon.tech/app/projects/fragrant-firefly-03453371/branches).
 - Find the branch called `yourName development`, and click the dots to the right.
 - Now copy the connectionstring, which should look something like this: `postgresql://<username>:<password>@<host>:<port>/<database>?sslmode=require`
