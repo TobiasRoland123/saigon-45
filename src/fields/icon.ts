@@ -1,7 +1,7 @@
 import type { Field, SelectField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
-import { iconOptions } from '@/icons'
+import { iconOptions } from '@/components/icons'
 
 type IconFieldType = (options?: {
   name?: string
@@ -29,4 +29,3 @@ export const icon: IconFieldType = ({
 
   return deepMerge(iconField, overrides)
 }
-

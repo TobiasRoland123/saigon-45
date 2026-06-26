@@ -31,4 +31,3 @@ export const iconOptions = Object.entries(iconRegistry).map(([value, icon]) => (
   label: icon.label,
   value: value as IconName,
 }))
-

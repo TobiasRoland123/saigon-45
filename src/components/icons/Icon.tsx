@@ -20,21 +20,9 @@ export const Icon: React.FC<IconProps> = ({ className, label, name, ...props }) 
 
   if (label) {
     return (
-      <IconComponent
-        aria-label={label}
-        className={cn('size-5 shrink-0', className)}
-        role="img"
-        {...props}
-      />
+      <IconComponent aria-label={label} className={cn('size-5', className)} role="img" {...props} />
     )
   }
 
-  return (
-    <IconComponent
-      aria-hidden="true"
-      className={cn('size-5 shrink-0', className)}
-      {...props}
-    />
-  )
+  return <IconComponent aria-hidden="true" className={cn('size-5', className)} {...props} />
 }
-
