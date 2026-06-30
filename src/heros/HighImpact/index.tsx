@@ -6,7 +6,6 @@ import { CMSLink } from '@/components/Link'
 import { Icon } from '@/components/icons'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
-import { cn } from '@/utilities/ui'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media, richText }) => {
   const { setHeaderTheme } = useHeaderTheme()
@@ -21,7 +20,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
       data-theme="dark"
     >
       <div className="container relative z-10 py-16 md:py-24 lg:py-32">
-        <div className="max-w-[43rem]">
+        <div className="max-w-172">
           {Array.isArray(infoItems) && infoItems.length > 0 && (
             <ul className="mb-6 flex w-fit max-w-full flex-col gap-3 rounded-2xl border border-white/25 bg-white/16 p-2 text-sm font-semibold text-white shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:flex-row sm:items-center sm:rounded-full sm:px-3 sm:py-2">
               {infoItems.map((item) => {
@@ -34,7 +33,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
                   >
                     {item.icon && (
                       <Icon
-                        className="size-4 shrink-0 text-[var(--color-primary-fixed)]"
+                        className="size-4 shrink-0 text-(--color-primary-fixed)"
                         name={item.icon}
                       />
                     )}
@@ -47,7 +46,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
 
           {richText && (
             <RichText
-              className="mb-8 max-w-none text-white [&_h1]:mb-5 [&_h1]:max-w-[15ch] [&_h1]:text-4xl [&_h1]:font-extrabold [&_h1]:leading-[1.05] [&_h1]:tracking-normal [&_p]:max-w-[39rem] [&_p]:text-base [&_p]:leading-8 [&_p]:text-white/88 md:[&_h1]:text-6xl md:[&_p]:text-lg"
+              className="mb-8 max-w-none text-white [&_h1]:mb-5 [&_h1]:max-w-[15ch] [&_h1]:text-4xl [&_h1]:font-extrabold [&_h1]:leading-[1.05] [&_h1]:tracking-normal [&_p]:max-w-156 [&_p]:text-base [&_p]:leading-8 [&_p]:text-white/88 md:[&_h1]:text-6xl md:[&_p]:text-lg"
               data={richText}
               enableGutter={false}
             />
@@ -63,12 +62,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
                     <CMSLink
                       {...link}
                       appearance={isPrimary ? 'default' : 'outline'}
-                      className={cn(
-                        'h-12 w-full rounded-2xl px-6 text-base font-bold shadow-[0_12px_36px_rgba(0,0,0,0.2)] transition-transform hover:scale-[1.02] sm:w-auto',
-                        isPrimary
-                          ? 'bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] hover:bg-[var(--color-secondary-container)]/90'
-                          : 'border-white/45 bg-white/12 text-white backdrop-blur-xl hover:bg-white/20 hover:text-white',
-                      )}
+                      className={
+                        'h-12 w-full rounded-2xl px-6 text-base font-bold shadow-[0_12px_36px_rgba(0,0,0,0.2)] transition-transform hover:scale-[1.02] sm:w-auto'
+                      }
                       size="lg"
                     />
                   </li>
