@@ -15,7 +15,6 @@ const eslintConfig = [
       '@typescript-eslint/no-explicit-any': 'warn',
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': 'off',
-      quotes: ['error', 'single', { avoidEscape: true }],
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'error',
