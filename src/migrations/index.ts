@@ -1,4 +1,6 @@
-import * as migration_20260409_155721_initial from './20260409_155721_initial'
+import * as migration_20260409_155721_initial from './20260409_155721_initial';
+import * as migration_20260701_000000_add_media_blur_placeholder from './20260701_000000_add_media_blur_placeholder';
+import * as migration_20260701_193543 from './20260701_193543';
 
 export const migrations = [
   {
@@ -6,4 +8,14 @@ export const migrations = [
     down: migration_20260409_155721_initial.down,
     name: '20260409_155721_initial',
   },
-]
+  {
+    up: migration_20260701_000000_add_media_blur_placeholder.up,
+    down: migration_20260701_000000_add_media_blur_placeholder.down,
+    name: '20260701_000000_add_media_blur_placeholder',
+  },
+  {
+    up: migration_20260701_193543.up,
+    down: migration_20260701_193543.down,
+    name: '20260701_193543'
+  },
+];

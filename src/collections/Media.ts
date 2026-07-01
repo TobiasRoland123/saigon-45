@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 import {
   FixedToolbarFeature,
@@ -6,6 +6,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
+import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
@@ -13,6 +14,32 @@ import { authenticated } from '../access/authenticated'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({ data, operation, req }) => {
+  if (operation !== 'create' || !req.file?.data || !req.file.mimetype.startsWith('image/')) {
+    return data
+  }
+
+  try {
+    const buffer = await sharp(req.file.data)
+      .resize({ width: 24, withoutEnlargement: true })
+      .blur()
+      .webp({ quality: 35 })
+      .toBuffer()
+
+    return {
+      ...data,
+      blurPlaceholder: `data:image/webp;base64,${buffer.toString('base64')}`,
+    }
+  } catch (error) {
+    req.payload.logger.warn({
+      err: error,
+      msg: 'Failed to generate media blur placeholder',
+    })
+
+    return data
+  }
+}
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -24,6 +51,13 @@ export const Media: CollectionConfig = {
     update: authenticated,
   },
   fields: [
+    {
+      name: 'blurPlaceholder',
+      type: 'textarea',
+      admin: {
+        hidden: true,
+      },
+    },
     {
       name: 'alt',
       type: 'text',
@@ -39,6 +73,9 @@ export const Media: CollectionConfig = {
       }),
     },
   ],
+  hooks: {
+    beforeChange: [generateBlurPlaceholder],
+  },
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
     staticDir: path.resolve(dirname, '../../public/media'),
