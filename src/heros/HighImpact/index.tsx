@@ -69,7 +69,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
         />
       )}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(12,31,28,0.88)_0%,rgba(12,31,28,0.64)_42%,rgba(12,31,28,0.18)_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_55%,rgba(120,177,160,0.38),transparent_34%),linear-gradient(0deg,rgba(12,31,28,0.5),transparent_45%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_55%,rgba(120,177,160,0.38),transparent_52%),linear-gradient(0deg,rgba(12,31,28,0.5),transparent_45%)]" />
     </div>
   )
 }
