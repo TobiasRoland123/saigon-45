@@ -1657,6 +1657,7 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  media?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1708,6 +1709,7 @@ export interface HeaderSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  media?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -9,6 +9,7 @@ import type { Header } from '@/payload-types'
 import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
 import { Button } from '@/components/ui/button'
+import { Media } from '@/components/Media'
 
 interface HeaderClientProps {
   data: Header
@@ -26,12 +27,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header
       suppressHydrationWarning
-      className="container relative z-20   "
+      className="container relative z-20"
       {...(headerTheme ? { 'data-theme': headerTheme } : {})}
     >
       <div className="py-8 flex justify-between">
         <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+          {data?.media && typeof data.media === 'object' ? (
+            <Media
+              resource={data.media}
+              priority
+              loading="eager"
+              imgClassName="h-12 w-auto object-contain"
+              size="120px"
+            />
+          ) : (
+            <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+          )}
         </Link>
         <HeaderNav data={data} />
         <Button variant="default">Bestil nu</Button>
