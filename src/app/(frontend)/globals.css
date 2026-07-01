@@ -43,6 +43,9 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 86rem;
+}
+
+@theme inline {
   --font-sans: var(--font-plus-jakarta-sans);
 }
 
@@ -83,6 +86,10 @@
       max-width: var(--breakpoint-2xl);
     }
   }
+}
+
+html {
+  --font-plus-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -231,7 +238,7 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-container: var(--primary-container);
-  :var(--on-primary-container);
+  --color-on-primary-container: var(--on-primary-container);
   --color-inverse-primary: var(--inverse-primary);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
