@@ -202,7 +202,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const [_, contactPage] = await Promise.all([
+  const [_] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
@@ -225,18 +225,15 @@ export const seed = async ({
           {
             link: {
               type: 'custom',
-              label: 'Posts',
-              url: '/posts',
+              label: 'Menu',
+              url: '/menu',
             },
           },
           {
             link: {
-              type: 'reference',
-              label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
+              type: 'custom',
+              label: 'Om os',
+              url: '/om-os',
             },
           },
         ],
@@ -249,24 +246,30 @@ export const seed = async ({
           {
             link: {
               type: 'custom',
-              label: 'Admin',
-              url: '/admin',
+              label: 'Menu',
+              url: '/menu',
             },
           },
           {
             link: {
               type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
+              label: 'Find os',
+              url: '/find-os',
             },
           },
           {
             link: {
               type: 'custom',
-              label: 'Payload',
+              label: 'Om os',
+              url: '/om-os',
+            },
+          },
+          {
+            link: {
+              type: 'custom',
+              label: 'Bestil',
               newTab: true,
-              url: 'https://payloadcms.com/',
+              url: 'https://wolt.com/da/dnk/copenhagen/restaurant/saigon-45',
             },
           },
         ],
