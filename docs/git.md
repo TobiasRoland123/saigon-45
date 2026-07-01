@@ -17,3 +17,6 @@ When ai is asked to create an issue,, its important to follow the rules below:
 - If Possible, then provide useful links to relevant design or documentation resources.
 - Make sure to always add tags to the issue to make it easier to find and categorize issues.
 
+
+## Pull requests
+  - Make sure to link the afftected issue in the pull request description, so that it will also be closed when the pull request is merged.
