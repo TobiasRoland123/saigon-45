@@ -53,10 +53,10 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
                     <CMSLink
                       {...link}
                       appearance={isPrimary ? 'default' : 'outline'}
-                      className={
-                        'h-12 w-full rounded-2xl px-6 text-base font-bold shadow-[0_12px_36px_rgba(0,0,0,0.2)] transition-transform hover:scale-[1.02] sm:w-auto'
-                      }
-                      size="lg"
+                      // className={
+                      //   'h-12 w-full rounded-2xl px-6 text-base font-bold shadow-[0_12px_36px_rgba(0,0,0,0.2)] transition-transform hover:scale-[1.02] sm:w-auto'
+                      // }
+                      size="xl"
                     />
                   </li>
                 )

@@ -164,7 +164,6 @@
   --sidebar-ring: #78b1a0;
   --success: #2f685a;
   --warning: #ffab69;
-  --error: #ba1a1a;
   --text: var(--foreground);
 }
 
@@ -232,7 +231,7 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-container: var(--primary-container);
-  --color-on-primary-container: var(--on-primary-container);
+  :var(--on-primary-container);
   --color-inverse-primary: var(--inverse-primary);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -293,7 +292,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply bg-background text-foreground min-h-screen flex flex-col;
   }
 }
 
