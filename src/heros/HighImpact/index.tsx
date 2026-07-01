@@ -7,10 +7,7 @@ import React from 'react'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media, richText }) => {
   return (
-    <div
-      className="relative mt-[-10.4rem] flex min-h-screen items-center overflow-hidden pt-[10.4rem] text-white"
-      data-theme="dark"
-    >
+    <div className="relative mt-[-10.4rem] flex min-h-screen items-center overflow-hidden pt-[10.4rem] text-white">
       <div className="container relative z-10 py-16 md:py-24 lg:py-32">
         <div className="max-w-172">
           {Array.isArray(infoItems) && infoItems.length > 0 && (
