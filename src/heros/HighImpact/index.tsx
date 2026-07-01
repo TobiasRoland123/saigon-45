@@ -3,6 +3,7 @@ import { CMSLink } from '@/components/Link'
 import { Icon } from '@/components/icons'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
+import React from 'react'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media, richText }) => {
   return (
