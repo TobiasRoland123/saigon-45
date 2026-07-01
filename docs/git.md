@@ -19,4 +19,4 @@ When ai is asked to create an issue,, its important to follow the rules below:
 
 
 ## Pull requests
-  - Make sure to link the afftected issue in the pull request description, so that it will also be closed when the pull request is merged.
+- Make sure to link the affected issue in the pull request description, so that it will also be closed when the pull request is merged.
