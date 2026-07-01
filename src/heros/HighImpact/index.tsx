@@ -12,13 +12,13 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ infoItems, links, media
         <div className="max-w-172">
           {Array.isArray(infoItems) && infoItems.length > 0 && (
             <ul className="mb-6 flex w-fit max-w-full flex-col gap-3 rounded-2xl border border-white/25 bg-white/16 p-2 text-sm font-semibold text-white shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:flex-row sm:items-center sm:rounded-full sm:px-3 sm:py-2">
-              {infoItems.map((item) => {
+              {infoItems.map((item, i) => {
                 if (!item?.label) return null
 
                 return (
                   <li
                     className="flex min-w-0 items-center gap-2 rounded-full px-2 py-1.5"
-                    key={item.id ?? item.label}
+                    key={item.id ?? `${item.label}-${i}`}
                   >
                     {item.icon && (
                       <Icon
