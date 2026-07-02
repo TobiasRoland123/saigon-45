@@ -24,7 +24,8 @@ export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({
     const file = req.file
     const mimeType = file && 'mimetype' in file ? file.mimetype : undefined
 
-    if (operation !== 'create' || !file?.data || !mimeType?.startsWith('image/')) {
+    // Only generate when an image file is actually being uploaded (covers create + file-replacing updates)
+    if (!file?.data || !mimeType?.startsWith('image/')) {
       return data
     }
 
