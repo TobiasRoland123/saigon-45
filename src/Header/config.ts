@@ -10,6 +10,12 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'media',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
@@ -24,6 +30,16 @@ export const Header: GlobalConfig = {
           RowLabel: '@/Header/RowLabel#RowLabel',
         },
       },
+    },
+    {
+      name: 'WoltCTA',
+      type: 'array',
+      fields: [
+        link({
+          appearances: false,
+        }),
+      ],
+      maxRows: 1,
     },
   ],
   hooks: {

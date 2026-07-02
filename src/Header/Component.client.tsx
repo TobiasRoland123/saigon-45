@@ -6,9 +6,9 @@ import React, { useEffect } from 'react'
 
 import type { Header } from '@/payload-types'
 
-import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
-import { Button } from '@/components/ui/button'
+import { CMSLink } from '@/components/Link/index'
+import { SvgMedia } from '@/components/Media'
 
 interface HeaderClientProps {
   data: Header
@@ -26,15 +26,18 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header
       suppressHydrationWarning
-      className="container relative z-20   "
+      className="px-6 relative z-20 bg-surface max-w-full mx-0"
       {...(headerTheme ? { 'data-theme': headerTheme } : {})}
     >
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+      <div className="py-6 flex justify-between items-center">
+        <Link href="/" className="flex items-center flex-row gap-2">
+          <p className="text-3xl font-bold text-surface-tint">Saigon 45</p>
+          <SvgMedia className="h-12 w-12" resource={data.media} />
         </Link>
         <HeaderNav data={data} />
-        <Button variant="default">Bestil nu</Button>
+        {data?.WoltCTA && data?.WoltCTA.length > 0 && (
+          <CMSLink {...data.WoltCTA[0].link} className="text-surface " appearance="default" />
+        )}
       </div>
     </header>
   )
