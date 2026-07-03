@@ -4,6 +4,7 @@ import React from 'react'
 import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
 import { validatePhoneNumber } from '@/utilities/validatePhoneNumber'
+import { formatPhoneNumber } from '@/utilities/formatPhoneNumber'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { SvgMedia } from '@/components/Media'
 import RichText from '@/components/RichText'
@@ -44,11 +45,13 @@ export async function Footer() {
             <p className="underline underline-offset-3 decoration-primary-muted text-primary-muted uppercase">
               Kontakt & info
             </p>
-            <ul className="[&>li]:mb-4 [&>a]:mb-4">
+            <ul className="[&>li]:leading-10 [&>a]:leading-10">
               <li>{contactData?.ContactAddress}</li>
               {numberValidation.valid && (
                 <li>
-                  <a href={`tel:${numberValidation.normalized}`}>{numberValidation.normalized}</a>
+                  <a href={`tel:${numberValidation.normalized}`}>
+                    {formatPhoneNumber(numberValidation.normalized || '')}
+                  </a>
                 </li>
               )}
               {contactData.ContactOpeningHouse && (
@@ -75,7 +78,7 @@ export async function Footer() {
                 <Link
                   key={socialLink.id}
                   href={socialLink.link?.url || '#'}
-                  className="flex items-center justify-center p-2 rounded-md bg-accent/20 hover:bg-accent/30 hover:curs transition-colors"
+                  className="flex items-center justify-center p-2 rounded-md bg-white/10 hover:bg-white/20 hover:curs transition-colors"
                   target="_blank"
                 >
                   <div className="bg-white rounded-full">

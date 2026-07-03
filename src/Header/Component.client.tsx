@@ -31,8 +31,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     >
       <div className="py-6 flex justify-between items-center">
         <Link href="/" className="flex items-center flex-row gap-2">
-          <p className="text-3xl font-bold text-surface-tint">Saigon 45</p>
-          <SvgMedia className="h-12 w-12" resource={data.media} />
+          <p className="text-2xl md:text-3xl font-bold text-surface-tint">Saigon 45</p>
+          <SvgMedia className="h-8 w-8 md:h-12 md:w-12" resource={data.media} />
         </Link>
         <HeaderNav data={data} />
         {data?.WoltCTA && data?.WoltCTA.length > 0 && (
