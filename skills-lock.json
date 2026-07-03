@@ -13,6 +13,12 @@
       "skillPath": "skills/engineering/grill-with-docs/SKILL.md",
       "computedHash": "e7ef25bbee50cda2eb7b3a8ef541db0a0396dad7d369f7d14fb610671dd1864b"
     },
+    "openspec": {
+      "source": "itechmeat/llm-code",
+      "sourceType": "github",
+      "skillPath": "skills/openspec/SKILL.md",
+      "computedHash": "7cdd2add2698a326eb5b04fa8b481b5a0f825e3652c956a3987bd94bf0ff05cd"
+    },
     "useeffect-audit": {
       "source": "anxndsgn/useeffect-audit",
       "sourceType": "github",
