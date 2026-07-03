@@ -1,5 +1,6 @@
 'use client'
 
+import DOMPurify from 'dompurify'
 import React, { useEffect, useState } from 'react'
 
 import { cn } from '@/utilities/ui'
@@ -63,7 +64,14 @@ export const SvgMedia: React.FC<SvgMediaProps> = ({
         if (!res.ok) throw new Error(`Failed to fetch SVG: ${res.status}`)
         return res.text()
       })
-      .then((svg) => setInlineSvg({ url, svg }))
+      .then((svg) => {
+        const clean = DOMPurify.sanitize(svg, {
+          USE_PROFILES: { svg: true, svgFilters: true },
+          FORBID_TAGS: ['script', 'use'],
+          FORBID_ATTR: ['onload', 'onerror', 'onclick', 'onmouseover'],
+        })
+        setInlineSvg({ url, svg: clean })
+      })
       .catch((err) => {
         if (err.name !== 'AbortError') console.error('[SvgMedia] Could not load inline SVG:', err)
       })
