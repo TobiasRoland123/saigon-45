@@ -43,7 +43,7 @@ export const SvgMedia: React.FC<SvgMediaProps> = ({
   updatedAt: updatedAtFromSpread,
   alt: altFromSpread,
 }) => {
-  const [inlineSvg, setInlineSvg] = useState<string | null>(null)
+  const [inlineSvg, setInlineSvg] = useState<{ url: string; svg: string } | null>(null)
 
   // Resolve source — prefer `resource` object, fall back to spread fields
   const mediaObj = resource && typeof resource === 'object' ? (resource as Media) : null
@@ -56,35 +56,33 @@ export const SvgMedia: React.FC<SvgMediaProps> = ({
   useEffect(() => {
     if (mode !== 'inline' || !url) return
 
-    let cancelled = false
+    const controller = new AbortController()
 
-    fetch(url)
+    fetch(url, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`Failed to fetch SVG: ${res.status}`)
         return res.text()
       })
-      .then((text) => {
-        if (!cancelled) setInlineSvg(text)
-      })
+      .then((svg) => setInlineSvg({ url, svg }))
       .catch((err) => {
-        console.error('[SvgMedia] Could not load inline SVG:', err)
+        if (err.name !== 'AbortError') console.error('[SvgMedia] Could not load inline SVG:', err)
       })
 
     return () => {
-      cancelled = true
+      controller.abort()
     }
   }, [url, mode])
 
   if (!url) return null
 
   if (mode === 'inline') {
-    if (!inlineSvg) return null
+    if (!inlineSvg || inlineSvg.url !== url) return null
 
     return (
       <div
         aria-label={alt}
         className={cn(className, imgClassName)}
-        dangerouslySetInnerHTML={{ __html: inlineSvg }}
+        dangerouslySetInnerHTML={{ __html: inlineSvg.svg }}
         onClick={onClick}
         role={onClick ? 'button' : undefined}
       />
