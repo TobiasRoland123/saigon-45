@@ -1741,8 +1741,60 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  About?:
+    | {
+        AboutLabel: string;
+        AboutSaigon45: string;
+        AboutCopyRightDetails: string;
+        id?: string | null;
+      }[]
+    | null;
+  ContactAndDetails?:
+    | {
+        ContactAddress: string;
+        ContactPhoneNumber: string;
+        ContactOpeningHouse?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  SocialLinks?:
+    | {
+        media?: (number | null) | Media;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
   navItems?:
     | {
+        navLabel: string;
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -1807,9 +1859,41 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  About?:
+    | T
+    | {
+        AboutLabel?: T;
+        AboutSaigon45?: T;
+        AboutCopyRightDetails?: T;
+        id?: T;
+      };
+  ContactAndDetails?:
+    | T
+    | {
+        ContactAddress?: T;
+        ContactPhoneNumber?: T;
+        ContactOpeningHouse?: T;
+        id?: T;
+      };
+  SocialLinks?:
+    | T
+    | {
+        media?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
   navItems?:
     | T
     | {
+        navLabel?: T;
         link?:
           | T
           | {
