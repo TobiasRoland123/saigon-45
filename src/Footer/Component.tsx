@@ -78,8 +78,9 @@ export async function Footer() {
                 <Link
                   key={socialLink.id}
                   href={socialLink.link?.url || '#'}
-                  className="flex items-center justify-center p-2 rounded-md bg-white/10 hover:bg-white/20 hover:curs transition-colors"
+                  className="flex items-center justify-center p-2 rounded-md bg-white/10 hover:bg-white/20 hover:curser transition-colors"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <div className="bg-white rounded-full">
                     {socialLink.media && typeof socialLink.media === 'object' ? (
