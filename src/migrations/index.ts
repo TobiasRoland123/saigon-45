@@ -2,6 +2,7 @@ import * as migration_20260409_155721_initial from './20260409_155721_initial'
 import * as migration_20260701_122522 from './20260701_122522'
 import * as migration_20260701_000000_add_media_blur_placeholder from './20260701_000000_add_media_blur_placeholder'
 import * as migration_20260703_215908_feature_highlights_block from './20260703_215908_feature_highlights_block'
+import * as migration_20260703_191909 from './20260703_191909'
 
 export const migrations = [
   {
@@ -23,5 +24,10 @@ export const migrations = [
     up: migration_20260703_215908_feature_highlights_block.up,
     down: migration_20260703_215908_feature_highlights_block.down,
     name: '20260703_215908_feature_highlights_block',
+  },
+  {
+    up: migration_20260703_191909.up,
+    down: migration_20260703_191909.down,
+    name: '20260703_191909',
   },
 ]
