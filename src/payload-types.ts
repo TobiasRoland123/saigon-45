@@ -180,7 +180,7 @@ export interface Page {
           /**
            * Choose one of the approved project icons.
            */
-          icon?: ('clock' | 'mapPin' | 'phone' | 'search') | null;
+          icon?: ('clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star') | null;
           label: string;
           id?: string | null;
         }[]
@@ -211,7 +211,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | MenuHighlightsBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | MenuHighlightsBlock | ArchiveBlock | FormBlock  | FeatureHighlightsBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -286,6 +286,7 @@ export interface Post {
  */
 export interface Media {
   id: number;
+  blurPlaceholder?: string | null;
   alt?: string | null;
   caption?: {
     root: {
@@ -833,6 +834,24 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureHighlightsBlock".
+ */
+export interface FeatureHighlightsBlock {
+  items: {
+    /**
+     * Choose one of the approved project icons.
+     */
+    icon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+    title: string;
+    subtitle: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureHighlights';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1147,6 +1166,7 @@ export interface PagesSelect<T extends boolean = true> {
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1277,6 +1297,22 @@ export interface FormBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureHighlightsBlock_select".
+ */
+export interface FeatureHighlightsBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        subtitle?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1311,6 +1347,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  blurPlaceholder?: T;
   alt?: T;
   caption?: T;
   folder?: T;
