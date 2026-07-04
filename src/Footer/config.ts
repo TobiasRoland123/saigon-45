@@ -1,7 +1,9 @@
-import type { GlobalConfig } from 'payload'
+import type { GlobalConfig, TextFieldSingleValidation } from 'payload'
 
+import { socialPlatformOptions } from '@/components/icons/socialIconRegistry'
 import { link } from '@/fields/link'
 import { revalidateFooter } from './hooks/revalidateFooter'
+import { validatePhoneNumber } from '@/utilities/validatePhoneNumber'
 import {
   FixedToolbarFeature,
   InlineToolbarFeature,
@@ -55,6 +57,10 @@ export const Footer: GlobalConfig = {
           name: 'ContactPhoneNumber',
           type: 'text',
           required: true,
+          validate: ((value) => {
+            const result = validatePhoneNumber(value ?? '')
+            return result.valid ? true : (result.error ?? 'Ugyldigt telefonnummer')
+          }) as TextFieldSingleValidation,
         },
         {
           name: 'ContactOpeningHouse',
@@ -64,34 +70,31 @@ export const Footer: GlobalConfig = {
               return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
             },
           }),
-          label: 'Opening Hours',
         },
-        // {
-        //   name: 'ContactOpeningHouse',
-        //   type: 'textarea',
-        //   required: true,
-        // },
       ],
       maxRows: 1,
     },
     {
-      name: 'SocialLinks',
+      name: 'SocialMedia',
       type: 'array',
+      admin: {
+        initCollapsed: false,
+      },
       fields: [
         {
-          name: 'media',
-          type: 'upload',
-          relationTo: 'media',
-          required: false,
+          name: 'platform',
+          type: 'select',
+          required: true,
+          options: socialPlatformOptions,
         },
-        link({
-          appearances: false,
-        }),
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          label: 'Profile URL',
+        },
       ],
-      maxRows: 6,
-      admin: {
-        initCollapsed: true,
-      },
+      maxRows: socialPlatformOptions.length,
     },
     {
       name: 'navItems',

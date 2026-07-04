@@ -107,6 +107,9 @@ importers:
       sharp:
         specifier: 0.34.2
         version: 0.34.2
+      simple-icons:
+        specifier: ^16.24.1
+        version: 16.24.1
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.6.0

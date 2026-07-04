@@ -3,10 +3,8 @@ import React from 'react'
 
 import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
-import { validatePhoneNumber } from '@/utilities/validatePhoneNumber'
 import { formatPhoneNumber } from '@/utilities/formatPhoneNumber'
-import { ImageMedia } from '@/components/Media/ImageMedia'
-import { SvgMedia } from '@/components/Media'
+import { SocialIcon } from '@/components/icons'
 import RichText from '@/components/RichText'
 
 export async function Footer() {
@@ -17,20 +15,19 @@ export async function Footer() {
     footerData?.ContactAndDetails && footerData?.ContactAndDetails.length > 0
       ? footerData.ContactAndDetails[0]
       : null
-  const socialLinksData =
-    footerData?.SocialLinks && footerData?.SocialLinks.length > 0 ? footerData.SocialLinks : null
+  const socialMediaData =
+    footerData?.SocialMedia && footerData?.SocialMedia.length > 0 ? footerData.SocialMedia : null
 
   const navItems = footerData?.navItems || []
 
   const currentYear = new Date().getFullYear()
-  const numberValidation = validatePhoneNumber(contactData?.ContactPhoneNumber || '')
+  const normalizedPhone = contactData?.ContactPhoneNumber
+    ? formatPhoneNumber(contactData.ContactPhoneNumber)
+    : null
 
   return (
     <footer className="mt-auto border-t border-border bg-primary dark:bg-card text-white">
       <div className="container pt-10 pb-16 gap-8 flex flex-col md:grid md:grid-rows-auto md:grid-cols-12 md:justify-between">
-        {/* <Link className="flex items-center" href="/">
-          <Logo />
-        </Link> */}
         {aboutData && (
           <div className="flex flex-col items-start gap-4 md:col-start-1 md:col-end-7 md:row-start-1 md:row-end-2">
             <p className="text-2xl">{aboutData.AboutLabel}</p>
@@ -47,11 +44,9 @@ export async function Footer() {
             </p>
             <ul className="[&>li]:leading-10 [&>a]:leading-10">
               <li>{contactData?.ContactAddress}</li>
-              {numberValidation.valid && (
+              {normalizedPhone && (
                 <li>
-                  <a href={`tel:${numberValidation.normalized}`}>
-                    {formatPhoneNumber(numberValidation.normalized || '')}
-                  </a>
+                  <a href={`tel:${normalizedPhone.replaceAll(' ', '')}`}>{normalizedPhone}</a>
                 </li>
               )}
               {contactData.ContactOpeningHouse && (
@@ -68,35 +63,28 @@ export async function Footer() {
           </div>
         )}
 
-        {socialLinksData && socialLinksData.length > 0 && (
+        {socialMediaData && socialMediaData.length > 0 && (
           <div className="flex flex-col items-start gap-4 md:col-start-10 md:col-end-13 md:row-start-1 md:row-end-2">
             <p className="underline underline-offset-3 decoration-primary-muted text-primary-muted uppercase">
               Følg os
             </p>
-            {socialLinksData.map((socialLink) => {
-              return (
-                <Link
-                  key={socialLink.id}
-                  href={socialLink.link?.url || '#'}
-                  className="flex items-center justify-center p-2 rounded-md bg-white/10 hover:bg-white/20 hover:curser transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="bg-white rounded-full">
-                    {socialLink.media && typeof socialLink.media === 'object' ? (
-                      socialLink.media.mimeType === 'image/svg+xml' ? (
-                        <SvgMedia className="w-7 h-7" resource={socialLink.media} />
-                      ) : (
-                        <ImageMedia
-                          imgClassName="w-7 h-7 object-contain"
-                          resource={socialLink.media}
-                        />
-                      )
-                    ) : null}
-                  </div>
-                </Link>
-              )
-            })}
+            <div className="flex flex-wrap items-start gap-4">
+              {socialMediaData?.map((item) => {
+                if (!item.platform || !item.url) return null
+
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.url}
+                    className="flex items-center justify-center p-2 rounded-md bg-white/10 hover:bg-white/20 hover:curser transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <SocialIcon className="w-7 h-7 text-white" platform={item.platform} />
+                  </Link>
+                )
+              })}
+            </div>
           </div>
         )}
 
@@ -104,7 +92,6 @@ export async function Footer() {
           <p className="underline underline-offset-3 decoration-primary-muted text-primary-muted uppercase">
             Links
           </p>
-          {/* <ThemeSelector /> */}
           <nav className="flex flex-col md:flex-row md:w-full md:justify-between gap-4">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />

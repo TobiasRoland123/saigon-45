@@ -1771,24 +1771,10 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
-  SocialLinks?:
+  SocialMedia?:
     | {
-        media?: (number | null) | Media;
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        platform: 'facebook' | 'instagram' | 'x' | 'linkedin' | 'youtube' | 'tiktok' | 'whatsapp' | 'pinterest';
+        url: string;
         id?: string | null;
       }[]
     | null;
@@ -1875,19 +1861,11 @@ export interface FooterSelect<T extends boolean = true> {
         ContactOpeningHouse?: T;
         id?: T;
       };
-  SocialLinks?:
+  SocialMedia?:
     | T
     | {
-        media?: T;
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        platform?: T;
+        url?: T;
         id?: T;
       };
   navItems?:
