@@ -286,6 +286,7 @@ export interface Post {
  */
 export interface Media {
   id: number;
+  blurPlaceholder?: string | null;
   alt?: string | null;
   caption?: {
     root: {
@@ -1276,6 +1277,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  blurPlaceholder?: T;
   alt?: T;
   caption?: T;
   folder?: T;
