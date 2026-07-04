@@ -1,4 +1,6 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+// For local Docker Postgres, swap the line above for the generic adapter:
+// import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -58,11 +60,20 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  db: postgresAdapter({
+  // We host on Vercel with a Neon database, so we use the Vercel adapter, which
+  // is built on Neon's serverless driver and handles connection pooling for us.
+  db: vercelPostgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
   }),
+  // To run against a local Docker Postgres instead (see docker-compose.yml),
+  // switch the import above and use the generic adapter:
+  // db: postgresAdapter({
+  //   pool: {
+  //     connectionString: process.env.POSTGRES_URL || '',
+  //   },
+  // }),
   collections: [Pages, Posts, Media, Categories, Users],
   folders: {
     slug: 'payload-folders',

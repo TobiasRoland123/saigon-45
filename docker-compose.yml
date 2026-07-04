@@ -5,8 +5,7 @@ services:
       - '54320:5432'
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_DB: postgres://postgres@localhost:54320/saigon45 # DOCKER - THIS MUST MATCH YOUR DB NAME IN .env
-      # POSTGRES_DB: your-database-name # THIS MUST MATCH YOUR DB NAME IN .env
+      POSTGRES_DB: saigon45 # Database name only — must match the db name in your .env POSTGRES_URL
       POSTGRES_HOST_AUTH_METHOD: trust
     env_file:
       - .env
