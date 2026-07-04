@@ -13,11 +13,11 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
   if (!cards?.length) return null
 
   return (
-    <section className={cn('container', className)}>
+    <section className={cn('container pt-16', className)}>
       <div className="mx-auto mb-12 max-w-4xl text-center md:mb-16">
-        <h2 className="text-4xl font-bold leading-tight text-primary md:text-5xl">{heading}</h2>
+        <h2 className="text-4xl leading-tight font-bold text-primary">{heading}</h2>
         {intro && (
-          <p className="mx-auto mt-5 max-w-3xl whitespace-pre-line text-xl leading-relaxed text-on-surface-variant md:text-2xl">
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed whitespace-pre-line text-on-surface-variant">
             {intro}
           </p>
         )}
@@ -40,7 +40,7 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
                 />
 
                 {card.badge && (
-                  <span className="absolute right-5 top-5 rounded-full bg-secondary px-5 py-2 text-sm font-bold uppercase tracking-wide text-on-secondary shadow-sm">
+                  <span className="text-on-secondary absolute top-5 right-5 rounded-full bg-secondary px-5 py-2 text-sm font-bold tracking-wide uppercase shadow-sm">
                     {card.badge}
                   </span>
                 )}
@@ -53,7 +53,7 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
               </div>
 
               <div className="flex flex-1 flex-col p-8 md:p-10">
-                <h3 className="text-3xl font-bold leading-tight text-primary md:text-4xl">
+                <h3 className="text-3xl leading-tight font-bold text-primary md:text-4xl">
                   {card.title}
                 </h3>
                 <p className="mt-6 text-lg leading-relaxed text-on-surface-variant md:text-xl">
