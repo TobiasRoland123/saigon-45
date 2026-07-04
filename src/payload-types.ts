@@ -211,7 +211,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | MenuHighlightsBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -556,6 +556,46 @@ export interface MediaBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuHighlightsBlock".
+ */
+export interface MenuHighlightsBlock {
+  heading: string;
+  intro?: string | null;
+  cards: {
+    media: number | Media;
+    /**
+     * Optional label shown over the image.
+     */
+    imageLabel?: string | null;
+    /**
+     * Optional badge shown in the top-right corner.
+     */
+    badge?: string | null;
+    title: string;
+    description: string;
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'menuHighlights';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1104,6 +1144,7 @@ export interface PagesSelect<T extends boolean = true> {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
+        menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
       };
@@ -1177,6 +1218,35 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuHighlightsBlock_select".
+ */
+export interface MenuHighlightsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  intro?: T;
+  cards?:
+    | T
+    | {
+        media?: T;
+        imageLabel?: T;
+        badge?: T;
+        title?: T;
+        description?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
