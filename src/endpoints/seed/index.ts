@@ -1,4 +1,4 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -19,8 +19,6 @@ const collections: CollectionSlug[] = [
   'form-submissions',
   'search',
 ]
-
-const globals: GlobalSlug[] = ['header', 'footer']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -44,20 +42,33 @@ export const seed = async ({
   payload.logger.info(`— Clearing collections and globals...`)
 
   // clear the database
-  await Promise.all(
-    globals.map((global) =>
-      payload.updateGlobal({
-        slug: global,
-        data: {
-          navItems: [],
-        },
-        depth: 0,
-        context: {
-          disableRevalidate: true,
-        },
-      }),
-    ),
-  )
+  await Promise.all([
+    payload.updateGlobal({
+      slug: 'header',
+      data: {
+        media: null,
+        navItems: [],
+        WoltCTA: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+    payload.updateGlobal({
+      slug: 'footer',
+      data: {
+        About: [],
+        ContactAndDetails: [],
+        SocialMedia: [],
+        navItems: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+  ])
 
   await Promise.all(
     collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
@@ -221,6 +232,7 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'header',
       data: {
+        media: imageHomeDoc.id,
         navItems: [
           {
             link: {
@@ -237,13 +249,91 @@ export const seed = async ({
             },
           },
         ],
+        WoltCTA: [
+          {
+            link: {
+              type: 'custom',
+              label: 'Bestil',
+              newTab: true,
+              url: 'https://wolt.com/da/dnk/copenhagen/restaurant/saigon-45',
+            },
+          },
+        ],
       },
     }),
     payload.updateGlobal({
       slug: 'footer',
       data: {
+        About: [
+          {
+            AboutLabel: 'Saigon 45',
+            AboutSaigon45:
+              'Din lokale destination for autentisk asiatisk takeaway og forfriskende bubble tea i hjertet af Rødovre.',
+            AboutCopyRightDetails: 'Saigon 45 - Rødovre Centrum. Fresh Asian Fusion & Bubble Tea.',
+          },
+        ],
+        ContactAndDetails: [
+          {
+            ContactAddress: 'Rødovre Centrum',
+            ContactPhoneNumber: '+45 28 68 92 80',
+            ContactOpeningHouse: {
+              root: {
+                type: 'root',
+                children: [
+                  {
+                    type: 'paragraph',
+                    children: [
+                      {
+                        type: 'text',
+                        detail: 0,
+                        format: 0,
+                        mode: 'normal',
+                        style: '',
+                        text: 'Man - Lør: 10.00 - 20.00',
+                        version: 1,
+                      },
+                    ],
+                    direction: 'ltr',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+                  },
+                  {
+                    type: 'paragraph',
+                    children: [
+                      {
+                        type: 'text',
+                        detail: 0,
+                        format: 0,
+                        mode: 'normal',
+                        style: '',
+                        text: 'Søndag: 10.00 - 19.00',
+                        version: 1,
+                      },
+                    ],
+                    direction: 'ltr',
+                    format: '',
+                    indent: 0,
+                    version: 1,
+                  },
+                ],
+                direction: 'ltr',
+                format: '',
+                indent: 0,
+                version: 1,
+              },
+            },
+          },
+        ],
+        SocialMedia: [
+          {
+            platform: 'facebook',
+            url: 'https://www.facebook.com/profile.php?id=100085443011562',
+          },
+        ],
         navItems: [
           {
+            navLabel: 'Menu',
             link: {
               type: 'custom',
               label: 'Menu',
@@ -251,6 +341,7 @@ export const seed = async ({
             },
           },
           {
+            navLabel: 'Find os',
             link: {
               type: 'custom',
               label: 'Find os',
@@ -258,6 +349,7 @@ export const seed = async ({
             },
           },
           {
+            navLabel: 'Om os',
             link: {
               type: 'custom',
               label: 'Om os',
@@ -265,6 +357,7 @@ export const seed = async ({
             },
           },
           {
+            navLabel: 'Bestil',
             link: {
               type: 'custom',
               label: 'Bestil',
