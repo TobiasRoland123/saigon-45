@@ -43,8 +43,9 @@ const createHookArgs = async ({
   }
 }
 
-const asHookArgs = (args: Awaited<ReturnType<typeof createHookArgs>>): GenerateBlurPlaceholderArgs =>
-  args as unknown as GenerateBlurPlaceholderArgs
+const asHookArgs = (
+  args: Awaited<ReturnType<typeof createHookArgs>>,
+): GenerateBlurPlaceholderArgs => args as unknown as GenerateBlurPlaceholderArgs
 
 describe('generateBlurPlaceholder', () => {
   it('generates a blur placeholder for new image uploads', async () => {

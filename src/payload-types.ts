@@ -180,7 +180,7 @@ export interface Page {
           /**
            * Choose one of the approved project icons.
            */
-          icon?: ('clock' | 'mapPin' | 'phone' | 'search') | null;
+          icon?: ('clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star') | null;
           label: string;
           id?: string | null;
         }[]
@@ -211,7 +211,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | FeatureHighlightsBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -794,6 +794,24 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureHighlightsBlock".
+ */
+export interface FeatureHighlightsBlock {
+  items: {
+    /**
+     * Choose one of the approved project icons.
+     */
+    icon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+    title: string;
+    subtitle: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureHighlights';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1107,6 +1125,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1203,6 +1222,22 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureHighlightsBlock_select".
+ */
+export interface FeatureHighlightsBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        subtitle?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
