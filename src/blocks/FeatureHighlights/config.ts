@@ -12,23 +12,6 @@ export const FeatureHighlights: Block = {
       admin: {
         initCollapsed: true,
       },
-      defaultValue: [
-        {
-          icon: 'star',
-          title: '4.5+ Stjerner på Google',
-          subtitle: 'Baseret på 500+ anmeldelser',
-        },
-        {
-          icon: 'badgeCheck',
-          title: 'Elite Smiley',
-          subtitle: 'Højeste fødevaresikkerhed',
-        },
-        {
-          icon: 'leaf',
-          title: 'Friske Råvarer',
-          subtitle: 'Kvalitet i hver servering',
-        },
-      ],
       fields: [
         icon({ required: true }),
         {
