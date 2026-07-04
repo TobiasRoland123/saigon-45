@@ -134,6 +134,7 @@ This design system utilizes **Plus Jakarta Sans** exclusively to maintain a cont
 The layout follows a **Fluid 12-Column Grid** for desktop and a **4-Column Grid** for mobile. Spacing is governed by an 8px rhythmic scale, but emphasizes "Breathable Space"—meaning margins and paddings should lean toward the larger end of the scale (MD and LG) to prevent the UI from feeling cluttered.
 
 **Adaptive Rules:**
+
 - **Mobile:** 16px side margins with 20px gutters. Content is primarily stacked in a single column.
 - **Tablet:** 32px side margins. Grid shifts to 2-column card layouts.
 - **Desktop:** Centered 1200px container. Elements should utilize asymmetric whitespace to create a modern, "lifestyle magazine" feel.
@@ -148,7 +149,7 @@ Hierarchy is achieved through **Tonal Layering** and **Soft Ambient Shadows**. R
 
 ## Shapes
 
-The shape language is defined by a **16px standard corner radius**, creating a "soft-square" aesthetic that feels friendly but organized. 
+The shape language is defined by a **16px standard corner radius**, creating a "soft-square" aesthetic that feels friendly but organized.
 
 - **Primary Elements:** Buttons and Input fields use 16px (rounded-lg) for a consistent tactile feel.
 - **Containers:** Large cards and sections use 24px (rounded-xl) to emphasize the organic herb/leaf inspiration.
@@ -157,18 +158,23 @@ The shape language is defined by a **16px standard corner radius**, creating a "
 ## Components
 
 ### Buttons
+
 - **Primary:** Solid Soft Teal (#78B1A0) with White text. 16px corners. No border.
 - **Secondary:** Solid Peach (#F4A261) with White text. Used for "Add to Cart" or "Order Now."
 - **Ghost:** Soft Teal border (2px) with Teal text. Used for less urgent actions.
 
 ### Cards
+
 Cards are the primary container. They feature a white background, 24px corner radius, and the primary-tinted ambient shadow. Padding inside cards should be generous (24px or 32px).
 
 ### Input Fields
+
 Inputs use a light teal-grey background with a 1px border that turns 2px Soft Teal on focus. Corners are 16px.
 
 ### Chips & Tags
+
 Used for drink categories (e.g., "Sugar Free," "Extra Topping"). These use a semi-transparent version of the primary color (10% opacity) with dark teal text and 8px corners.
 
 ### Interactive States
+
 Hover states should involve a subtle scale-up (1.02x) and a slight darkening of the background color, reinforcing the "bouncy" and "fresh" nature of the design system.
