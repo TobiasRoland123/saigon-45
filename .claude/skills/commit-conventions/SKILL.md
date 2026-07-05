@@ -1,6 +1,6 @@
 ---
 name: commit-conventions
-description: How to write git commit messages in the Saigon 45 repo. This project follows Conventional Commits — `type(scope): Subject` with an imperative, capitalized subject on a header line of at most 65 characters, and an optional body wrapped at 72 characters. Use this whenever writing a commit message or running `git commit` in this repository. Mirrors the interactive `gum` helper in `commit.zsh`.
+description: 'How to write git commit messages in the Saigon 45 repo. This project follows Conventional Commits — `type(scope): Subject` with an imperative, capitalized subject on a header line of at most 65 characters, and an optional body wrapped at 72 characters. Use this whenever writing a commit message or running `git commit` in this repository. Mirrors the interactive `gum` helper in `commit.zsh`.'
 ---
 
 # Commit conventions
