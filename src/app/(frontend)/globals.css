@@ -105,10 +105,12 @@
   --outline-variant: #bfc9c4;
   --surface-tint: #2f685a;
   --primary: #2f685a;
+  --primary-muted: #97b4ad;
   --on-primary: #ffffff;
   --primary-container: #78b1a0;
   --on-primary-container: #004437;
   --inverse-primary: #98d2c0;
+  --inverse-primary-muted: #4a6960;
   --secondary: #8e4e14;
   --on-secondary: #ffffff;
   --secondary-container: #ffab69;
@@ -178,6 +180,7 @@
   --popover: rgb(34 52 48 / 80%);
   --popover-foreground: var(--inverse-on-surface);
   --primary: var(--inverse-primary);
+  --primary-muted: var(--inverse-primary-muted);
   --primary-foreground: var(--on-primary-fixed);
   --secondary: var(--secondary-fixed-dim);
   --secondary-foreground: var(--on-secondary-fixed);
@@ -232,10 +235,12 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-muted: var(--primary-muted);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-container: var(--primary-container);
   --color-on-primary-container: var(--on-primary-container);
   --color-inverse-primary: var(--inverse-primary);
+  --color-inverse-primary-muted: var(--inverse-primary-muted);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary-container: var(--secondary-container);

@@ -1691,7 +1691,28 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
+  media?: (number | null) | Media;
   navItems?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  WoltCTA?:
     | {
         link: {
           type?: ('reference' | 'custom') | null;
@@ -1720,8 +1741,46 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  About?:
+    | {
+        AboutLabel: string;
+        AboutSaigon45: string;
+        AboutCopyRightDetails: string;
+        id?: string | null;
+      }[]
+    | null;
+  ContactAndDetails?:
+    | {
+        ContactAddress: string;
+        ContactPhoneNumber: string;
+        ContactOpeningHouse?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  SocialMedia?:
+    | {
+        platform: 'facebook' | 'instagram' | 'x' | 'linkedin' | 'youtube' | 'tiktok' | 'whatsapp' | 'pinterest';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   navItems?:
     | {
+        navLabel: string;
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -1748,7 +1807,22 @@ export interface Footer {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  media?: T;
   navItems?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  WoltCTA?:
     | T
     | {
         link?:
@@ -1771,9 +1845,33 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  About?:
+    | T
+    | {
+        AboutLabel?: T;
+        AboutSaigon45?: T;
+        AboutCopyRightDetails?: T;
+        id?: T;
+      };
+  ContactAndDetails?:
+    | T
+    | {
+        ContactAddress?: T;
+        ContactPhoneNumber?: T;
+        ContactOpeningHouse?: T;
+        id?: T;
+      };
+  SocialMedia?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
   navItems?:
     | T
     | {
+        navLabel?: T;
         link?:
           | T
           | {
