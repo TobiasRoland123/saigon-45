@@ -40,8 +40,10 @@ is a `SKILL.md` (with supporting files) that Claude Code discovers automatically
 - **useeffect-audit** — audit and refactor React Effects using official React guidance
 - **agent-browser** — browser automation CLI for interacting with and testing web apps
 - **grill-with-docs** — a relentless interview to sharpen a plan or design while producing ADRs and a glossary
+- **commit-conventions** — the repo's Conventional Commits style for git commit messages (mirrors the `gum` helper)
 
-These mirror the skills under `.agents/skills/`, which remain in place for other tools.
+The first five mirror the skills under `.agents/skills/`, which remain in place for other tools;
+`commit-conventions` is Claude Code–specific.
 
 ## Docs
 
