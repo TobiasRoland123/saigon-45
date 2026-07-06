@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'opening-hours': OpeningHour;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'opening-hours': OpeningHoursSelect<false> | OpeningHoursSelect<true>;
   };
   locale: null;
   widgets: {
@@ -2056,6 +2058,35 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "opening-hours".
+ */
+export interface OpeningHour {
+  id: number;
+  /**
+   * Shown on the left of the opening-hours pill, e.g. "Rødovre Centrum 41".
+   */
+  address: string;
+  /**
+   * Link to adress on Google Maps, e.g. "https://goo.gl/maps/..."
+   */
+  addressUrl: string;
+  /**
+   * One row per day. Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.
+   */
+  days?:
+    | {
+        day: '1' | '2' | '3' | '4' | '5' | '6' | '0';
+        closed?: boolean | null;
+        opensAt?: string | null;
+        closesAt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2133,6 +2164,26 @@ export interface FooterSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "opening-hours_select".
+ */
+export interface OpeningHoursSelect<T extends boolean = true> {
+  address?: T;
+  addressUrl?: T;
+  days?:
+    | T
+    | {
+        day?: T;
+        closed?: T;
+        opensAt?: T;
+        closesAt?: T;
         id?: T;
       };
   updatedAt?: T;
