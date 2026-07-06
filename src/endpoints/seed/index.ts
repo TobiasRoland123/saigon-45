@@ -68,6 +68,18 @@ export const seed = async ({
         disableRevalidate: true,
       },
     }),
+    payload.updateGlobal({
+      slug: 'opening-hours',
+      data: {
+        address: '',
+        addressUrl: '',
+        days: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
   ])
 
   await Promise.all(
@@ -364,6 +376,50 @@ export const seed = async ({
               newTab: true,
               url: 'https://wolt.com/da/dnk/copenhagen/restaurant/saigon-45',
             },
+          },
+        ],
+      },
+    }),
+    payload.updateGlobal({
+      slug: 'opening-hours',
+      data: {
+        address: 'Rødovre Centrum 41',
+        addressUrl: 'https://maps.app.goo.gl/hyo5nd2EUuAJ4tok7',
+        days: [
+          {
+            day: '1',
+            opensAt: '10:00',
+            closesAt: '20:00',
+          },
+          {
+            day: '2',
+            opensAt: '10:00',
+            closesAt: '20:00',
+          },
+          {
+            day: '3',
+            opensAt: '10:00',
+            closesAt: '20:00',
+          },
+          {
+            day: '4',
+            opensAt: '10:00',
+            closesAt: '20:00',
+          },
+          {
+            day: '5',
+            opensAt: '10:00',
+            closesAt: '20:00',
+          },
+          {
+            day: '6',
+            opensAt: '10:00',
+            closesAt: '20:00',
+          },
+          {
+            day: '0',
+            opensAt: '10:00',
+            closesAt: '20:00',
           },
         ],
       },
