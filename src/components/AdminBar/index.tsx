@@ -48,7 +48,7 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn(baseClass, 'py-2 bg-black text-white', {
+      className={cn(baseClass, 'bg-black py-2 text-white', {
         block: show,
         hidden: !show,
       })}
@@ -62,6 +62,7 @@ export const AdminBar: React.FC<{
             logo: 'text-white',
             user: 'text-white',
           }}
+          adminPath="/admin"
           cmsURL={getClientSideURL()}
           collectionSlug={collection}
           collectionLabels={{

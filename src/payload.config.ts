@@ -66,6 +66,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
+    push: false,
   }),
   // To run against a local Docker Postgres instead (see docker-compose.yml),
   // switch the import above and use the generic adapter:
@@ -73,6 +74,7 @@ export default buildConfig({
   //   pool: {
   //     connectionString: process.env.POSTGRES_URL || '',
   //   },
+  //   push: false,
   // }),
   collections: [Pages, Posts, Media, Categories, Users],
   folders: {
