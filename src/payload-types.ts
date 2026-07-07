@@ -211,7 +211,15 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | FeatureHighlightsBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | FeatureHighlightsBlock
+    | ReviewsBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -812,6 +820,31 @@ export interface FeatureHighlightsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock".
+ */
+export interface ReviewsBlock {
+  eyebrow: string;
+  ratingLabel: string;
+  ratingDescription: string;
+  smileyTitle: string;
+  smileyLinkLabel: string;
+  /**
+   * Optional URL for the Smiley report link.
+   */
+  smileyLinkUrl?: string | null;
+  reviews: {
+    quote: string;
+    name: string;
+    source: string;
+    rating: number;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reviews';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1126,6 +1159,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
+        reviews?: T | ReviewsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1236,6 +1270,29 @@ export interface FeatureHighlightsBlockSelect<T extends boolean = true> {
         icon?: T;
         title?: T;
         subtitle?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock_select".
+ */
+export interface ReviewsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  ratingLabel?: T;
+  ratingDescription?: T;
+  smileyTitle?: T;
+  smileyLinkLabel?: T;
+  smileyLinkUrl?: T;
+  reviews?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        source?: T;
+        rating?: T;
         id?: T;
       };
   id?: T;
