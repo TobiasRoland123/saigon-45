@@ -1,7 +1,6 @@
 import type { MenuHighlightsBlock as MenuHighlightsBlockProps } from '@/payload-types'
 
-import { Media } from '@/components/Media'
-import { MenuHighlightCard } from '@/blocks/MenuHighlights/Card'
+import { HighlightCard } from '@/blocks/MenuHighlights/Card'
 import { cn } from '@/utilities/ui'
 import React from 'react'
 
@@ -41,18 +40,9 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
 
       <div className="grid gap-8 lg:grid-cols-3">
         {cards.map((card, index) => (
-          <MenuHighlightCard
+          <HighlightCard
             badge={card.badge}
             description={card.description}
-            image={
-              <Media
-                fill
-                imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
-                priority={index < 3}
-                resource={card.media}
-                size="(max-width: 1024px) 100vw, 33vw"
-              />
-            }
             imageLabel={card.imageLabel}
             key={card.id ?? index}
             link={{
@@ -60,6 +50,8 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
               label: card.link.label,
               newTab: card.link.newTab,
             }}
+            media={card.media}
+            priority={index < 3}
             title={card.title}
           />
         ))}
