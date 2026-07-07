@@ -1,4 +1,8 @@
 import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
+import { readFile, stat } from 'node:fs/promises'
+import { basename, extname, join } from 'node:path'
+
+import type { OpeningHour } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -11,16 +15,58 @@ import { post2 } from './post-2'
 import { post3 } from './post-3'
 
 const collections: CollectionSlug[] = [
-  'categories',
-  'media',
+  'form-submissions',
+  'search',
   'pages',
   'posts',
   'forms',
-  'form-submissions',
-  'search',
+  'media',
+  'categories',
 ]
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
+
+const openingHoursData = {
+  address: 'Rødovre Centrum 41',
+  addressUrl: 'https://maps.app.goo.gl/hyo5nd2EUuAJ4tok7',
+  days: [
+    {
+      day: '1',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+    {
+      day: '2',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+    {
+      day: '3',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+    {
+      day: '4',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+    {
+      day: '5',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+    {
+      day: '6',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+    {
+      day: '0',
+      opensAt: '10:00',
+      closesAt: '20:00',
+    },
+  ],
+} satisfies Partial<OpeningHour>
 
 // Next.js revalidation errors are normal when seeding the database without a server running
 // i.e. running `yarn seed` locally instead of using the admin UI within an active app
@@ -70,11 +116,7 @@ export const seed = async ({
     }),
     payload.updateGlobal({
       slug: 'opening-hours',
-      data: {
-        address: '',
-        addressUrl: '',
-        days: [],
-      },
+      data: openingHoursData,
       depth: 0,
       context: {
         disableRevalidate: true,
@@ -82,15 +124,15 @@ export const seed = async ({
     }),
   ])
 
-  await Promise.all(
-    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-  )
+  for (const collection of collections) {
+    await payload.db.deleteMany({ collection, req, where: {} })
+  }
 
-  await Promise.all(
-    collections
-      .filter((collection) => Boolean(payload.collections[collection].config.versions))
-      .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
-  )
+  for (const collection of collections) {
+    if (payload.collections[collection].config.versions) {
+      await payload.db.deleteVersions({ collection, req, where: {} })
+    }
+  }
 
   payload.logger.info(`— Seeding demo author and user...`)
 
@@ -107,18 +149,10 @@ export const seed = async ({
   payload.logger.info(`— Seeding media...`)
 
   const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
-    ),
+    getLocalSeedFile('image-post1.webp'),
+    getLocalSeedFile('image-post2.webp'),
+    getLocalSeedFile('image-post3.webp'),
+    getLocalSeedFile('image-hero1.webp'),
   ])
 
   const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
@@ -382,69 +416,21 @@ export const seed = async ({
     }),
     payload.updateGlobal({
       slug: 'opening-hours',
-      data: {
-        address: 'Rødovre Centrum 41',
-        addressUrl: 'https://maps.app.goo.gl/hyo5nd2EUuAJ4tok7',
-        days: [
-          {
-            day: '1',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-          {
-            day: '2',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-          {
-            day: '3',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-          {
-            day: '4',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-          {
-            day: '5',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-          {
-            day: '6',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-          {
-            day: '0',
-            opensAt: '10:00',
-            closesAt: '20:00',
-          },
-        ],
-      },
+      data: openingHoursData,
     }),
   ])
 
   payload.logger.info('Seeded database successfully!')
 }
 
-async function fetchFileByURL(url: string): Promise<File> {
-  const res = await fetch(url, {
-    credentials: 'include',
-    method: 'GET',
-  })
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`)
-  }
-
-  const data = await res.arrayBuffer()
+async function getLocalSeedFile(filename: string): Promise<File> {
+  const filePath = join(process.cwd(), 'src', 'endpoints', 'seed', filename)
+  const [data, file] = await Promise.all([readFile(filePath), stat(filePath)])
 
   return {
-    name: url.split('/').pop() || `file-${Date.now()}`,
-    data: Buffer.from(data),
-    mimetype: `image/${url.split('.').pop()}`,
-    size: data.byteLength,
+    name: basename(filePath),
+    data,
+    mimetype: `image/${extname(filePath).slice(1)}`,
+    size: file.size,
   }
 }
