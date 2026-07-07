@@ -3,6 +3,7 @@ import type { Media as MediaType } from '@/payload-types'
 import { Media } from '@/components/Media'
 import Link from 'next/link'
 import React from 'react'
+import { cn } from '@/utilities/ui'
 
 export type HighlightCardProps = {
   badge?: string | null
@@ -16,6 +17,7 @@ export type HighlightCardProps = {
   media: number | MediaType
   priority?: boolean
   title: string
+  index?: number
 }
 
 export const HighlightCard: React.FC<HighlightCardProps> = ({
@@ -26,11 +28,22 @@ export const HighlightCard: React.FC<HighlightCardProps> = ({
   media,
   priority,
   title,
+  index,
 }) => {
   const newTabProps = link?.newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
+  const isCenter = index ? index === 1 || index === 4 : false
+
   return (
-    <article className="group flex min-h-136 overflow-hidden rounded-lg border border-outline-variant bg-surface-container-lowest shadow-[0_10px_34px_rgba(12,31,28,0.08)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_16px_44px_rgba(12,31,28,0.13)]">
+    <Link
+      href={link?.href ?? '#'}
+      {...newTabProps}
+      className={cn(
+        'group flex min-h-136 overflow-hidden rounded-lg border border-outline-variant bg-surface-container-lowest ' +
+          'shadow-[0_10px_34px_rgba(12,31,28,0.08)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_16px_44px_rgba(12,31,28,0.13)]',
+        isCenter && 'md:scale-110',
+      )}
+    >
       <div className="flex w-full flex-col">
         <div className="relative aspect-[1.36] overflow-hidden bg-surface-container">
           <Media
@@ -59,16 +72,12 @@ export const HighlightCard: React.FC<HighlightCardProps> = ({
           <p className="mt-6 text-sm leading-relaxed text-on-surface-variant">{description}</p>
 
           {link?.href && (
-            <Link
-              className="mt-auto inline-flex pt-12 text-xl font-bold text-primary no-underline hover:text-primary/80"
-              href={link.href}
-              {...newTabProps}
-            >
+            <span className="mt-auto inline-flex pt-12 text-xl font-bold text-primary no-underline hover:text-primary/80">
               {link.label}
-            </Link>
+            </span>
           )}
         </div>
       </div>
-    </article>
+    </Link>
   )
 }

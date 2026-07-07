@@ -53,6 +53,7 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
             media={card.media}
             priority={index < 3}
             title={card.title}
+            index={index}
           />
         ))}
       </div>
