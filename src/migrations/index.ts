@@ -3,6 +3,7 @@ import * as migration_20260701_000000_add_media_blur_placeholder from './2026070
 import * as migration_20260701_122522 from './20260701_122522'
 import * as migration_20260703_215908_feature_highlights_block from './20260703_215908_feature_highlights_block'
 import * as migration_20260707_200303 from './20260707_200303'
+import * as migration_20260707_200805 from './20260707_200805'
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260707_200303.up,
     down: migration_20260707_200303.down,
     name: '20260707_200303',
+  },
+  {
+    up: migration_20260707_200805.up,
+    down: migration_20260707_200805.down,
+    name: '20260707_200805',
   },
 ]

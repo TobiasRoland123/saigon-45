@@ -21,7 +21,7 @@ export const MenuHighlights: Block = {
       type: 'array',
       required: true,
       minRows: 1,
-      maxRows: 6,
+      maxRows: 3,
       admin: {
         initCollapsed: true,
       },

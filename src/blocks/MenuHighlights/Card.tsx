@@ -41,7 +41,7 @@ export const HighlightCard: React.FC<HighlightCardProps> = ({
       className={cn(
         'group flex min-h-136 overflow-hidden rounded-lg border border-outline-variant bg-surface-container-lowest ' +
           'shadow-[0_10px_34px_rgba(12,31,28,0.08)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_16px_44px_rgba(12,31,28,0.13)]',
-        isCenter && 'md:scale-110',
+        isCenter && 'md:scale-105',
       )}
     >
       <div className="flex w-full flex-col">
