@@ -14,9 +14,9 @@ export const SideBySideContentBlock: React.FC<SideBySideContentBlockProps> = ({
   primaryLink,
 }) => {
   return (
-    <section className="bg-surface-container-low py-16 md:py-24">
+    <section className="pt-24">
       <div className="container grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl pr-8">
           <p className="mb-8 inline-flex rounded-full bg-primary px-4 py-2 text-xs font-extrabold tracking-[0.14em] text-primary-foreground uppercase">
             {eyebrow}
           </p>
@@ -35,8 +35,8 @@ export const SideBySideContentBlock: React.FC<SideBySideContentBlockProps> = ({
                 className="flex items-center gap-4 text-lg text-on-surface-variant"
                 key={feature.id ?? feature.label}
               >
-                <span className="grid size-8 shrink-0 place-items-center rounded-full border-2 border-primary text-primary">
-                  <Icon name="badgeCheck" className="size-5" />
+                <span className="grid shrink-0 place-items-center text-primary">
+                  <Icon name="badgeCheck" className="size-8" />
                 </span>
                 <span>{feature.label}</span>
               </li>
@@ -52,7 +52,7 @@ export const SideBySideContentBlock: React.FC<SideBySideContentBlockProps> = ({
         </div>
 
         <div className="relative mx-auto w-full max-w-3xl pb-10 lg:pb-0">
-          <div className="relative aspect-[1.02] overflow-hidden rounded-[1.75rem] border-[10px] border-white shadow-[0_28px_70px_rgba(47,104,90,0.22)] md:aspect-[1.05]">
+          <div className="relative ml-16 aspect-[1.02] overflow-hidden rounded-[1.75rem] border-[10px] border-white shadow-[0_28px_70px_rgba(47,104,90,0.22)] md:aspect-[1.05]">
             <Media
               fill
               imgClassName="object-cover"
