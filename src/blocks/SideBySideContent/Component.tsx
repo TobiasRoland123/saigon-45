@@ -4,15 +4,8 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { Icon } from '@/components/icons'
 
-export const SideBySideContentBlock: React.FC<SideBySideContentBlockProps> = ({
-  description,
-  eyebrow,
-  features,
-  heading,
-  imageCallout,
-  media,
-  primaryLink,
-}) => {
+export function SideBySideContentBlock(props: SideBySideContentBlockProps) {
+  const { description, eyebrow, features, heading, imageCallout, media, primaryLink } = props
   return (
     <section className="pt-24">
       <div className="container grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
