@@ -32,7 +32,7 @@ export const HighlightCard: React.FC<HighlightCardProps> = ({
 }) => {
   const newTabProps = link?.newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
-  const isCenter = index ? index === 1 || index === 4 : false
+  const isCenter = index && index === 1
 
   return (
     <Link
