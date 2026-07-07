@@ -1,41 +1,29 @@
 'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import type { Header } from '@/payload-types'
 
-import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
+import { CMSLink } from '@/components/Link/index'
+import { SvgMedia } from '@/components/Media'
 
 interface HeaderClientProps {
   data: Header
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
-  /* Storing the value in a useState to avoid hydration errors */
-  const [theme, setTheme] = useState<string | null>(null)
-  const { headerTheme, setHeaderTheme } = useHeaderTheme()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    setHeaderTheme(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
-
-  useEffect(() => {
-    if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerTheme])
-
   return (
-    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+    <header suppressHydrationWarning className="relative z-20 bg-surface">
+      <div className="container flex items-center justify-between px-6 py-6">
+        <Link href="/" className="flex flex-row items-center gap-2">
+          <p className="text-2xl font-bold text-surface-tint md:text-3xl">Saigon 45</p>
+          <SvgMedia className="h-8 w-8 md:h-12 md:w-12" resource={data.media} />
         </Link>
         <HeaderNav data={data} />
+        {data?.WoltCTA && data?.WoltCTA.length > 0 && (
+          <CMSLink {...data.WoltCTA[0].link} className="text-surface" appearance="default" />
+        )}
       </div>
     </header>
   )

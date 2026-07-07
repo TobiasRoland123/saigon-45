@@ -22,20 +22,20 @@
   }
 }
 
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
 
-@source inline("lg:col-span-4");
-@source inline("lg:col-span-6");
-@source inline("lg:col-span-8");
-@source inline("lg:col-span-12");
-@source inline("border-border");
-@source inline("bg-card");
-@source inline("border-error");
-@source inline("bg-error/30");
-@source inline("border-success");
-@source inline("bg-success/30");
-@source inline("border-warning");
-@source inline("bg-warning/30");
+@source inline('lg:col-span-4');
+@source inline('lg:col-span-6');
+@source inline('lg:col-span-8');
+@source inline('lg:col-span-12');
+@source inline('border-border');
+@source inline('bg-card');
+@source inline('border-error');
+@source inline('bg-error/30');
+@source inline('border-success');
+@source inline('bg-success/30');
+@source inline('border-warning');
+@source inline('bg-warning/30');
 
 @theme {
   --breakpoint-sm: 40rem;
@@ -105,10 +105,12 @@
   --outline-variant: #bfc9c4;
   --surface-tint: #2f685a;
   --primary: #2f685a;
+  --primary-muted: #97b4ad;
   --on-primary: #ffffff;
   --primary-container: #78b1a0;
   --on-primary-container: #004437;
   --inverse-primary: #98d2c0;
+  --inverse-primary-muted: #4a6960;
   --secondary: #8e4e14;
   --on-secondary: #ffffff;
   --secondary-container: #ffab69;
@@ -178,6 +180,7 @@
   --popover: rgb(34 52 48 / 80%);
   --popover-foreground: var(--inverse-on-surface);
   --primary: var(--inverse-primary);
+  --primary-muted: var(--inverse-primary-muted);
   --primary-foreground: var(--on-primary-fixed);
   --secondary: var(--secondary-fixed-dim);
   --secondary-foreground: var(--on-secondary-fixed);
@@ -232,10 +235,12 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-muted: var(--primary-muted);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-container: var(--primary-container);
   --color-on-primary-container: var(--on-primary-container);
   --color-inverse-primary: var(--inverse-primary);
+  --color-inverse-primary-muted: var(--inverse-primary-muted);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary-container: var(--secondary-container);
@@ -295,7 +300,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-screen flex flex-col;
+    @apply flex min-h-screen flex-col bg-background text-foreground;
   }
 }
 

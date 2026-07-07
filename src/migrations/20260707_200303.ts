@@ -56,7 +56,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
-  ALTER TABLE "media" ADD COLUMN "blur_placeholder" varchar;
   ALTER TABLE "pages_blocks_menu_highlights_cards" ADD CONSTRAINT "pages_blocks_menu_highlights_cards_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_menu_highlights_cards" ADD CONSTRAINT "pages_blocks_menu_highlights_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_menu_highlights"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_menu_highlights" ADD CONSTRAINT "pages_blocks_menu_highlights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -83,7 +82,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_blocks_menu_highlights" CASCADE;
   DROP TABLE "_pages_v_blocks_menu_highlights_cards" CASCADE;
   DROP TABLE "_pages_v_blocks_menu_highlights" CASCADE;
-  ALTER TABLE "media" DROP COLUMN "blur_placeholder";
   DROP TYPE "public"."enum_pages_blocks_menu_highlights_cards_link_type";
   DROP TYPE "public"."enum__pages_v_blocks_menu_highlights_cards_link_type";`)
 }

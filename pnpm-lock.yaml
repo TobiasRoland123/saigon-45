@@ -10,9 +10,12 @@ importers:
       '@payloadcms/admin-bar':
         specifier: 3.82.1
         version: 3.82.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@payloadcms/db-postgres':
+        specifier: ^3.82.1
+        version: 3.82.1(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))
       '@payloadcms/db-vercel-postgres':
         specifier: 3.82.1
-        version: 3.82.1(@types/pg@8.11.6)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))
+        version: 3.82.1(@types/pg@8.10.2)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))
       '@payloadcms/live-preview-react':
         specifier: 3.82.1
         version: 3.82.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -64,6 +67,9 @@ importers:
       cross-env:
         specifier: 10.1.0
         version: 10.1.0
+      dompurify:
+        specifier: ^3.4.11
+        version: 3.4.11
       dotenv:
         specifier: 16.4.7
         version: 16.4.7
@@ -100,6 +106,9 @@ importers:
       sharp:
         specifier: 0.34.2
         version: 0.34.2
+      simple-icons:
+        specifier: ^16.24.1
+        version: 16.24.1
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.6.0
@@ -2457,6 +2466,14 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.1 || ^19.1.2 || ^19.2.1
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.1 || ^19.1.2 || ^19.2.1
 
+  '@payloadcms/db-postgres@3.82.1':
+    resolution:
+      {
+        integrity: sha512-A1AeDUPrBHEmhT+ORF1bD2GmFfPfPcK6uSz+AWLrOQ+vZ8/9CIQhCVEE//GsT7Q2YdazTrWUMtgjJARmZ2zWEQ==,
+      }
+    peerDependencies:
+      payload: 3.82.1
+
   '@payloadcms/db-vercel-postgres@3.82.1':
     resolution:
       {
@@ -3554,6 +3571,12 @@ packages:
     resolution:
       {
         integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==,
+      }
+
+  '@types/pg@8.10.2':
+    resolution:
+      {
+        integrity: sha512-MKFs9P6nJ+LAeHLU3V0cODEOgyThJ3OAnmOlsZsxux6sfQs3HRXR5bBn7xG5DjckEFhTAxsXi7k7cd0pCMxpJw==,
       }
 
   '@types/pg@8.11.6':
@@ -4765,6 +4788,12 @@ packages:
     resolution:
       {
         integrity: sha512-WhL/YuveyGXJaerVlMYGWhvQswa7myDG17P7Vu65EWC05o8vfeNbvNf4d/BOvH99+ZW+LlQsc1GDKMa1vNK6dw==,
+      }
+
+  dompurify@3.4.11:
+    resolution:
+      {
+        integrity: sha512-zhlUV12GsaRzMsf9q5M254YhA4+VuF0fG+QFqu6aYpoGlKtz+w8//jBcGVYBgQkR5GHjUomejY84AV+/uPbWdw==,
       }
 
   dotenv@16.4.7:
@@ -7854,6 +7883,13 @@ packages:
       }
     engines: { node: '>=14' }
 
+  simple-icons@16.24.1:
+    resolution:
+      {
+        integrity: sha512-AnDQPrZAVzYSym7cBVIrnbhLk9auWGgkl+9hKvkbTqGEfH6TU7WKgumEXYYaJuM1Ib87+cnzr881UZniCM7t+A==,
+      }
+    engines: { node: '>=0.12.18' }
+
   simple-swizzle@0.2.4:
     resolution:
       {
@@ -10008,13 +10044,56 @@ snapshots:
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
 
-  '@payloadcms/db-vercel-postgres@3.82.1(@types/pg@8.11.6)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))':
+  '@payloadcms/db-postgres@3.82.1(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))':
     dependencies:
-      '@payloadcms/drizzle': 3.82.1(@types/pg@8.11.6)(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))(pg@8.16.3)
+      '@payloadcms/drizzle': 3.82.1(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))(pg@8.16.3)
+      '@types/pg': 8.10.2
+      console-table-printer: 2.12.1
+      drizzle-kit: 0.31.7
+      drizzle-orm: 0.44.7(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(pg@8.16.3)
+      payload: 3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6)
+      pg: 8.16.3
+      prompts: 2.4.2
+      to-snake-case: 1.0.0
+      uuid: 10.0.0
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@electric-sql/pglite'
+      - '@libsql/client'
+      - '@libsql/client-wasm'
+      - '@neondatabase/serverless'
+      - '@op-engineering/op-sqlite'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@prisma/client'
+      - '@tidbcloud/serverless'
+      - '@types/better-sqlite3'
+      - '@types/sql.js'
+      - '@upstash/redis'
+      - '@vercel/postgres'
+      - '@xata.io/client'
+      - better-sqlite3
+      - bun-types
+      - expo-sqlite
+      - gel
+      - knex
+      - kysely
+      - mysql2
+      - pg-native
+      - postgres
+      - prisma
+      - sql.js
+      - sqlite3
+      - supports-color
+
+  '@payloadcms/db-vercel-postgres@3.82.1(@types/pg@8.10.2)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))':
+    dependencies:
+      '@payloadcms/drizzle': 3.82.1(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))(pg@8.16.3)
       '@vercel/postgres': 0.9.0
       console-table-printer: 2.12.1
       drizzle-kit: 0.31.7
-      drizzle-orm: 0.44.7(@types/pg@8.11.6)(@vercel/postgres@0.9.0)(pg@8.16.3)
+      drizzle-orm: 0.44.7(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(pg@8.16.3)
       payload: 3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6)
       pg: 8.16.3
       prompts: 2.4.2
@@ -10051,11 +10130,11 @@ snapshots:
       - sqlite3
       - supports-color
 
-  '@payloadcms/drizzle@3.82.1(@types/pg@8.11.6)(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))(pg@8.16.3)':
+  '@payloadcms/drizzle@3.82.1(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(payload@3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6))(pg@8.16.3)':
     dependencies:
       console-table-printer: 2.12.1
       dequal: 2.0.3
-      drizzle-orm: 0.44.7(@types/pg@8.11.6)(@vercel/postgres@0.9.0)(pg@8.16.3)
+      drizzle-orm: 0.44.7(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(pg@8.16.3)
       payload: 3.82.1(bufferutil@4.1.0)(graphql@16.14.2)(typescript@6.0.3)(utf-8-validate@6.0.6)
       prompts: 2.4.2
       to-snake-case: 1.0.0
@@ -10832,6 +10911,12 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
+  '@types/pg@8.10.2':
+    dependencies:
+      '@types/node': 24.12.3
+      pg-protocol: 1.14.0
+      pg-types: 4.1.0
+
   '@types/pg@8.11.6':
     dependencies:
       '@types/node': 24.12.3
@@ -11542,6 +11627,10 @@ snapshots:
     optionalDependencies:
       '@types/trusted-types': 2.0.7
 
+  dompurify@3.4.11:
+    optionalDependencies:
+      '@types/trusted-types': 2.0.7
+
   dotenv@16.4.7: {}
 
   drizzle-kit@0.31.7:
@@ -11553,9 +11642,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.7(@types/pg@8.11.6)(@vercel/postgres@0.9.0)(pg@8.16.3):
+  drizzle-orm@0.44.7(@types/pg@8.10.2)(@vercel/postgres@0.9.0)(pg@8.16.3):
     optionalDependencies:
-      '@types/pg': 8.11.6
+      '@types/pg': 8.10.2
       '@vercel/postgres': 0.9.0
       pg: 8.16.3
 
@@ -13752,6 +13841,8 @@ snapshots:
   siginfo@2.0.0: {}
 
   signal-exit@4.1.0: {}
+
+  simple-icons@16.24.1: {}
 
   simple-swizzle@0.2.4:
     dependencies:
