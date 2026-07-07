@@ -51,8 +51,8 @@ export const SideBySideContentBlock: React.FC<SideBySideContentBlockProps> = ({
           />
         </div>
 
-        <div className="relative mx-auto w-full max-w-3xl pb-10 lg:pb-0">
-          <div className="relative ml-16 aspect-[1.02] overflow-hidden rounded-[1.75rem] border-[10px] border-white shadow-[0_28px_70px_rgba(47,104,90,0.22)] md:aspect-[1.05]">
+        <div className="relative mx-auto w-full pb-10 lg:pb-0">
+          <div className="relative ml-16 aspect-[1.02] overflow-hidden rounded-[1.75rem] border-10 border-white shadow-[0_28px_70px_rgba(47,104,90,0.22)] md:aspect-[1.05]">
             <Media
               fill
               imgClassName="object-cover"
