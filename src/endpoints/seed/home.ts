@@ -469,6 +469,23 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         media: metaImage.id,
       },
       {
+        blockName: 'Reviews Section',
+        blockType: 'reviews',
+        eyebrow: 'Kvalitet du kan smage',
+        ratingLabel: '4.5+ Stjerner på Google',
+        ratingDescription: 'Vores gæster elsker vores mad og hurtige service.',
+        smileyTitle: 'Elite Smiley',
+        smileyLinkLabel: 'Se vores seneste Smiley-rapport her.',
+        reviews: [
+          {
+            name: 'Thomas Berg',
+            quote: 'Fantastisk gyoza! Prøv dem som snack til din bubble tea.',
+            rating: 5,
+            source: 'Google Review',
+          },
+        ],
+      },
+      {
         blockName: 'Archive Block',
         blockType: 'archive',
         categories: [],
