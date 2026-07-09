@@ -41,6 +41,26 @@ export const seed = async ({
   // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
 
+  const existingMedia = await payload.find({
+    collection: 'media',
+    depth: 0,
+    limit: 1000,
+  })
+
+  await Promise.all(
+    existingMedia.docs.map((media) =>
+      payload.delete({
+        collection: 'media',
+        id: media.id,
+        depth: 0,
+        req,
+        context: {
+          disableRevalidate: true,
+        },
+      }),
+    ),
+  )
+
   // clear the database
   await Promise.all([
     payload.updateGlobal({
@@ -71,7 +91,9 @@ export const seed = async ({
   ])
 
   await Promise.all(
-    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
+    collections
+      .filter((collection) => collection !== 'media')
+      .map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
   )
 
   await Promise.all(
@@ -94,18 +116,24 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding media...`)
 
+  const seedRunId = Date.now()
+
   const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
+      `seed-${seedRunId}-image-post1.webp`,
     ),
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
+      `seed-${seedRunId}-image-post2.webp`,
     ),
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
+      `seed-${seedRunId}-image-post3.webp`,
     ),
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
+      `seed-${seedRunId}-image-hero1.webp`,
     ),
   ])
 
@@ -373,7 +401,7 @@ export const seed = async ({
   payload.logger.info('Seeded database successfully!')
 }
 
-async function fetchFileByURL(url: string): Promise<File> {
+async function fetchFileByURL(url: string, name?: string): Promise<File> {
   const res = await fetch(url, {
     credentials: 'include',
     method: 'GET',
@@ -386,7 +414,7 @@ async function fetchFileByURL(url: string): Promise<File> {
   const data = await res.arrayBuffer()
 
   return {
-    name: url.split('/').pop() || `file-${Date.now()}`,
+    name: name || url.split('/').pop() || `file-${Date.now()}`,
     data: Buffer.from(data),
     mimetype: `image/${url.split('.').pop()}`,
     size: data.byteLength,

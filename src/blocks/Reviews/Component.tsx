@@ -23,12 +23,12 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   return (
     <section className="bg-background py-8 text-primary-foreground md:py-12">
       <div className="container">
-        <div className="relative overflow-hidden rounded-[2rem] bg-[#0b2924] px-6 py-12 shadow-2xl shadow-black/35 md:rounded-[2.75rem] md:px-16 md:py-20 lg:px-20">
+        <div className="relative overflow-hidden rounded-4xl bg-[#0b2924] px-6 py-12 shadow-2xl shadow-black/35 md:rounded-[2.75rem] md:px-16 md:py-20 lg:px-20">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_50%,rgba(151,180,173,0.16),transparent_32%),radial-gradient(circle_at_82%_24%,rgba(47,104,90,0.22),transparent_35%)]" />
           <div className="relative grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
             <div>
               {eyebrow && (
-                <h2 className="max-w-2xl text-4xl leading-[1.05] font-extrabold tracking-normal text-[#e9fef8] md:text-6xl">
+                <h2 className="max-w-2xl text-5xl leading-[1.05] font-extrabold tracking-normal text-[#e9fef8]">
                   {eyebrow}
                 </h2>
               )}
@@ -41,12 +41,12 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                     </div>
                     <div>
                       {ratingLabel && (
-                        <p className="text-2xl leading-tight font-extrabold text-[#e9fef8] md:text-3xl">
+                        <p className="text-2xl leading-tight font-bold text-[#e9fef8]">
                           {ratingLabel}
                         </p>
                       )}
                       {ratingDescription && (
-                        <p className="mt-2 max-w-md text-base leading-relaxed text-[#caded9]/80 md:text-lg">
+                        <p className="mt-2 max-w-md text-base leading-relaxed text-[#caded9]/80">
                           {ratingDescription}
                         </p>
                       )}
@@ -61,20 +61,20 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                     </div>
                     <div>
                       {smileyTitle && (
-                        <p className="text-2xl leading-tight font-extrabold text-[#e9fef8] md:text-3xl">
+                        <p className="text-2xl leading-tight font-extrabold text-[#e9fef8]">
                           {smileyTitle}
                         </p>
                       )}
                       {smileyLinkLabel &&
                         (smileyLinkUrl ? (
                           <a
-                            className="mt-2 inline-block text-base font-bold text-[#98d2c0] underline decoration-[#98d2c0]/45 underline-offset-4 hover:text-[#c5eae9] md:text-lg"
+                            className="mt-2 inline-block text-base text-[#98d2c0] underline decoration-[#98d2c0]/45 underline-offset-4 hover:text-[#c5eae9] md:text-lg"
                             href={smileyLinkUrl}
                           >
                             {smileyLinkLabel}
                           </a>
                         ) : (
-                          <p className="mt-2 text-base font-bold text-[#98d2c0] underline decoration-[#98d2c0]/45 underline-offset-4 md:text-lg">
+                          <p className="mt-2 text-base text-[#98d2c0] underline decoration-[#98d2c0]/45 underline-offset-4">
                             {smileyLinkLabel}
                           </p>
                         ))}
@@ -85,8 +85,8 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
             </div>
 
             {featuredReview && (
-              <div className="relative lg:ml-auto lg:w-full lg:max-w-[46rem]">
-                <div className="absolute top-8 right-[-0.75rem] hidden h-[78%] w-full rounded-[2rem] bg-[#caded9]/55 lg:block" />
+              <div className="relative lg:ml-auto lg:w-full lg:max-w-184">
+                <div className="absolute top-8 -right-3 hidden h-[78%] w-full rounded-4xl bg-[#caded9]/55 lg:block" />
                 <figure className="relative rounded-[1.75rem] border border-[#caded9]/15 bg-[#203b35] p-8 shadow-2xl shadow-black/25 md:p-10">
                   <div
                     className="flex gap-1 text-[#2f685a]"
@@ -94,22 +94,22 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                   >
                     {Array.from({ length: MAX_STARS }).map((_, index) => (
                       <Icon
-                        className={`size-4 fill-current md:size-5 ${index + 1 > Math.round(featuredRating) ? 'opacity-30' : ''}`}
+                        className={`size-2.5 fill-current${index + 1 > Math.round(featuredRating) ? 'opacity-30' : ''}`}
                         key={index}
                         name="star"
                       />
                     ))}
                   </div>
 
-                  <blockquote className="mt-8 max-w-[34rem] text-2xl leading-relaxed font-medium text-[#e0f5f0]/90 italic md:text-3xl">
+                  <blockquote className="mt-8 max-w-136 text-lg leading-relaxed text-[#e0f5f0]/90 italic">
                     &quot;{featuredReview.quote}&quot;
                   </blockquote>
 
                   <div className="mt-12 border-t border-[#caded9]/15 pt-8">
                     <figcaption>
-                      <p className="text-lg font-extrabold text-[#98d2c0]">{featuredReview.name}</p>
+                      <p className="text-sm font-semibold text-[#98d2c0]">{featuredReview.name}</p>
                       {featuredReview.source && (
-                        <p className="mt-1 text-sm font-bold tracking-[0.16em] text-[#caded9]/65 uppercase">
+                        <p className="mt-1 text-[10px] tracking-[0.16em] text-[#caded9]/65 uppercase">
                           {featuredReview.source}
                         </p>
                       )}
