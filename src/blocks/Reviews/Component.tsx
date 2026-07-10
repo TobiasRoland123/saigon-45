@@ -18,7 +18,6 @@ type Review = NonNullable<ReviewsBlockProps['reviews']>[number]
 
 type ReviewCardProps = {
   review: Review
-  index: number
   isVisible: boolean
   isActive: boolean
   offset: number
@@ -44,7 +43,6 @@ const ReviewNavigationButton: React.FC<ReviewNavigationButtonProps> = ({ directi
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
   review,
-  index,
   isVisible,
   isActive,
   offset,
@@ -62,8 +60,14 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
 
   return (
     <article
-      className={`absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'} ${visibilityClass} ${isDragging ? 'duration-0' : ''}`}
+      className={cn(
+        'absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10',
+        isVisible ? 'pointer-events-auto' : 'pointer-events-none',
+        visibilityClass,
+        isDragging && 'duration-0',
+      )}
       style={{ transform }}
+      key={review.id}
     >
       <div className="flex gap-1 text-primary" aria-label={`${rating} ud af ${MAX_STARS} stjerner`}>
         {Array.from({ length: MAX_STARS }).map((_, starIndex) => (
@@ -71,8 +75,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             key={starIndex}
             name="star"
             className={cn(
-              `size-2.5 fill-current`,
-              starIndex + 1 > Math.round(rating) ? 'opacity-30' : '',
+              'size-2.5 fill-current',
+              starIndex + 1 > Math.round(rating) && 'opacity-30',
             )}
           />
         ))}
@@ -262,7 +266,6 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                       <ReviewCard
                         key={review.id || `${review.name}-${index}`}
                         review={review}
-                        index={index}
                         isVisible={isVisible}
                         isActive={isActive}
                         offset={offset}

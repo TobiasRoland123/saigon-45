@@ -13,3 +13,4 @@ Docs holds documentation for different areas of the project., which should be fo
 
 - [git.md](docs/git.md) This is a guide to git related rules in this project
 - [icons.md](docs/icons.md) Project-wide icon strategy and implementation guidance
+- [styling.md](docs/styling.md) Use `cn` for conditional and dynamic Tailwind class composition
