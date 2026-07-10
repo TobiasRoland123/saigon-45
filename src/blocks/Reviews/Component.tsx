@@ -94,9 +94,9 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       </div>
       <span
         aria-hidden="true"
-        className="absolute right-8 bottom-8 text-6xl leading-none font-extrabold text-primary/35"
+        className="absolute right-8 bottom-16 text-6xl leading-none font-extrabold text-primary/35"
       >
-        &quot;
+        <Icon name="quote" />
       </span>
     </article>
   )

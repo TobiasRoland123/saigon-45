@@ -9,6 +9,7 @@ import { FeatureHighlights } from '../../blocks/FeatureHighlights/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { Reviews } from '../../blocks/Reviews/config'
+import { MenuHighlights } from '../../blocks/MenuHighlights/config'
 import { SideBySideContent } from '@/blocks/SideBySideContent/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
@@ -86,6 +87,7 @@ export const Pages: CollectionConfig = {
                 FormBlock,
                 FeatureHighlights,
                 Reviews,
+                MenuHighlights,
                 SideBySideContent,
               ],
               required: true,

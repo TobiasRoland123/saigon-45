@@ -181,7 +181,18 @@ export interface Page {
            * Choose one of the approved project icons.
            */
           icon?:
-            | ('arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star')
+            | (
+                | 'arrowLeft'
+                | 'arrowRight'
+                | 'clock'
+                | 'mapPin'
+                | 'phone'
+                | 'badgeCheck'
+                | 'leaf'
+                | 'search'
+                | 'star'
+                | 'quote'
+              )
             | null;
           label: string;
           id?: string | null;
@@ -221,6 +232,7 @@ export interface Page {
     | FormBlock
     | FeatureHighlightsBlock
     | ReviewsBlock
+    | MenuHighlightsBlock
     | SideBySideContentBlock
   )[];
   meta?: {
@@ -812,7 +824,17 @@ export interface FeatureHighlightsBlock {
     /**
      * Choose one of the approved project icons.
      */
-    icon: 'arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+    icon:
+      | 'arrowLeft'
+      | 'arrowRight'
+      | 'clock'
+      | 'mapPin'
+      | 'phone'
+      | 'badgeCheck'
+      | 'leaf'
+      | 'search'
+      | 'star'
+      | 'quote';
     title: string;
     subtitle: string;
     id?: string | null;
@@ -832,12 +854,32 @@ export interface ReviewsBlock {
   /**
    * Choose one of the approved project icons.
    */
-  ratingIcon: 'arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+  ratingIcon:
+    | 'arrowLeft'
+    | 'arrowRight'
+    | 'clock'
+    | 'mapPin'
+    | 'phone'
+    | 'badgeCheck'
+    | 'leaf'
+    | 'search'
+    | 'star'
+    | 'quote';
   smileyTitle: string;
   /**
    * Choose one of the approved project icons.
    */
-  smileyIcon: 'arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+  smileyIcon:
+    | 'arrowLeft'
+    | 'arrowRight'
+    | 'clock'
+    | 'mapPin'
+    | 'phone'
+    | 'badgeCheck'
+    | 'leaf'
+    | 'search'
+    | 'star'
+    | 'quote';
   smileyLinkLabel: string;
   /**
    * Optional URL for the Smiley report link.
@@ -856,6 +898,46 @@ export interface ReviewsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'reviews';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuHighlightsBlock".
+ */
+export interface MenuHighlightsBlock {
+  heading: string;
+  intro?: string | null;
+  cards: {
+    media: number | Media;
+    /**
+     * Optional label shown over the image.
+     */
+    imageLabel?: string | null;
+    /**
+     * Optional badge shown in the top-right corner.
+     */
+    badge?: string | null;
+    title: string;
+    description: string;
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'menuHighlights';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1211,6 +1293,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
         reviews?: T | ReviewsBlockSelect<T>;
+        menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
       };
   meta?:
@@ -1347,6 +1430,35 @@ export interface ReviewsBlockSelect<T extends boolean = true> {
         name?: T;
         source?: T;
         rating?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuHighlightsBlock_select".
+ */
+export interface MenuHighlightsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  intro?: T;
+  cards?:
+    | T
+    | {
+        media?: T;
+        imageLabel?: T;
+        badge?: T;
+        title?: T;
+        description?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   id?: T;

@@ -9,6 +9,7 @@ import {
   Phone,
   Search,
   Star,
+  Quote,
 } from 'lucide-react'
 
 export type IconDefinition = {
@@ -52,6 +53,10 @@ export const iconRegistry = {
   star: {
     label: 'Star',
     Icon: Star,
+  },
+  quote: {
+    label: 'Quote',
+    Icon: Quote,
   },
 } as const satisfies Record<string, IconDefinition>
 

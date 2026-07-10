@@ -3,11 +3,13 @@ import type { Media } from '@/payload-types'
 
 type HomeArgs = {
   heroImage: Media
+  menuImages: [Media, Media, Media]
   metaImage: Media
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
   heroImage,
+  menuImages,
   metaImage,
 }) => {
   return {
@@ -95,6 +97,53 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       },
     },
     layout: [
+      {
+        blockName: 'Menu Highlights',
+        blockType: 'menuHighlights',
+        heading: 'Hvad har du lyst til?',
+        intro:
+          'Vælg mellem varme wokretter, sprøde snacks og farverige bubble teas, lavet hurtigt og friskt midt i Rødovre Centrum.',
+        cards: [
+          {
+            media: menuImages[0].id,
+            imageLabel: 'Wok & nudler',
+            badge: 'Populært',
+            title: 'Frisklavede asiatiske favoritter',
+            description:
+              'Varme retter med grøntsager, nudler og saucer med masser af smag. Perfekt når du vil have et hurtigt måltid uden at gå på kompromis.',
+            link: {
+              type: 'custom',
+              label: 'Se wokretter',
+              url: '#menu',
+            },
+          },
+          {
+            media: menuImages[1].id,
+            imageLabel: 'Bubble tea',
+            badge: 'Koldt',
+            title: 'Bubble tea i mange varianter',
+            description:
+              'Frugtige, cremede og forfriskende drikke med popping boba eller tapioka. Find din favorit til shoppingturen eller tag den med hjem.',
+            link: {
+              type: 'custom',
+              label: 'Se drikke',
+              url: '#drikke',
+            },
+          },
+          {
+            media: menuImages[2].id,
+            imageLabel: 'Snacks',
+            title: 'Sprøde småretter til deling',
+            description:
+              'Gør måltidet komplet med snacks og sider, der passer til både frokostpausen, børnefamilien og den hurtige takeaway-bestilling.',
+            link: {
+              type: 'custom',
+              label: 'Se snacks',
+              url: '#snacks',
+            },
+          },
+        ],
+      },
       {
         blockName: 'Selskaber & Events',
         blockType: 'splitContent',

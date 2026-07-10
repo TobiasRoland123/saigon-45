@@ -22,20 +22,20 @@
   }
 }
 
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
 
-@source inline("lg:col-span-4");
-@source inline("lg:col-span-6");
-@source inline("lg:col-span-8");
-@source inline("lg:col-span-12");
-@source inline("border-border");
-@source inline("bg-card");
-@source inline("border-error");
-@source inline("bg-error/30");
-@source inline("border-success");
-@source inline("bg-success/30");
-@source inline("border-warning");
-@source inline("bg-warning/30");
+@source inline('lg:col-span-4');
+@source inline('lg:col-span-6');
+@source inline('lg:col-span-8');
+@source inline('lg:col-span-12');
+@source inline('border-border');
+@source inline('bg-card');
+@source inline('border-error');
+@source inline('bg-error/30');
+@source inline('border-success');
+@source inline('bg-success/30');
+@source inline('border-warning');
+@source inline('bg-warning/30');
 
 @theme {
   --breakpoint-sm: 40rem;
@@ -300,7 +300,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-screen flex flex-col;
+    @apply flex min-h-screen flex-col bg-background text-foreground;
   }
 }
 

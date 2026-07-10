@@ -1,4 +1,5 @@
 import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
+import { randomUUID } from 'crypto'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -245,7 +246,11 @@ export const seed = async ({
     payload.create({
       collection: 'pages',
       depth: 0,
-      data: home({ heroImage: imageHomeDoc, metaImage: image2Doc }),
+      data: home({
+        heroImage: imageHomeDoc,
+        menuImages: [image1Doc, image2Doc, image3Doc],
+        metaImage: image2Doc,
+      }),
     }),
     payload.create({
       collection: 'pages',
@@ -412,9 +417,11 @@ async function fetchFileByURL(url: string, name?: string): Promise<File> {
   }
 
   const data = await res.arrayBuffer()
+  const fileName = url.split('/').pop() || `file-${Date.now()}`
+  const seedFileName = `seed-${randomUUID()}-${fileName}`
 
   return {
-    name: name || url.split('/').pop() || `file-${Date.now()}`,
+    name: name || seedFileName,
     data: Buffer.from(data),
     mimetype: `image/${url.split('.').pop()}`,
     size: data.byteLength,
