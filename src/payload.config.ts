@@ -87,6 +87,10 @@ export default buildConfig({
       collections: {
         media: true,
       },
+      // Seed uploads may reuse the same source filenames. Keep each upload
+      // addressable in Blob storage so rerunning the seed does not fail when
+      // an earlier run already uploaded the file.
+      addRandomSuffix: true,
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],
