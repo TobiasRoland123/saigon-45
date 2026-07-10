@@ -45,22 +45,21 @@ export const seed = async ({
   const existingMedia = await payload.find({
     collection: 'media',
     depth: 0,
-    limit: 1000,
+    pagination: false,
   })
 
-  await Promise.all(
-    existingMedia.docs.map((media) =>
-      payload.delete({
-        collection: 'media',
-        id: media.id,
-        depth: 0,
-        req,
-        context: {
-          disableRevalidate: true,
-        },
-      }),
-    ),
-  )
+  // Delete through Payload so the Vercel Blob adapter removes the stored files too.
+  for (const media of existingMedia.docs) {
+    await payload.delete({
+      collection: 'media',
+      id: media.id,
+      depth: 0,
+      req,
+      context: {
+        disableRevalidate: true,
+      },
+    })
+  }
 
   // clear the database
   await Promise.all([
