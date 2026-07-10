@@ -2,7 +2,7 @@
 
 import type { ReviewsBlock as ReviewsBlockProps } from '@/payload-types'
 import { Icon } from '@/components/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { cn } from '@/utilities/ui'
 
 const DEFAULT_RATING = 4.5
@@ -118,6 +118,15 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   const [pointerStart, setPointerStart] = useState<number | null>(null)
   const [dragX, setDragX] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
+  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (animationTimeoutRef.current !== null) {
+        clearTimeout(animationTimeoutRef.current)
+      }
+    }
+  }, [])
 
   if (!eyebrow && !visibleReviews.length && !ratingLabel && !smileyTitle) return null
 
@@ -127,7 +136,11 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
     setIsAnimating(true)
     setDragX(direction * 520)
 
-    window.setTimeout(() => {
+    if (animationTimeoutRef.current !== null) {
+      clearTimeout(animationTimeoutRef.current)
+    }
+
+    animationTimeoutRef.current = setTimeout(() => {
       setActiveIndex((index) =>
         direction === 1
           ? (index + 1) % visibleReviews.length
@@ -135,6 +148,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
       )
       setDragX(0)
       setIsAnimating(false)
+      animationTimeoutRef.current = null
     }, 360)
   }
 
