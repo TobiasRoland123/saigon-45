@@ -3,6 +3,7 @@
 import type { ReviewsBlock as ReviewsBlockProps } from '@/payload-types'
 import { Icon } from '@/components/icons'
 import React, { useState } from 'react'
+import { cn } from '@/utilities/ui'
 
 const DEFAULT_RATING = 4.5
 const MAX_STARS = 5
@@ -11,6 +12,19 @@ const SWIPE_THRESHOLD = 48
 type ReviewNavigationButtonProps = {
   direction: 'left' | 'right'
   onClick: () => void
+}
+
+type Review = NonNullable<ReviewsBlockProps['reviews']>[number]
+
+type ReviewCardProps = {
+  review: Review
+  index: number
+  isVisible: boolean
+  isActive: boolean
+  offset: number
+  isDragging: boolean
+  transform: string
+  rating: number
 }
 
 const ReviewNavigationButton: React.FC<ReviewNavigationButtonProps> = ({ direction, onClick }) => {
@@ -25,6 +39,62 @@ const ReviewNavigationButton: React.FC<ReviewNavigationButtonProps> = ({ directi
     >
       <Icon name={isPrevious ? 'arrowLeft' : 'arrowRight'} />
     </button>
+  )
+}
+
+const ReviewCard: React.FC<ReviewCardProps> = ({
+  review,
+  index,
+  isVisible,
+  isActive,
+  offset,
+  isDragging,
+  transform,
+  rating,
+}) => {
+  const visibilityClass = isActive
+    ? 'z-30 opacity-100'
+    : offset === 1
+      ? 'z-20 opacity-100'
+      : offset === 2
+        ? 'z-10 opacity-100'
+        : 'invisible opacity-0'
+
+  return (
+    <article
+      className={`absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'} ${visibilityClass} ${isDragging ? 'duration-0' : ''}`}
+      style={{ transform }}
+    >
+      <div className="flex gap-1 text-primary" aria-label={`${rating} ud af ${MAX_STARS} stjerner`}>
+        {Array.from({ length: MAX_STARS }).map((_, starIndex) => (
+          <Icon
+            key={starIndex}
+            name="star"
+            className={cn(
+              `size-2.5 fill-current`,
+              starIndex + 1 > Math.round(rating) ? 'opacity-30' : '',
+            )}
+          />
+        ))}
+      </div>
+      <blockquote className="mt-8 max-w-136 text-lg leading-relaxed text-inverse-on-surface/90 italic">
+        &quot;{review.quote}&quot;
+      </blockquote>
+      <div className="mt-12 border-t border-surface-dim/15 pt-8">
+        <p className="text-sm font-semibold text-inverse-primary">{review.name}</p>
+        {review.source && (
+          <p className="mt-1 text-[10px] tracking-[0.16em] text-surface-dim/65 uppercase">
+            {review.source}
+          </p>
+        )}
+      </div>
+      <span
+        aria-hidden="true"
+        className="absolute right-8 bottom-8 text-6xl leading-none font-extrabold text-primary/35"
+      >
+        &quot;
+      </span>
+    </article>
   )
 }
 
@@ -162,7 +232,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                 )}
               </div>
             </div>
-            {visibleReviews.length > 0 && ( // TODO: put this into a separate component
+            {visibleReviews.length > 0 && (
               <div className="relative lg:ml-auto lg:w-full lg:max-w-184">
                 <div
                   className="relative min-h-96 touch-pan-y select-none"
@@ -189,43 +259,17 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                       ? `translateX(${dragX}px) rotate(${dragX / 18}deg)`
                       : `translate(${offset * 12 + (dragX < 0 ? -1 : 1) * revealProgress * offset * 4}px, ${offset * 24 - revealProgress * offset * 6}px) rotate(${offset * 2}deg) scale(${1 - offset * 0.035 + revealProgress * 0.035})`
                     return (
-                      <article
+                      <ReviewCard
                         key={review.id || `${review.name}-${index}`}
-                        className={`absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'} ${isActive ? 'z-30 opacity-100' : offset === 1 ? 'z-20 opacity-100' : offset === 2 ? 'z-10 opacity-100' : 'invisible opacity-0'} ${pointerStart !== null ? 'duration-0' : ''}`}
-                        style={{ transform }}
-                      >
-                        <div
-                          className="flex gap-1 text-primary"
-                          aria-label={`${rating} ud af ${MAX_STARS} stjerner`}
-                        >
-                          {Array.from({ length: MAX_STARS }).map((_, starIndex) => (
-                            <Icon
-                              key={starIndex}
-                              name="star"
-                              className={`size-2.5 fill-current${starIndex + 1 > Math.round(rating) ? 'opacity-30' : ''}`}
-                            />
-                          ))}
-                        </div>
-                        <blockquote className="mt-8 max-w-136 text-lg leading-relaxed text-inverse-on-surface/90 italic">
-                          &quot;{review.quote}&quot;
-                        </blockquote>
-                        <div className="mt-12 border-t border-surface-dim/15 pt-8">
-                          <p className="text-sm font-semibold text-inverse-primary">
-                            {review.name}
-                          </p>
-                          {review.source && (
-                            <p className="mt-1 text-[10px] tracking-[0.16em] text-surface-dim/65 uppercase">
-                              {review.source}
-                            </p>
-                          )}
-                        </div>
-                        <span
-                          aria-hidden="true"
-                          className="absolute right-8 bottom-8 text-6xl leading-none font-extrabold text-primary/35"
-                        >
-                          &quot;
-                        </span>
-                      </article>
+                        review={review}
+                        index={index}
+                        isVisible={isVisible}
+                        isActive={isActive}
+                        offset={offset}
+                        isDragging={pointerStart !== null}
+                        transform={transform}
+                        rating={rating}
+                      />
                     )
                   })}
                 </div>
