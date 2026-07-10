@@ -26,8 +26,8 @@ export async function Footer() {
     : null
 
   return (
-    <footer className="mt-auto border-t border-border bg-primary dark:bg-card text-white">
-      <div className="container pt-10 pb-16 gap-8 flex flex-col md:grid md:grid-rows-auto md:grid-cols-12 md:justify-between">
+    <footer className="mt-auto border-t border-border bg-primary text-white dark:bg-card">
+      <div className="md:grid-rows-auto container flex flex-col gap-8 pt-10 pb-16 md:grid md:grid-cols-12 md:justify-between">
         {aboutData && (
           <div className="flex flex-col items-start gap-4 md:col-start-1 md:col-end-7 md:row-start-1 md:row-end-2">
             <p className="text-2xl">{aboutData.AboutLabel}</p>
@@ -39,10 +39,10 @@ export async function Footer() {
         )}
         {contactData && (
           <div className="flex flex-col items-start gap-4 md:col-start-7 md:col-end-10 md:row-start-1 md:row-end-2">
-            <p className="underline underline-offset-3 decoration-primary-muted text-primary-muted uppercase">
+            <p className="text-primary-muted uppercase underline decoration-primary-muted underline-offset-3">
               Kontakt & info
             </p>
-            <ul className="[&>li]:leading-10 [&>a]:leading-10">
+            <ul className="[&>a]:leading-10 [&>li]:leading-10">
               <li>{contactData?.ContactAddress}</li>
               {normalizedPhone && (
                 <li>
@@ -52,7 +52,7 @@ export async function Footer() {
               {contactData.ContactOpeningHouse && (
                 <li>
                   <RichText
-                    className="[&>p]:leading-10 "
+                    className="[&>p]:leading-10"
                     data={contactData.ContactOpeningHouse}
                     enableGutter={false}
                     enableProse={false}
@@ -65,7 +65,7 @@ export async function Footer() {
 
         {socialMediaData && socialMediaData.length > 0 && (
           <div className="flex flex-col items-start gap-4 md:col-start-10 md:col-end-13 md:row-start-1 md:row-end-2">
-            <p className="underline underline-offset-3 decoration-primary-muted text-primary-muted uppercase">
+            <p className="text-primary-muted uppercase underline decoration-primary-muted underline-offset-3">
               Følg os
             </p>
             <div className="flex flex-wrap items-start gap-4">
@@ -76,11 +76,11 @@ export async function Footer() {
                   <Link
                     key={item.id}
                     href={item.url}
-                    className="flex items-center justify-center p-2 rounded-md bg-white/10 hover:bg-white/20 hover:curser transition-colors"
+                    className="cursor-pointer flex items-center justify-center rounded-md bg-white/10 p-2 transition-colors hover:bg-white/20"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <SocialIcon className="w-7 h-7 text-white" platform={item.platform} />
+                    <SocialIcon className="h-7 w-7 text-white" platform={item.platform} />
                   </Link>
                 )
               })}
@@ -89,10 +89,10 @@ export async function Footer() {
         )}
 
         <div className="flex w-full flex-col items-start gap-4 md:col-start-1 md:col-end-7 md:row-start-2 md:row-end-3">
-          <p className="underline underline-offset-3 decoration-primary-muted text-primary-muted uppercase">
+          <p className="text-primary-muted uppercase underline decoration-primary-muted underline-offset-3">
             Links
           </p>
-          <nav className="flex flex-col md:flex-row md:w-full md:justify-between gap-4">
+          <nav className="flex flex-col gap-4 md:w-full md:flex-row md:justify-between">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />
             })}

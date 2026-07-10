@@ -25,19 +25,19 @@ Optional body, wrapped at 72 characters.
 
 Pick the type that best describes the change:
 
-| Type       | When to use                                        |
-| ---------- | -------------------------------------------------- |
-| `feat`     | A new feature                                      |
-| `fix`      | A bug fix                                           |
-| `refactor` | Restructure code without changing behavior         |
-| `style`    | Formatting, whitespace, semicolons, etc.           |
-| `docs`     | Documentation only                                 |
-| `test`     | Add or update tests                                |
-| `perf`     | Improve performance                                |
-| `build`    | Build system or dependencies                       |
-| `ci`       | CI/CD pipeline and config                          |
-| `chore`    | Maintenance and tooling                            |
-| `revert`   | Revert a previous commit                           |
+| Type       | When to use                                |
+| ---------- | ------------------------------------------ |
+| `feat`     | A new feature                              |
+| `fix`      | A bug fix                                  |
+| `refactor` | Restructure code without changing behavior |
+| `style`    | Formatting, whitespace, semicolons, etc.   |
+| `docs`     | Documentation only                         |
+| `test`     | Add or update tests                        |
+| `perf`     | Improve performance                        |
+| `build`    | Build system or dependencies               |
+| `ci`       | CI/CD pipeline and config                  |
+| `chore`    | Maintenance and tooling                    |
+| `revert`   | Revert a previous commit                   |
 
 ## Scope
 
@@ -47,7 +47,7 @@ Pick the type that best describes the change:
 ## Subject
 
 - **Imperative mood.** The subject must complete the sentence
-  *"When applied, this commit will …"* — e.g. "…**add a dark mode toggle**".
+  _"When applied, this commit will …"_ — e.g. "…**add a dark mode toggle**".
 - **Capitalize the first letter** of the subject: `Add a dark mode toggle`.
 - **No trailing period.**
 - **Length:** the whole header line (`type(scope): Subject`, including the type, scope,
