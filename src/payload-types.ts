@@ -832,6 +832,9 @@ export interface ReviewsBlock {
    * Optional URL for the Smiley report link.
    */
   smileyLinkUrl?: string | null;
+  /**
+   * Add multiple reviews to create the interactive swipeable review stack.
+   */
   reviews: {
     quote: string;
     name: string;

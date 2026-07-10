@@ -1,9 +1,12 @@
+'use client'
+
 import type { ReviewsBlock as ReviewsBlockProps } from '@/payload-types'
 import { Icon } from '@/components/icons'
-import React from 'react'
+import React, { useState } from 'react'
 
 const DEFAULT_RATING = 4.5
 const MAX_STARS = 5
+const SWIPE_THRESHOLD = 48
 
 export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   eyebrow = 'Kvalitet du kan smage',
@@ -15,10 +18,64 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   reviews,
 }) => {
   const visibleReviews = reviews?.filter((review) => review.quote && review.name) || []
-  const featuredReview = visibleReviews[0]
-  const featuredRating = featuredReview?.rating || DEFAULT_RATING
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [pointerStart, setPointerStart] = useState<number | null>(null)
+  const [dragX, setDragX] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
 
-  if (!eyebrow && !featuredReview && !ratingLabel && !smileyTitle) return null
+  if (!eyebrow && !visibleReviews.length && !ratingLabel && !smileyTitle) return null
+
+  const animateTo = (direction: 1 | -1) => {
+    if (isAnimating || visibleReviews.length < 2) return
+
+    setIsAnimating(true)
+    setDragX(direction * 520)
+
+    window.setTimeout(() => {
+      setActiveIndex((index) =>
+        direction === 1
+          ? (index + 1) % visibleReviews.length
+          : (index - 1 + visibleReviews.length) % visibleReviews.length,
+      )
+      setDragX(0)
+      setIsAnimating(false)
+    }, 360)
+  }
+
+  const showNext = () => animateTo(1)
+  const showPrevious = () => animateTo(-1)
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (isAnimating) return
+    setPointerStart(event.clientX)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (pointerStart === null) return
+    setDragX(event.clientX - pointerStart)
+  }
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (pointerStart === null) return
+    const distance = event.clientX - pointerStart
+    setPointerStart(null)
+    if (Math.abs(distance) < SWIPE_THRESHOLD || visibleReviews.length < 2) {
+      setDragX(0)
+      return
+    }
+    setActiveIndex((index) =>
+      distance < 0
+        ? (index + 1) % visibleReviews.length
+        : (index - 1 + visibleReviews.length) % visibleReviews.length,
+    )
+    setDragX(0)
+  }
+
+  const handlePointerCancel = () => {
+    setPointerStart(null)
+    setDragX(0)
+  }
 
   return (
     <section className="bg-background py-8 text-primary-foreground md:py-12">
@@ -37,7 +94,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                 {(ratingLabel || ratingDescription) && (
                   <div className="flex gap-5">
                     <div className="grid size-14 shrink-0 place-items-center rounded-full border border-primary/35 bg-on-primary-container text-primary-container md:size-16">
-                      <Icon name="star" className="size-7 fill-current" />
+                      <Icon name="star" className="size-7" />
                     </div>
                     <div>
                       {ratingLabel && (
@@ -57,7 +114,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                 {(smileyTitle || smileyLinkLabel) && (
                   <div className="flex gap-5">
                     <div className="grid size-14 shrink-0 place-items-center rounded-full border border-secondary/35 bg-on-secondary-container text-secondary-container md:size-16">
-                      <Icon name="badgeCheck" className="size-7 fill-current" />
+                      <Icon name="badgeCheck" className="size-7" />
                     </div>
                     <div>
                       {smileyTitle && (
@@ -84,47 +141,98 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
               </div>
             </div>
 
-            {featuredReview && (
+            {visibleReviews.length > 0 && (
               <div className="relative lg:ml-auto lg:w-full lg:max-w-184">
-                <div className="absolute top-8 -right-3 hidden h-[78%] w-full rounded-4xl bg-surface-dim/55 lg:block" />
-                <figure className="relative rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 md:p-10">
-                  <div
-                    className="flex gap-1 text-primary"
-                    aria-label={`${featuredRating} ud af ${MAX_STARS} stjerner`}
-                  >
-                    {Array.from({ length: MAX_STARS }).map((_, index) => (
-                      <Icon
-                        className={`size-2.5 fill-current${index + 1 > Math.round(featuredRating) ? 'opacity-30' : ''}`}
-                        key={index}
-                        name="star"
-                      />
-                    ))}
+                <div
+                  className="relative min-h-96 touch-pan-y select-none"
+                  onKeyDown={(event) => {
+                    if (event.key === 'ArrowRight') showNext()
+                    if (event.key === 'ArrowLeft') showPrevious()
+                  }}
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={handlePointerUp}
+                  onPointerCancel={handlePointerCancel}
+                  role="region"
+                  aria-label="Kundeanmeldelser"
+                  tabIndex={0}
+                >
+                  {visibleReviews.map((review, index) => {
+                    const offset =
+                      (index - activeIndex + visibleReviews.length) % visibleReviews.length
+                    const isVisible = offset < 3
+                    const rating = review.rating || DEFAULT_RATING
+                    const isActive = offset === 0
+                    const revealProgress = Math.min(Math.abs(dragX) / 180, 1)
+                    const transform = isActive
+                      ? `translateX(${dragX}px) rotate(${dragX / 18}deg)`
+                      : `translate(${offset * 12 + (dragX < 0 ? -1 : 1) * revealProgress * offset * 4}px, ${offset * 24 - revealProgress * offset * 6}px) rotate(${offset * 2}deg) scale(${1 - offset * 0.035 + revealProgress * 0.035})`
+                    return (
+                      <article
+                        key={review.id || `${review.name}-${index}`}
+                        className={`absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'} ${isActive ? 'z-30 opacity-100' : offset === 1 ? 'z-20 opacity-90' : offset === 2 ? 'z-10 opacity-75' : 'invisible opacity-0'} ${pointerStart !== null ? 'duration-0' : ''}`}
+                        style={{ transform }}
+                      >
+                        <div
+                          className="flex gap-1 text-primary"
+                          aria-label={`${rating} ud af ${MAX_STARS} stjerner`}
+                        >
+                          {Array.from({ length: MAX_STARS }).map((_, starIndex) => (
+                            <Icon
+                              key={starIndex}
+                              name="star"
+                              className={`size-2.5 fill-current${starIndex + 1 > Math.round(rating) ? 'opacity-30' : ''}`}
+                            />
+                          ))}
+                        </div>
+                        <blockquote className="mt-8 max-w-136 text-lg leading-relaxed text-inverse-on-surface/90 italic">
+                          &quot;{review.quote}&quot;
+                        </blockquote>
+                        <div className="mt-12 border-t border-surface-dim/15 pt-8">
+                          <p className="text-sm font-semibold text-inverse-primary">
+                            {review.name}
+                          </p>
+                          {review.source && (
+                            <p className="mt-1 text-[10px] tracking-[0.16em] text-surface-dim/65 uppercase">
+                              {review.source}
+                            </p>
+                          )}
+                        </div>
+                        <span
+                          aria-hidden="true"
+                          className="absolute right-8 bottom-8 text-6xl leading-none font-extrabold text-primary/35"
+                        >
+                          &quot;
+                        </span>
+                      </article>
+                    )
+                  })}
+                </div>
+                {visibleReviews.length > 1 && (
+                  <div className="relative z-40 mt-6 flex items-center justify-between">
+                    <p className="text-sm text-surface-dim" aria-live="polite">
+                      {activeIndex + 1} / {visibleReviews.length}
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        aria-label="Forrige anmeldelse"
+                        onClick={showPrevious}
+                        className="grid size-10 place-items-center rounded-full border border-primary-muted/40 text-primary-fixed transition-colors hover:bg-primary/20"
+                      >
+                        <span aria-hidden="true">←</span>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Næste anmeldelse"
+                        onClick={showNext}
+                        className="grid size-10 place-items-center rounded-full border border-primary-muted/40 text-primary-fixed transition-colors hover:bg-primary/20"
+                      >
+                        <span aria-hidden="true">→</span>
+                      </button>
+                    </div>
                   </div>
-
-                  <blockquote className="mt-8 max-w-136 text-lg leading-relaxed text-inverse-on-surface/90 italic">
-                    &quot;{featuredReview.quote}&quot;
-                  </blockquote>
-
-                  <div className="mt-12 border-t border-surface-dim/15 pt-8">
-                    <figcaption>
-                      <p className="text-sm font-semibold text-inverse-primary">
-                        {featuredReview.name}
-                      </p>
-                      {featuredReview.source && (
-                        <p className="mt-1 text-[10px] tracking-[0.16em] text-surface-dim/65 uppercase">
-                          {featuredReview.source}
-                        </p>
-                      )}
-                    </figcaption>
-                  </div>
-
-                  <span
-                    aria-hidden="true"
-                    className="absolute right-8 bottom-8 text-6xl leading-none font-extrabold text-primary/35"
-                  >
-                    &quot;
-                  </span>
-                </figure>
+                )}
               </div>
             )}
           </div>

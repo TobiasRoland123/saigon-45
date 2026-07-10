@@ -483,6 +483,19 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             rating: 5,
             source: 'Google Review',
           },
+          {
+            name: 'Sofie Nielsen',
+            quote:
+              'Virkelig lækker bubble tea og superhurtig service. Jeg kommer helt sikkert igen.',
+            rating: 5,
+            source: 'Google Review',
+          },
+          {
+            name: 'Mikkel Andersen',
+            quote: 'Gode smage, friske toppings og en hyggelig stemning. Kan varmt anbefales.',
+            rating: 4,
+            source: 'Google Review',
+          },
         ],
       },
       {

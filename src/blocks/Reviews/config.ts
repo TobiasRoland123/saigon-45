@@ -46,12 +46,25 @@ export const Reviews: Block = {
       type: 'array',
       admin: {
         initCollapsed: true,
+        description: 'Add multiple reviews to create the interactive swipeable review stack.',
       },
       defaultValue: [
         {
           name: 'Thomas Berg',
           quote: 'Fantastisk gyoza! Prøv dem som snack til din bubble tea.',
           rating: 5,
+          source: 'Google Review',
+        },
+        {
+          name: 'Sofie Nielsen',
+          quote: 'Virkelig lækker bubble tea og superhurtig service. Jeg kommer helt sikkert igen.',
+          rating: 5,
+          source: 'Google Review',
+        },
+        {
+          name: 'Mikkel Andersen',
+          quote: 'Gode smage, friske toppings og en hyggelig stemning. Kan varmt anbefales.',
+          rating: 4,
           source: 'Google Review',
         },
       ],
