@@ -145,6 +145,33 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         ],
       },
       {
+        blockName: 'Selskaber & Events',
+        blockType: 'splitContent',
+        eyebrow: 'Planlægger du et event?',
+        heading: 'Selskaber & Events',
+        description:
+          'Lad os stå for maden til din næste fest, reception eller firmafrokost. Vi tilbyder skræddersyede menuer til selskaber og firmaer, der ønsker autentiske asiatiske smagsoplevelser.',
+        features: [
+          {
+            label: 'Skræddersyede catering-menuer',
+          },
+          {
+            label: 'Perfekt til både små og store selskaber',
+          },
+          {
+            label: 'Mulighed for levering eller afhentning',
+          },
+        ],
+        primaryLink: {
+          type: 'custom',
+          appearance: 'default',
+          label: 'Hør mere om selskaber',
+          url: '#',
+        },
+        media: metaImage.id,
+        imageCallout: 'Book dit næste event hos os',
+      },
+      {
         blockName: 'Content Block',
         blockType: 'content',
         columns: [

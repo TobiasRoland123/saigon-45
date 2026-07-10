@@ -9,6 +9,7 @@ import { FeatureHighlights } from '../../blocks/FeatureHighlights/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { MenuHighlights } from '../../blocks/MenuHighlights/config'
+import { SideBySideContent } from '@/blocks/SideBySideContent/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -85,6 +86,7 @@ export const Pages: CollectionConfig = {
                 FormBlock,
                 FeatureHighlights,
                 MenuHighlights,
+                SideBySideContent,
               ],
               required: true,
               admin: {
