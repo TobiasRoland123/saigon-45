@@ -180,7 +180,7 @@ export interface Page {
           /**
            * Choose one of the approved project icons.
            */
-          icon?: ('clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star') | null;
+          icon?: ('clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star' | 'arrowRight') | null;
           label: string;
           id?: string | null;
         }[]
@@ -810,7 +810,7 @@ export interface FeatureHighlightsBlock {
     /**
      * Choose one of the approved project icons.
      */
-    icon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+    icon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star' | 'arrowRight';
     title: string;
     subtitle: string;
     id?: string | null;
