@@ -61,7 +61,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                     </div>
                     <div>
                       {smileyTitle && (
-                        <p className="text-2xl leading-tight font-extrabold text-[#e9fef8]">
+                        <p className="text-2xl leading-tight font-bold text-[#e9fef8]">
                           {smileyTitle}
                         </p>
                       )}
