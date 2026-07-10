@@ -41,14 +41,17 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
       <div className="grid gap-8 lg:grid-cols-3">
         {cards.map((card, index) => (
           <HighlightCard
+            key={card.id ?? index}
             badge={card.badge}
             description={card.description}
             imageLabel={card.imageLabel}
-            key={card.id ?? index}
+            media={card.media}
+            title={card.title}
             link={{
               href: getCardHref(card),
               label: card.link.label,
               newTab: card.link.newTab,
+            }}
             priority={index === 0}
             index={index}
           />
