@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { icon } from '@/fields/icon'
 
 export const Reviews: Block = {
   slug: 'reviews',
@@ -22,12 +23,24 @@ export const Reviews: Block = {
       defaultValue: 'Vores gæster elsker vores mad og hurtige service.',
       required: true,
     },
+    icon({
+      name: 'ratingIcon',
+      label: 'Rating icon',
+      required: true,
+      overrides: { defaultValue: 'star' },
+    }),
     {
       name: 'smileyTitle',
       type: 'text',
       defaultValue: 'Elite Smiley',
       required: true,
     },
+    icon({
+      name: 'smileyIcon',
+      label: 'Smiley icon',
+      required: true,
+      overrides: { defaultValue: 'badgeCheck' },
+    }),
     {
       name: 'smileyLinkLabel',
       type: 'text',

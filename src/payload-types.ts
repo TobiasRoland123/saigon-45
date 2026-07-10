@@ -826,7 +826,15 @@ export interface ReviewsBlock {
   eyebrow: string;
   ratingLabel: string;
   ratingDescription: string;
+  /**
+   * Choose one of the approved project icons.
+   */
+  ratingIcon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
   smileyTitle: string;
+  /**
+   * Choose one of the approved project icons.
+   */
+  smileyIcon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
   smileyLinkLabel: string;
   /**
    * Optional URL for the Smiley report link.
@@ -1286,7 +1294,9 @@ export interface ReviewsBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   ratingLabel?: T;
   ratingDescription?: T;
+  ratingIcon?: T;
   smileyTitle?: T;
+  smileyIcon?: T;
   smileyLinkLabel?: T;
   smileyLinkUrl?: T;
   reviews?:

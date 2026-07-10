@@ -474,7 +474,9 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         eyebrow: 'Kvalitet du kan smage',
         ratingLabel: '4.5+ Stjerner på Google',
         ratingDescription: 'Vores gæster elsker vores mad og hurtige service.',
+        ratingIcon: 'star',
         smileyTitle: 'Elite Smiley',
+        smileyIcon: 'badgeCheck',
         smileyLinkLabel: 'Se vores seneste Smiley-rapport her.',
         reviews: [
           {

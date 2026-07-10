@@ -12,7 +12,9 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   eyebrow = 'Kvalitet du kan smage',
   ratingLabel = '4.5+ Stjerner på Google',
   ratingDescription = 'Vores gæster elsker vores mad og hurtige service.',
+  ratingIcon = 'star',
   smileyTitle = 'Elite Smiley',
+  smileyIcon = 'badgeCheck',
   smileyLinkLabel = 'Se vores seneste Smiley-rapport her.',
   smileyLinkUrl,
   reviews,
@@ -94,7 +96,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                 {(ratingLabel || ratingDescription) && (
                   <div className="flex gap-5">
                     <div className="grid size-14 shrink-0 place-items-center rounded-full border border-primary/35 bg-on-primary-container text-primary-container md:size-16">
-                      <Icon name="star" className="size-7" />
+                      <Icon name={ratingIcon} className="size-7" />
                     </div>
                     <div>
                       {ratingLabel && (
@@ -114,7 +116,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                 {(smileyTitle || smileyLinkLabel) && (
                   <div className="flex gap-5">
                     <div className="grid size-14 shrink-0 place-items-center rounded-full border border-secondary/35 bg-on-secondary-container text-secondary-container md:size-16">
-                      <Icon name="badgeCheck" className="size-7" />
+                      <Icon name={smileyIcon} className="size-7" />
                     </div>
                     <div>
                       {smileyTitle && (
@@ -140,8 +142,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                 )}
               </div>
             </div>
-
-            {visibleReviews.length > 0 && (
+            {visibleReviews.length > 0 && ( // TODO: put this into a separate component
               <div className="relative lg:ml-auto lg:w-full lg:max-w-184">
                 <div
                   className="relative min-h-96 touch-pan-y select-none"
@@ -170,7 +171,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                     return (
                       <article
                         key={review.id || `${review.name}-${index}`}
-                        className={`absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'} ${isActive ? 'z-30 opacity-100' : offset === 1 ? 'z-20 opacity-90' : offset === 2 ? 'z-10 opacity-75' : 'invisible opacity-0'} ${pointerStart !== null ? 'duration-0' : ''}`}
+                        className={`absolute inset-x-0 top-0 rounded-[1.75rem] border border-surface-dim/15 bg-inverse-surface p-8 shadow-2xl shadow-black/25 transition-[transform,opacity] duration-500 ease-out md:p-10 ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'} ${isActive ? 'z-30 opacity-100' : offset === 1 ? 'z-20 opacity-100' : offset === 2 ? 'z-10 opacity-100' : 'invisible opacity-0'} ${pointerStart !== null ? 'duration-0' : ''}`}
                         style={{ transform }}
                       >
                         <div
