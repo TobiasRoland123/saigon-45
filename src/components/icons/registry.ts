@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { BadgeCheck, Clock, Leaf, MapPin, Phone, Search, Star } from 'lucide-react'
+import { BadgeCheck, Clock, Leaf, MapPin, Phone, Search, Star, ArrowRight } from 'lucide-react'
 
 export type IconDefinition = {
   label: string
@@ -34,6 +34,10 @@ export const iconRegistry = {
   star: {
     label: 'Star',
     Icon: Star,
+  },
+  arrowRight: {
+    label: 'Arrow right',
+    Icon: ArrowRight,
   },
 } as const satisfies Record<string, IconDefinition>
 

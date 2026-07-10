@@ -4,6 +4,8 @@ import * as migration_20260701_122522 from './20260701_122522'
 import * as migration_20260703_191909 from './20260703_191909'
 import * as migration_20260703_215908_feature_highlights_block from './20260703_215908_feature_highlights_block'
 import * as migration_20260704_205136 from './20260704_205136'
+import * as migration_20260707_200303 from './20260707_200303'
+import * as migration_20260707_200805 from './20260707_200805'
 import * as migration_20260707_082606_side_by_side_content_block from './20260707_082606_side_by_side_content_block'
 
 export const migrations = [
@@ -36,6 +38,16 @@ export const migrations = [
     up: migration_20260704_205136.up,
     down: migration_20260704_205136.down,
     name: '20260704_205136',
+  },
+  {
+    up: migration_20260707_200303.up,
+    down: migration_20260707_200303.down,
+    name: '20260707_200303',
+  },
+  {
+    up: migration_20260707_200805.up,
+    down: migration_20260707_200805.down,
+    name: '20260707_200805',
   },
   {
     up: migration_20260707_082606_side_by_side_content_block.up,

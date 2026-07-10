@@ -15,14 +15,14 @@ interface HeaderClientProps {
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header suppressHydrationWarning className="relative z-20 bg-surface">
-      <div className="container px-6 py-6 flex justify-between items-center">
-        <Link href="/" className="flex items-center flex-row gap-2">
-          <p className="text-2xl md:text-3xl font-bold text-surface-tint">Saigon 45</p>
+      <div className="container flex items-center justify-between px-6 py-6">
+        <Link href="/" className="flex flex-row items-center gap-2">
+          <p className="text-2xl font-bold text-surface-tint md:text-3xl">Saigon 45</p>
           <SvgMedia className="h-8 w-8 md:h-12 md:w-12" resource={data.media} />
         </Link>
         <HeaderNav data={data} />
         {data?.WoltCTA && data?.WoltCTA.length > 0 && (
-          <CMSLink {...data.WoltCTA[0].link} className="text-surface " appearance="default" />
+          <CMSLink {...data.WoltCTA[0].link} className="text-surface" appearance="default" />
         )}
       </div>
     </header>

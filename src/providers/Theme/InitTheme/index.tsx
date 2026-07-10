@@ -5,7 +5,8 @@ import { themeLocalStorageKey } from '../ThemeSelector/types'
 
 export const InitTheme: React.FC = () => {
   return (
-    <Script strategy="beforeInteractive"
+    <Script
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{
         __html: `
       (function () {
