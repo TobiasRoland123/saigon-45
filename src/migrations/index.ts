@@ -4,11 +4,12 @@ import * as migration_20260701_122522 from './20260701_122522'
 import * as migration_20260703_191909 from './20260703_191909'
 import * as migration_20260703_215908_feature_highlights_block from './20260703_215908_feature_highlights_block'
 import * as migration_20260704_205136 from './20260704_205136'
+import * as migration_20260707_082606_side_by_side_content_block from './20260707_082606_side_by_side_content_block'
 import * as migration_20260707_200303 from './20260707_200303'
 import * as migration_20260707_200805 from './20260707_200805'
-import * as migration_20260707_082606_side_by_side_content_block from './20260707_082606_side_by_side_content_block'
 import * as migration_20260707_211847_reviews_block from './20260707_211847_reviews_block'
 import * as migration_20260710_173633 from './20260710_173633'
+import * as migration_20260710_213901 from './20260710_213901'
 import * as migration_20260710_230900_repair_menu_highlights_schema from './20260710_230900_repair_menu_highlights_schema'
 
 export const migrations = [
@@ -43,6 +44,11 @@ export const migrations = [
     name: '20260704_205136',
   },
   {
+    up: migration_20260707_082606_side_by_side_content_block.up,
+    down: migration_20260707_082606_side_by_side_content_block.down,
+    name: '20260707_082606_side_by_side_content_block',
+  },
+  {
     up: migration_20260707_200303.up,
     down: migration_20260707_200303.down,
     name: '20260707_200303',
@@ -53,11 +59,6 @@ export const migrations = [
     name: '20260707_200805',
   },
   {
-    up: migration_20260707_082606_side_by_side_content_block.up,
-    down: migration_20260707_082606_side_by_side_content_block.down,
-    name: '20260707_082606_side_by_side_content_block',
-  },
-  {
     up: migration_20260707_211847_reviews_block.up,
     down: migration_20260707_211847_reviews_block.down,
     name: '20260707_211847_reviews_block',
@@ -66,6 +67,11 @@ export const migrations = [
     up: migration_20260710_173633.up,
     down: migration_20260710_173633.down,
     name: '20260710_173633',
+  },
+  {
+    up: migration_20260710_213901.up,
+    down: migration_20260710_213901.down,
+    name: '20260710_213901',
   },
   {
     up: migration_20260710_230900_repair_menu_highlights_schema.up,
