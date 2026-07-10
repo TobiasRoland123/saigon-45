@@ -180,7 +180,9 @@ export interface Page {
           /**
            * Choose one of the approved project icons.
            */
-          icon?: ('clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star') | null;
+          icon?:
+            | ('arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star')
+            | null;
           label: string;
           id?: string | null;
         }[]
@@ -809,7 +811,7 @@ export interface FeatureHighlightsBlock {
     /**
      * Choose one of the approved project icons.
      */
-    icon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+    icon: 'arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
     title: string;
     subtitle: string;
     id?: string | null;
@@ -829,12 +831,12 @@ export interface ReviewsBlock {
   /**
    * Choose one of the approved project icons.
    */
-  ratingIcon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+  ratingIcon: 'arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
   smileyTitle: string;
   /**
    * Choose one of the approved project icons.
    */
-  smileyIcon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
+  smileyIcon: 'arrowLeft' | 'arrowRight' | 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star';
   smileyLinkLabel: string;
   /**
    * Optional URL for the Smiley report link.

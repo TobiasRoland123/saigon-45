@@ -8,6 +8,26 @@ const DEFAULT_RATING = 4.5
 const MAX_STARS = 5
 const SWIPE_THRESHOLD = 48
 
+type ReviewNavigationButtonProps = {
+  direction: 'left' | 'right'
+  onClick: () => void
+}
+
+const ReviewNavigationButton: React.FC<ReviewNavigationButtonProps> = ({ direction, onClick }) => {
+  const isPrevious = direction === 'left'
+
+  return (
+    <button
+      type="button"
+      aria-label={isPrevious ? 'Forrige anmeldelse' : 'Næste anmeldelse'}
+      onClick={onClick}
+      className="grid size-10 place-items-center rounded-full border border-primary-muted/40 text-primary-fixed transition-colors hover:bg-primary/20"
+    >
+      <Icon name={isPrevious ? 'arrowLeft' : 'arrowRight'} />
+    </button>
+  )
+}
+
 export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   eyebrow = 'Kvalitet du kan smage',
   ratingLabel = '4.5+ Stjerner på Google',
@@ -215,22 +235,8 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                       {activeIndex + 1} / {visibleReviews.length}
                     </p>
                     <div className="flex gap-2">
-                      <button
-                        type="button"
-                        aria-label="Forrige anmeldelse"
-                        onClick={showPrevious}
-                        className="grid size-10 place-items-center rounded-full border border-primary-muted/40 text-primary-fixed transition-colors hover:bg-primary/20"
-                      >
-                        <span aria-hidden="true">←</span>
-                      </button>
-                      <button
-                        type="button"
-                        aria-label="Næste anmeldelse"
-                        onClick={showNext}
-                        className="grid size-10 place-items-center rounded-full border border-primary-muted/40 text-primary-fixed transition-colors hover:bg-primary/20"
-                      >
-                        <span aria-hidden="true">→</span>
-                      </button>
+                      <ReviewNavigationButton direction="left" onClick={showPrevious} />
+                      <ReviewNavigationButton direction="right" onClick={showNext} />
                     </div>
                   </div>
                 )}
