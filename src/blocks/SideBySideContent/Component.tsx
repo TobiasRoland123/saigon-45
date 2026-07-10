@@ -44,8 +44,8 @@ export function SideBySideContentBlock(props: SideBySideContentBlockProps) {
           />
         </div>
 
-        <div className="mx-auto grid w-full grid-cols-1 pb-10 lg:pb-0">
-          <div className="relative col-start-1 row-start-1 ml-16 aspect-[1.02] overflow-hidden rounded-[1.75rem] border-10 border-white md:aspect-[1.05]">
+        <div className="mx-auto grid w-full grid-cols-24 grid-rows-24 pb-10 lg:pb-0">
+          <div className="relative col-start-2 col-end-25 row-start-1 row-end-24 aspect-[1.02] overflow-hidden rounded-[1.75rem] border-10 border-white md:aspect-[1.05]">
             <Media
               fill
               imgClassName="object-cover"
@@ -55,7 +55,7 @@ export function SideBySideContentBlock(props: SideBySideContentBlockProps) {
             />
           </div>
 
-          <div className="z-10 col-start-1 row-start-1 mr-4 max-w-56 self-end justify-self-end rounded-xl bg-secondary px-8 py-6 text-center text-xl leading-snug font-extrabold text-secondary-foreground shadow-[0_18px_50px_rgba(142,78,20,0.28)] md:mr-0 md:-translate-x-[14%] md:justify-self-start">
+          <div className="z-10 col-start-1 col-end-10 row-start-20 row-end-25 mr-4 max-w-56 self-end justify-self-end rounded-xl bg-secondary px-8 py-6 text-center text-xl leading-snug font-extrabold text-secondary-foreground shadow-[0_18px_50px_rgba(142,78,20,0.28)] md:mr-0 md:justify-self-start">
             {imageCallout}
           </div>
         </div>
