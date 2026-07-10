@@ -76,7 +76,7 @@ export async function Footer() {
                   <Link
                     key={item.id}
                     href={item.url}
-                    className="hover:curser flex items-center justify-center rounded-md bg-white/10 p-2 transition-colors hover:bg-white/20"
+                    className="cursor-pointer flex items-center justify-center rounded-md bg-white/10 p-2 transition-colors hover:bg-white/20"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
