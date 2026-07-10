@@ -9,7 +9,6 @@ import * as migration_20260707_200303 from './20260707_200303'
 import * as migration_20260707_200805 from './20260707_200805'
 import * as migration_20260707_211847_reviews_block from './20260707_211847_reviews_block'
 import * as migration_20260710_173633 from './20260710_173633'
-import * as migration_20260710_213901 from './20260710_213901'
 import * as migration_20260710_230900_repair_menu_highlights_schema from './20260710_230900_repair_menu_highlights_schema'
 
 export const migrations = [
@@ -67,11 +66,6 @@ export const migrations = [
     up: migration_20260710_173633.up,
     down: migration_20260710_173633.down,
     name: '20260710_173633',
-  },
-  {
-    up: migration_20260710_213901.up,
-    down: migration_20260710_213901.down,
-    name: '20260710_213901',
   },
   {
     up: migration_20260710_230900_repair_menu_highlights_schema.up,
