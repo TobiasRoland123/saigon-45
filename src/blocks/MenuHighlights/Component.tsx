@@ -49,10 +49,7 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
               href: getCardHref(card),
               label: card.link.label,
               newTab: card.link.newTab,
-            }}
-            media={card.media}
-            priority={index < 3}
-            title={card.title}
+            priority={index === 0}
             index={index}
           />
         ))}
