@@ -9,6 +9,7 @@ import { FeatureHighlightsBlock } from '@/blocks/FeatureHighlights/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ReviewsBlock } from '@/blocks/Reviews/Component'
+import { SideBySideContentBlock } from '@/blocks/SideBySideContent/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -18,6 +19,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   reviews: ReviewsBlock,
+  splitContent: SideBySideContentBlock,
 }
 
 export const RenderBlocks: React.FC<{

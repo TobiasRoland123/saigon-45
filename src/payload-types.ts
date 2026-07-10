@@ -221,6 +221,7 @@ export interface Page {
     | FormBlock
     | FeatureHighlightsBlock
     | ReviewsBlock
+    | SideBySideContentBlock
   )[];
   meta?: {
     title?: string | null;
@@ -858,6 +859,43 @@ export interface ReviewsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SideBySideContentBlock".
+ */
+export interface SideBySideContentBlock {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  features: {
+    label: string;
+    id?: string | null;
+  }[];
+  primaryLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'default' | null;
+  };
+  media: number | Media;
+  imageCallout: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'splitContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1173,6 +1211,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
         reviews?: T | ReviewsBlockSelect<T>;
+        splitContent?: T | SideBySideContentBlockSelect<T>;
       };
   meta?:
     | T
@@ -1310,6 +1349,35 @@ export interface ReviewsBlockSelect<T extends boolean = true> {
         rating?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SideBySideContentBlock_select".
+ */
+export interface SideBySideContentBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  primaryLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  media?: T;
+  imageCallout?: T;
   id?: T;
   blockName?: T;
 }

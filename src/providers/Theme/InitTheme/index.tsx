@@ -1,10 +1,12 @@
 import React from 'react'
+import Script from 'next/script'
 
 import { themeLocalStorageKey } from '../ThemeSelector/types'
 
 export const InitTheme: React.FC = () => {
   return (
-    <script
+    <Script
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{
         __html: `
       (function () {
