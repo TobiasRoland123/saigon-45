@@ -180,7 +180,20 @@ export interface Page {
           /**
            * Choose one of the approved project icons.
            */
-          icon?: ('clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star' | 'arrowRight') | null;
+          icon?:
+            | (
+                | 'arrowLeft'
+                | 'arrowRight'
+                | 'clock'
+                | 'mapPin'
+                | 'phone'
+                | 'badgeCheck'
+                | 'leaf'
+                | 'search'
+                | 'star'
+                | 'quote'
+              )
+            | null;
           label: string;
           id?: string | null;
         }[]
@@ -218,6 +231,7 @@ export interface Page {
     | ArchiveBlock
     | FormBlock
     | FeatureHighlightsBlock
+    | ReviewsBlock
     | MenuHighlightsBlock
     | SideBySideContentBlock
   )[];
@@ -810,7 +824,17 @@ export interface FeatureHighlightsBlock {
     /**
      * Choose one of the approved project icons.
      */
-    icon: 'clock' | 'mapPin' | 'phone' | 'badgeCheck' | 'leaf' | 'search' | 'star' | 'arrowRight';
+    icon:
+      | 'arrowLeft'
+      | 'arrowRight'
+      | 'clock'
+      | 'mapPin'
+      | 'phone'
+      | 'badgeCheck'
+      | 'leaf'
+      | 'search'
+      | 'star'
+      | 'quote';
     title: string;
     subtitle: string;
     id?: string | null;
@@ -818,6 +842,62 @@ export interface FeatureHighlightsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'featureHighlights';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock".
+ */
+export interface ReviewsBlock {
+  eyebrow: string;
+  ratingLabel: string;
+  ratingDescription: string;
+  /**
+   * Choose one of the approved project icons.
+   */
+  ratingIcon:
+    | 'arrowLeft'
+    | 'arrowRight'
+    | 'clock'
+    | 'mapPin'
+    | 'phone'
+    | 'badgeCheck'
+    | 'leaf'
+    | 'search'
+    | 'star'
+    | 'quote';
+  smileyTitle: string;
+  /**
+   * Choose one of the approved project icons.
+   */
+  smileyIcon:
+    | 'arrowLeft'
+    | 'arrowRight'
+    | 'clock'
+    | 'mapPin'
+    | 'phone'
+    | 'badgeCheck'
+    | 'leaf'
+    | 'search'
+    | 'star'
+    | 'quote';
+  smileyLinkLabel: string;
+  /**
+   * Optional URL for the Smiley report link.
+   */
+  smileyLinkUrl?: string | null;
+  /**
+   * Add multiple reviews to create the interactive swipeable review stack.
+   */
+  reviews: {
+    quote: string;
+    name: string;
+    source: string;
+    rating: number;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'reviews';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1212,6 +1292,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
+        reviews?: T | ReviewsBlockSelect<T>;
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
       };
@@ -1324,6 +1405,31 @@ export interface FeatureHighlightsBlockSelect<T extends boolean = true> {
         icon?: T;
         title?: T;
         subtitle?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ReviewsBlock_select".
+ */
+export interface ReviewsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  ratingLabel?: T;
+  ratingDescription?: T;
+  ratingIcon?: T;
+  smileyTitle?: T;
+  smileyIcon?: T;
+  smileyLinkLabel?: T;
+  smileyLinkUrl?: T;
+  reviews?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        source?: T;
+        rating?: T;
         id?: T;
       };
   id?: T;

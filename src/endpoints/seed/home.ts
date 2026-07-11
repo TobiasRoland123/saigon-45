@@ -545,6 +545,38 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         media: metaImage.id,
       },
       {
+        blockName: 'Reviews Section',
+        blockType: 'reviews',
+        eyebrow: 'Kvalitet du kan smage',
+        ratingLabel: '4.5+ Stjerner på Google',
+        ratingDescription: 'Vores gæster elsker vores mad og hurtige service.',
+        ratingIcon: 'star',
+        smileyTitle: 'Elite Smiley',
+        smileyIcon: 'badgeCheck',
+        smileyLinkLabel: 'Se vores seneste Smiley-rapport her.',
+        reviews: [
+          {
+            name: 'Thomas Berg',
+            quote: 'Fantastisk gyoza! Prøv dem som snack til din bubble tea.',
+            rating: 5,
+            source: 'Google Review',
+          },
+          {
+            name: 'Sofie Nielsen',
+            quote:
+              'Virkelig lækker bubble tea og superhurtig service. Jeg kommer helt sikkert igen.',
+            rating: 5,
+            source: 'Google Review',
+          },
+          {
+            name: 'Mikkel Andersen',
+            quote: 'Gode smage, friske toppings og en hyggelig stemning. Kan varmt anbefales.',
+            rating: 4,
+            source: 'Google Review',
+          },
+        ],
+      },
+      {
         blockName: 'Archive Block',
         blockType: 'archive',
         categories: [],
