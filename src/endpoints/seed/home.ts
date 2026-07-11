@@ -1,4 +1,5 @@
 import type { RequiredDataFromCollectionSlug } from 'payload'
+
 import type { Media } from '@/payload-types'
 
 type HomeArgs = {
@@ -11,728 +12,190 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
   heroImage,
   menuImages,
   metaImage,
-}) => {
-  return {
-    slug: 'home',
-    _status: 'published',
-    hero: {
-      type: 'highImpact',
-      infoItems: [
-        {
-          icon: 'mapPin',
-          label: 'Rødovre Centrum 41',
-        },
-        {
-          icon: 'clock',
-          label: 'Åben: 10:00 - 20:00',
-        },
-      ],
-      links: [
-        {
-          link: {
-            type: 'custom',
-            appearance: 'default',
-            label: 'Bestil nu',
-            url: '#',
-          },
-        },
-        {
-          link: {
-            type: 'custom',
-            appearance: 'outline',
-            label: 'Se menu',
-            url: '#',
-          },
-        },
-      ],
-      media: heroImage.id,
-      richText: {
-        root: {
-          type: 'root',
-          children: [
-            {
-              type: 'heading',
-              children: [
-                {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: 'Asiatisk takeaway & bubble tea i Rødovre Centrum',
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              tag: 'h1',
-              version: 1,
-            },
-            {
-              type: 'paragraph',
-              children: [
-                {
-                  type: 'text',
-                  detail: 0,
-                  format: 0,
-                  mode: 'normal',
-                  style: '',
-                  text: 'Oplev vores frisklavede wokretter, sprøde snacks og det største udvalg af bubble tea. Perfekt til en pause i shoppingen eller en hyggelig aften hjemme.',
-                  version: 1,
-                },
-              ],
-              direction: 'ltr',
-              format: '',
-              indent: 0,
-              textFormat: 0,
-              version: 1,
-            },
-          ],
-          direction: 'ltr',
-          format: '',
-          indent: 0,
-          version: 1,
-        },
-      },
-    },
-    layout: [
+}) => ({
+  title: 'Forside',
+  slug: 'home',
+  _status: 'published',
+  hero: {
+    type: 'highImpact',
+    infoItems: [
+      { icon: 'mapPin', label: 'Rødovre Centrum 41' },
+      { icon: 'clock', label: 'Åben hver dag 10:00–20:00' },
+    ],
+    links: [
       {
-        blockName: 'Menu Highlights',
-        blockType: 'menuHighlights',
-        heading: 'Hvad har du lyst til?',
-        intro:
-          'Vælg mellem varme wokretter, sprøde snacks og farverige bubble teas, lavet hurtigt og friskt midt i Rødovre Centrum.',
-        cards: [
-          {
-            media: menuImages[0].id,
-            imageLabel: 'Wok & nudler',
-            badge: 'Populært',
-            title: 'Frisklavede asiatiske favoritter',
-            description:
-              'Varme retter med grøntsager, nudler og saucer med masser af smag. Perfekt når du vil have et hurtigt måltid uden at gå på kompromis.',
-            link: {
-              type: 'custom',
-              label: 'Se wokretter',
-              url: '#menu',
-            },
-          },
-          {
-            media: menuImages[1].id,
-            imageLabel: 'Bubble tea',
-            badge: 'Koldt',
-            title: 'Bubble tea i mange varianter',
-            description:
-              'Frugtige, cremede og forfriskende drikke med popping boba eller tapioka. Find din favorit til shoppingturen eller tag den med hjem.',
-            link: {
-              type: 'custom',
-              label: 'Se drikke',
-              url: '#drikke',
-            },
-          },
-          {
-            media: menuImages[2].id,
-            imageLabel: 'Snacks',
-            title: 'Sprøde småretter til deling',
-            description:
-              'Gør måltidet komplet med snacks og sider, der passer til både frokostpausen, børnefamilien og den hurtige takeaway-bestilling.',
-            link: {
-              type: 'custom',
-              label: 'Se snacks',
-              url: '#snacks',
-            },
-          },
-        ],
-      },
-      {
-        blockName: 'Selskaber & Events',
-        blockType: 'splitContent',
-        eyebrow: 'Planlægger du et event?',
-        heading: 'Selskaber & Events',
-        description:
-          'Lad os stå for maden til din næste fest, reception eller firmafrokost. Vi tilbyder skræddersyede menuer til selskaber og firmaer, der ønsker autentiske asiatiske smagsoplevelser.',
-        features: [
-          {
-            label: 'Skræddersyede catering-menuer',
-          },
-          {
-            label: 'Perfekt til både små og store selskaber',
-          },
-          {
-            label: 'Mulighed for levering eller afhentning',
-          },
-        ],
-        primaryLink: {
+        link: {
           type: 'custom',
           appearance: 'default',
-          label: 'Hør mere om selskaber',
-          url: '#',
+          label: 'Bestil nu',
+          url: '#menu',
         },
-        media: metaImage.id,
-        imageCallout: 'Book dit næste event hos os',
       },
       {
-        blockName: 'Content Block',
-        blockType: 'content',
-        columns: [
-          {
-            richText: {
-              root: {
-                type: 'root',
-                children: [
-                  {
-                    type: 'heading',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Core features',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    tag: 'h2',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 1,
-              },
-            },
-            size: 'full',
-          },
-          {
-            enableLink: false,
-            richText: {
-              root: {
-                type: 'root',
-                children: [
-                  {
-                    type: 'heading',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Admin Dashboard',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    tag: 'h3',
-                    version: 1,
-                  },
-                  {
-                    type: 'paragraph',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: "Manage this site's pages and posts from the ",
-                        version: 1,
-                      },
-                      {
-                        type: 'link',
-                        children: [
-                          {
-                            type: 'text',
-                            detail: 0,
-                            format: 0,
-                            mode: 'normal',
-                            style: '',
-                            text: 'admin dashboard',
-                            version: 1,
-                          },
-                        ],
-                        direction: 'ltr',
-                        fields: {
-                          linkType: 'custom',
-                          newTab: false,
-                          url: '/admin',
-                        },
-                        format: '',
-                        indent: 0,
-                        version: 2,
-                      },
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: '.',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    textFormat: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 1,
-              },
-            },
-            size: 'oneThird',
-          },
-          {
-            enableLink: false,
-            richText: {
-              root: {
-                type: 'root',
-                children: [
-                  {
-                    type: 'heading',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Preview',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    tag: 'h3',
-                    version: 1,
-                  },
-                  {
-                    type: 'paragraph',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Using versions, drafts, and preview, editors can review and share their changes before publishing them.',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    textFormat: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 1,
-              },
-            },
-            size: 'oneThird',
-          },
-          {
-            enableLink: false,
-            richText: {
-              root: {
-                type: 'root',
-                children: [
-                  {
-                    type: 'heading',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Page Builder',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    tag: 'h3',
-                    version: 1,
-                  },
-                  {
-                    type: 'paragraph',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Custom page builder allows you to create unique page, post, and project layouts for any type of content.',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    textFormat: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 1,
-              },
-            },
-            size: 'oneThird',
-          },
-          {
-            enableLink: false,
-            richText: {
-              root: {
-                type: 'root',
-                children: [
-                  {
-                    type: 'heading',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'SEO',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    tag: 'h3',
-                    version: 1,
-                  },
-                  {
-                    type: 'paragraph',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Editors have complete control over SEO data and site content directly from the ',
-                        version: 1,
-                      },
-                      {
-                        type: 'link',
-                        children: [
-                          {
-                            type: 'text',
-                            detail: 0,
-                            format: 0,
-                            mode: 'normal',
-                            style: '',
-                            text: 'admin dashboard',
-                            version: 1,
-                          },
-                        ],
-                        direction: 'ltr',
-                        fields: {
-                          linkType: 'custom',
-                          newTab: false,
-                          url: '/admin',
-                        },
-                        format: '',
-                        indent: 0,
-                        version: 2,
-                      },
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: '.',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    textFormat: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 1,
-              },
-            },
-            size: 'oneThird',
-          },
-          {
-            enableLink: false,
-            richText: {
-              root: {
-                type: 'root',
-                children: [
-                  {
-                    type: 'heading',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Dark Mode',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    tag: 'h3',
-                    version: 1,
-                  },
-                  {
-                    type: 'paragraph',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'Users will experience this site in their preferred color scheme and each block can be inverted.',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    textFormat: 0,
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 1,
-              },
-            },
-            size: 'oneThird',
-          },
-        ],
-      },
-      {
-        blockName: 'Media Block',
-        blockType: 'mediaBlock',
-        media: metaImage.id,
-      },
-      {
-        blockName: 'Reviews Section',
-        blockType: 'reviews',
-        eyebrow: 'Kvalitet du kan smage',
-        ratingLabel: '4.5+ Stjerner på Google',
-        ratingDescription: 'Vores gæster elsker vores mad og hurtige service.',
-        ratingIcon: 'star',
-        smileyTitle: 'Elite Smiley',
-        smileyIcon: 'badgeCheck',
-        smileyLinkLabel: 'Se vores seneste Smiley-rapport her.',
-        reviews: [
-          {
-            name: 'Thomas Berg',
-            quote: 'Fantastisk gyoza! Prøv dem som snack til din bubble tea.',
-            rating: 5,
-            source: 'Google Review',
-          },
-          {
-            name: 'Sofie Nielsen',
-            quote:
-              'Virkelig lækker bubble tea og superhurtig service. Jeg kommer helt sikkert igen.',
-            rating: 5,
-            source: 'Google Review',
-          },
-          {
-            name: 'Mikkel Andersen',
-            quote: 'Gode smage, friske toppings og en hyggelig stemning. Kan varmt anbefales.',
-            rating: 4,
-            source: 'Google Review',
-          },
-        ],
-      },
-      {
-        blockName: 'Archive Block',
-        blockType: 'archive',
-        categories: [],
-        introContent: {
-          root: {
-            type: 'root',
-            children: [
-              {
-                type: 'heading',
-                children: [
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: 'Recent posts',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                tag: 'h3',
-                version: 1,
-              },
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: 'The posts below are displayed in an "Archive" layout building block which is an extremely powerful way to display documents on a page. It can be auto-populated by collection or by category, or posts can be individually selected. Pagination controls will automatically appear if the number of results exceeds the number of items per page.',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                textFormat: 0,
-                version: 1,
-              },
-            ],
-            direction: 'ltr',
-            format: '',
-            indent: 0,
-            version: 1,
-          },
-        },
-        populateBy: 'collection',
-        relationTo: 'posts',
-      },
-      {
-        blockName: 'CTA',
-        blockType: 'cta',
-        links: [
-          {
-            link: {
-              type: 'custom',
-              appearance: 'default',
-              label: 'All posts',
-              url: '/posts',
-            },
-          },
-        ],
-        richText: {
-          root: {
-            type: 'root',
-            children: [
-              {
-                type: 'heading',
-                children: [
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: 'This is a call to action',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                tag: 'h3',
-                version: 1,
-              },
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: 'This is a custom layout building block ',
-                    version: 1,
-                  },
-                  {
-                    type: 'link',
-                    children: [
-                      {
-                        type: 'text',
-                        detail: 0,
-                        format: 0,
-                        mode: 'normal',
-                        style: '',
-                        text: 'configured in the admin dashboard',
-                        version: 1,
-                      },
-                    ],
-                    direction: 'ltr',
-                    fields: {
-                      linkType: 'custom',
-                      newTab: false,
-                      url: '/admin',
-                    },
-                    format: '',
-                    indent: 0,
-                    version: 2,
-                  },
-                  {
-                    type: 'text',
-                    detail: 0,
-                    format: 0,
-                    mode: 'normal',
-                    style: '',
-                    text: '.',
-                    version: 1,
-                  },
-                ],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                textFormat: 0,
-                version: 1,
-              },
-            ],
-            direction: 'ltr',
-            format: '',
-            indent: 0,
-            version: 1,
-          },
+        link: {
+          type: 'custom',
+          appearance: 'outline',
+          label: 'Se vores udvalg',
+          url: '#favoritter',
         },
       },
     ],
-    meta: {
-      description: 'An open-source website built with Payload and Next.js.',
-      image: heroImage.id,
-      title: 'Payload Website Template',
+    media: heroImage.id,
+    richText: {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'heading',
+            children: [
+              {
+                type: 'text',
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'Asiatisk street food og bubble tea i Rødovre Centrum',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            tag: 'h1',
+            version: 1,
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                detail: 0,
+                format: 0,
+                mode: 'normal',
+                style: '',
+                text: 'Friske wokretter, sprøde snacks og farverige drikke – klar til din pause, shoppingtur eller hyggelige aften hjemme.',
+                version: 1,
+              },
+            ],
+            direction: 'ltr',
+            format: '',
+            indent: 0,
+            textFormat: 0,
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+      },
     },
-    title: 'Home',
-  }
-}
+  },
+  layout: [
+    {
+      blockName: 'Derfor vælger gæster os',
+      blockType: 'featureHighlights',
+      items: [
+        { icon: 'leaf', title: 'Lavet friskt', subtitle: 'Tilberedt, når du bestiller' },
+        { icon: 'clock', title: 'Klar på ingen tid', subtitle: 'Ideelt til en travl hverdag' },
+        { icon: 'mapPin', title: 'Lige ved dig', subtitle: 'Midt i Rødovre Centrum' },
+      ],
+    },
+    {
+      blockName: 'Menu-favoritter',
+      blockType: 'menuHighlights',
+      heading: 'Find din næste favorit',
+      intro:
+        'Uanset om du er sulten efter noget varmt, sprødt eller forfriskende, har vi noget til dig.',
+      cards: [
+        {
+          media: menuImages[0].id,
+          imageLabel: 'Wok og nudler',
+          badge: 'Populært',
+          title: 'Varme wokretter med masser af smag',
+          description:
+            'Vælg din favorit med nudler, ris og friske grøntsager i en sauce, der passer til dit humør.',
+          link: { type: 'custom', label: 'Se wokretter', url: '#menu' },
+        },
+        {
+          media: menuImages[1].id,
+          imageLabel: 'Bubble tea',
+          badge: 'Forfriskende',
+          title: 'Bubble tea på din måde',
+          description:
+            'Cremet, frugtig eller iskold – vælg din base, topping og sødme, og tag din favorit med på farten.',
+          link: { type: 'custom', label: 'Se drikke', url: '#menu' },
+        },
+        {
+          media: menuImages[2].id,
+          imageLabel: 'Snacks',
+          title: 'Sprøde snacks til at dele',
+          description:
+            'Gyoza, små sider og sprøde bidder, som gør både frokosten og takeaway-aftenen lidt bedre.',
+          link: { type: 'custom', label: 'Se snacks', url: '#menu' },
+        },
+      ],
+    },
+    {
+      blockName: 'Catering og selskaber',
+      blockType: 'splitContent',
+      eyebrow: 'Mad til flere',
+      heading: 'Gør næste arrangement nemt og velsmagende',
+      description:
+        'Vi hjælper med asiatisk mad til fødselsdage, møder og uformelle sammenkomster. Fortæl os, hvor mange I bliver, så finder vi en menu, der passer.',
+      features: [
+        { label: 'Sammensæt en menu efter jeres ønsker' },
+        { label: 'Velegnet til både små og store selskaber' },
+        { label: 'Afhentning, når det passer jer' },
+      ],
+      primaryLink: {
+        type: 'custom',
+        appearance: 'default',
+        label: 'Spørg om catering',
+        url: '/kontakt',
+      },
+      media: metaImage.id,
+      imageCallout: 'Lad os tage os af maden',
+    },
+    {
+      blockName: 'Gæsternes anmeldelser',
+      blockType: 'reviews',
+      eyebrow: 'Kvalitet, du kan smage',
+      ratingLabel: 'Elsket af lokale gæster',
+      ratingDescription:
+        'Hurtig service, friske råvarer og smag, man får lyst til at komme tilbage efter.',
+      ratingIcon: 'star',
+      smileyTitle: 'Fokus på god kvalitet',
+      smileyIcon: 'badgeCheck',
+      smileyLinkLabel: 'Se vores seneste Smiley-rapport her.',
+      reviews: [
+        {
+          name: 'Amalie Jensen',
+          quote:
+            'Min go-to til en hurtig frokost. Wokken er altid varm og fuld af friske grøntsager.',
+          rating: 5,
+          source: 'Google Review',
+        },
+        {
+          name: 'Mads Larsen',
+          quote:
+            'Virkelig god bubble tea og sød betjening. Børnene vil altid gerne forbi, når vi er i centret.',
+          rating: 5,
+          source: 'Google Review',
+        },
+        {
+          name: 'Signe Holm',
+          quote: 'De sprøde snacks og gyoza er perfekte at dele. Vi kommer gerne igen.',
+          rating: 5,
+          source: 'Google Review',
+        },
+      ],
+    },
+  ],
+  meta: {
+    title: 'Asiatisk street food og bubble tea i Rødovre Centrum',
+    description:
+      'Bestil frisklavede wokretter, sprøde snacks og bubble tea hos os i Rødovre Centrum.',
+    image: metaImage.id,
+  },
+})
