@@ -4,6 +4,7 @@ import { randomUUID } from 'crypto'
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
+import { menu } from './menu'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
 import { imageHero1 } from './image-hero-1'
@@ -241,7 +242,14 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const [_] = await Promise.all([
+  const [_home, _menu, _contact] = await Promise.all([
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      data: menu({
+        menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
+      }),
+    }),
     payload.create({
       collection: 'pages',
       depth: 0,

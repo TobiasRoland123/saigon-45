@@ -232,6 +232,7 @@ export interface Page {
     | FormBlock
     | FeatureHighlightsBlock
     | ReviewsBlock
+    | MenuItemGridBlock
     | MenuHighlightsBlock
     | SideBySideContentBlock
   )[];
@@ -901,6 +902,57 @@ export interface ReviewsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuItemGridBlock".
+ */
+export interface MenuItemGridBlock {
+  heading: string;
+  /**
+   * Category label shown alongside the heading.
+   */
+  category?: string | null;
+  items: {
+    media: number | Media;
+    name: string;
+    description: string;
+    /**
+     * For example: 49,-
+     */
+    price: string;
+    /**
+     * Optional dietary or promotional labels.
+     */
+    badges?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Optional destination for the menu item.
+     */
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'menuItemGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MenuHighlightsBlock".
  */
 export interface MenuHighlightsBlock {
@@ -1293,6 +1345,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         featureHighlights?: T | FeatureHighlightsBlockSelect<T>;
         reviews?: T | ReviewsBlockSelect<T>;
+        menuItemGrid?: T | MenuItemGridBlockSelect<T>;
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
       };
@@ -1430,6 +1483,40 @@ export interface ReviewsBlockSelect<T extends boolean = true> {
         name?: T;
         source?: T;
         rating?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuItemGridBlock_select".
+ */
+export interface MenuItemGridBlockSelect<T extends boolean = true> {
+  heading?: T;
+  category?: T;
+  items?:
+    | T
+    | {
+        media?: T;
+        name?: T;
+        description?: T;
+        price?: T;
+        badges?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   id?: T;
