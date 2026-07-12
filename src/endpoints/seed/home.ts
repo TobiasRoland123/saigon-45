@@ -124,7 +124,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           title: 'Bubble tea på din måde',
           description:
             'Cremet, frugtig eller iskold – vælg din base, topping og sødme, og tag din favorit med på farten.',
-          link: { type: 'custom', label: 'Se drikke', url: '#menu' },
+          link: { type: 'custom', label: 'Se drikke', url: '/menu' },
         },
         {
           media: menuImages[2].id,
