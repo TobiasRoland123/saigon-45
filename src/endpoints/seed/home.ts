@@ -28,7 +28,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           type: 'custom',
           appearance: 'default',
           label: 'Bestil nu',
-          url: '#menu',
+          url: '/menu',
         },
       },
       {
