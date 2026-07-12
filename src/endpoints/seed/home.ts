@@ -132,7 +132,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           title: 'Sprøde snacks til at dele',
           description:
             'Gyoza, små sider og sprøde bidder, som gør både frokosten og takeaway-aftenen lidt bedre.',
-          link: { type: 'custom', label: 'Se snacks', url: '#menu' },
+          link: { type: 'custom', label: 'Se snacks', url: '/menu' },
         },
       ],
     },
