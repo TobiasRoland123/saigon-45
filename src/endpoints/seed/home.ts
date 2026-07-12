@@ -115,7 +115,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           title: 'Varme wokretter med masser af smag',
           description:
             'Vælg din favorit med nudler, ris og friske grøntsager i en sauce, der passer til dit humør.',
-          link: { type: 'custom', label: 'Se wokretter', url: '#menu' },
+          link: { type: 'custom', label: 'Se wokretter', url: '/menu' },
         },
         {
           media: menuImages[1].id,
