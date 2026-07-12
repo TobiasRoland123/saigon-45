@@ -36,7 +36,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           type: 'custom',
           appearance: 'outline',
           label: 'Se vores udvalg',
-          url: '#favoritter',
+          url: '/menu',
         },
       },
     ],
