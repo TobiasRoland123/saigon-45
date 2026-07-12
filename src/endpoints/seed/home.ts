@@ -20,7 +20,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
     type: 'highImpact',
     infoItems: [
       { icon: 'mapPin', label: 'Rødovre Centrum 41' },
-      { icon: 'clock', label: 'Åben hver dag 10:00–20:00' },
+      { icon: 'clock', label: 'Man–lør 10:00–20:00 · søn 10:00–19:00' }
     ],
     links: [
       {
