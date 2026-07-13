@@ -1,6 +1,5 @@
 import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
-import { Icon } from '@/components/icons'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { getCachedGlobal } from '@/utilities/getGlobals'
@@ -17,29 +16,6 @@ export const HighImpactHero = async ({ infoItems, links, media, richText }: Page
     <div className="relative -mt-42 flex min-h-screen items-center overflow-hidden pt-26 text-white">
       <div className="relative z-10 container py-16 md:py-24 lg:py-32">
         <div className="max-w-172">
-          {Array.isArray(infoItems) && infoItems.length > 0 && (
-            <ul className="mb-6 flex w-fit max-w-full flex-col gap-3 rounded-2xl border border-white/25 bg-white/16 p-2 text-sm font-semibold text-white shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:flex-row sm:items-center sm:rounded-full sm:px-3 sm:py-2">
-              {infoItems.map((item, i) => {
-                if (!item?.label) return null
-
-                return (
-                  <li
-                    className="flex min-w-0 items-center gap-2 rounded-full px-2 py-1.5"
-                    key={item.id ?? `${item.label}-${i}`}
-                  >
-                    {item.icon && (
-                      <Icon
-                        className="size-4 shrink-0 text-(--color-primary-fixed)"
-                        name={item.icon}
-                      />
-                    )}
-                    <span className="truncate">{item.label}</span>
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-
           {openingHours?.address && (
             <OpeningHoursPill
               address={openingHours.address}
