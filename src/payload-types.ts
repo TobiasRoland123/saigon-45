@@ -177,29 +177,6 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
-    infoItems?:
-      | {
-          /**
-           * Choose one of the approved project icons.
-           */
-          icon?:
-            | (
-                | 'arrowLeft'
-                | 'arrowRight'
-                | 'clock'
-                | 'mapPin'
-                | 'phone'
-                | 'badgeCheck'
-                | 'leaf'
-                | 'search'
-                | 'star'
-                | 'quote'
-              )
-            | null;
-          label: string;
-          id?: string | null;
-        }[]
-      | null;
     links?:
       | {
           link: {
@@ -1261,13 +1238,6 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
-        infoItems?:
-          | T
-          | {
-              icon?: T;
-              label?: T;
-              id?: T;
-            };
         links?:
           | T
           | {
