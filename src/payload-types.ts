@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'opening-hours': OpeningHour;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'opening-hours': OpeningHoursSelect<false> | OpeningHoursSelect<true>;
   };
   locale: null;
   widgets: {
@@ -2056,6 +2058,91 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "opening-hours".
+ */
+export interface OpeningHour {
+  id: number;
+  /**
+   * Shown on the left of the opening-hours pill, e.g. "Rødovre Centrum 41".
+   */
+  address: string;
+  /**
+   * Link to adress on Google Maps, e.g. "https://goo.gl/maps/..."
+   */
+  addressUrl: string;
+  /**
+   * Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.
+   */
+  days: {
+    monday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    tuesday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    wednesday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    thursday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    friday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    saturday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    sunday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2134,6 +2221,77 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "opening-hours_select".
+ */
+export interface OpeningHoursSelect<T extends boolean = true> {
+  address?: T;
+  addressUrl?: T;
+  days?:
+    | T
+    | {
+        monday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        tuesday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        wednesday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        thursday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        friday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        saturday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        sunday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
