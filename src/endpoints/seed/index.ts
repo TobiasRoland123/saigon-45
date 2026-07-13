@@ -44,7 +44,7 @@ const businessInfoData = {
     thursday: { label: 'Torsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     friday: { label: 'Fredag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     saturday: { label: 'Lørdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
-    sunday: { label: 'Søndag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    sunday: { label: 'Søndag', closed: false, opensAt: '10:00', closesAt: '19:00' },
   },
   socialMedia: [],
 } satisfies Partial<BusinessInfo>

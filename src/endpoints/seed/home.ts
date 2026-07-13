@@ -187,6 +187,16 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
         },
       ],
     },
+    {
+      blockName: 'Find Us Section',
+      blockType: 'findUs',
+      heading: 'Besøg os i dag',
+      addressLabel: 'Adresse',
+      hoursLabel: 'Åbningstider',
+      contactLabel: 'Kontakt',
+      buttonLabel: 'Find vej på Google Maps',
+      media: metaImage.id,
+    },
   ],
   meta: {
     title: 'Asiatisk street food og bubble tea i Rødovre Centrum',
