@@ -7,22 +7,22 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postg
 // hero pill keeps its address + hours (zip/phone are left blank — the admin
 // enforces them on the next save). Also adds the 'externalLink' icon enum value.
 //
-// This migration additionally drops the orphaned `pages_hero_info_items` /
-// `_pages_v_version_hero_info_items` tables: the hero `infoItems` field was
-// removed from config in cd9506e ("Remove old OpenPill and related config")
-// but no migration ever dropped its tables, so the generator reconciles them
-// here. The generated snapshot already reflects config, so this keeps the two
-// in sync — reviewed by hand per the stale-snapshot caveat.
+// The orphaned `pages_hero_info_items` / `_pages_v_version_hero_info_items`
+// tables (left behind when the hero `infoItems` field was removed in cd9506e)
+// are handled entirely by the earlier 20260713_112318 migration, which runs
+// before this one — so this migration deliberately does NOT touch them, to
+// avoid dropping tables that are already gone. The icon-enum ADD VALUEs use
+// IF NOT EXISTS defensively (matching the 20260712 migration).
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_business_info_social_media_platform" AS ENUM('facebook', 'instagram', 'x', 'linkedin', 'youtube', 'tiktok', 'whatsapp', 'pinterest');
-  ALTER TYPE "public"."enum_pages_blocks_feature_highlights_items_icon" ADD VALUE 'externalLink' BEFORE 'mapPin';
-  ALTER TYPE "public"."enum_pages_blocks_reviews_rating_icon" ADD VALUE 'externalLink' BEFORE 'mapPin';
-  ALTER TYPE "public"."enum_pages_blocks_reviews_smiley_icon" ADD VALUE 'externalLink' BEFORE 'mapPin';
-  ALTER TYPE "public"."enum__pages_v_blocks_feature_highlights_items_icon" ADD VALUE 'externalLink' BEFORE 'mapPin';
-  ALTER TYPE "public"."enum__pages_v_blocks_reviews_rating_icon" ADD VALUE 'externalLink' BEFORE 'mapPin';
-  ALTER TYPE "public"."enum__pages_v_blocks_reviews_smiley_icon" ADD VALUE 'externalLink' BEFORE 'mapPin';
+  ALTER TYPE "public"."enum_pages_blocks_feature_highlights_items_icon" ADD VALUE IF NOT EXISTS 'externalLink' BEFORE 'mapPin';
+  ALTER TYPE "public"."enum_pages_blocks_reviews_rating_icon" ADD VALUE IF NOT EXISTS 'externalLink' BEFORE 'mapPin';
+  ALTER TYPE "public"."enum_pages_blocks_reviews_smiley_icon" ADD VALUE IF NOT EXISTS 'externalLink' BEFORE 'mapPin';
+  ALTER TYPE "public"."enum__pages_v_blocks_feature_highlights_items_icon" ADD VALUE IF NOT EXISTS 'externalLink' BEFORE 'mapPin';
+  ALTER TYPE "public"."enum__pages_v_blocks_reviews_rating_icon" ADD VALUE IF NOT EXISTS 'externalLink' BEFORE 'mapPin';
+  ALTER TYPE "public"."enum__pages_v_blocks_reviews_smiley_icon" ADD VALUE IF NOT EXISTS 'externalLink' BEFORE 'mapPin';
   CREATE TABLE "pages_blocks_find_us" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -125,8 +125,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	now(), now()
   FROM "opening_hours" LIMIT 1;
 
-  DROP TABLE "pages_hero_info_items" CASCADE;
-  DROP TABLE "_pages_v_version_hero_info_items" CASCADE;
   DROP TABLE "opening_hours" CASCADE;
   ALTER TABLE "pages_blocks_find_us" ADD CONSTRAINT "pages_blocks_find_us_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_find_us" ADD CONSTRAINT "pages_blocks_find_us_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -142,33 +140,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_find_us_path_idx" ON "_pages_v_blocks_find_us" USING btree ("_path");
   CREATE INDEX "_pages_v_blocks_find_us_media_idx" ON "_pages_v_blocks_find_us" USING btree ("media_id");
   CREATE INDEX "business_info_social_media_order_idx" ON "business_info_social_media" USING btree ("_order");
-  CREATE INDEX "business_info_social_media_parent_id_idx" ON "business_info_social_media" USING btree ("_parent_id");
-  DROP TYPE "public"."enum_pages_hero_info_items_icon";
-  DROP TYPE "public"."enum__pages_v_version_hero_info_items_icon";`)
+  CREATE INDEX "business_info_social_media_parent_id_idx" ON "business_info_social_media" USING btree ("_parent_id");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE "public"."enum_pages_hero_info_items_icon" AS ENUM('arrowLeft', 'arrowRight', 'clock', 'mapPin', 'phone', 'badgeCheck', 'leaf', 'search', 'star', 'quote');
-  CREATE TYPE "public"."enum__pages_v_version_hero_info_items_icon" AS ENUM('arrowLeft', 'arrowRight', 'clock', 'mapPin', 'phone', 'badgeCheck', 'leaf', 'search', 'star', 'quote');
-  CREATE TABLE "pages_hero_info_items" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"icon" "enum_pages_hero_info_items_icon",
-  	"label" varchar
-  );
-  
-  CREATE TABLE "_pages_v_version_hero_info_items" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"icon" "enum__pages_v_version_hero_info_items_icon",
-  	"label" varchar,
-  	"_uuid" varchar
-  );
-  
-  CREATE TABLE "opening_hours" (
+   CREATE TABLE "opening_hours" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"address" varchar NOT NULL,
   	"address_url" varchar NOT NULL,
@@ -240,11 +217,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   CREATE TYPE "public"."enum__pages_v_blocks_reviews_smiley_icon" AS ENUM('arrowLeft', 'arrowRight', 'clock', 'mapPin', 'phone', 'badgeCheck', 'leaf', 'search', 'star', 'quote');
   ALTER TABLE "_pages_v_blocks_reviews" ALTER COLUMN "smiley_icon" SET DEFAULT 'badgeCheck'::"public"."enum__pages_v_blocks_reviews_smiley_icon";
   ALTER TABLE "_pages_v_blocks_reviews" ALTER COLUMN "smiley_icon" SET DATA TYPE "public"."enum__pages_v_blocks_reviews_smiley_icon" USING "smiley_icon"::"public"."enum__pages_v_blocks_reviews_smiley_icon";
-  ALTER TABLE "pages_hero_info_items" ADD CONSTRAINT "pages_hero_info_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "_pages_v_version_hero_info_items" ADD CONSTRAINT "_pages_v_version_hero_info_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
-  CREATE INDEX "pages_hero_info_items_order_idx" ON "pages_hero_info_items" USING btree ("_order");
-  CREATE INDEX "pages_hero_info_items_parent_id_idx" ON "pages_hero_info_items" USING btree ("_parent_id");
-  CREATE INDEX "_pages_v_version_hero_info_items_order_idx" ON "_pages_v_version_hero_info_items" USING btree ("_order");
-  CREATE INDEX "_pages_v_version_hero_info_items_parent_id_idx" ON "_pages_v_version_hero_info_items" USING btree ("_parent_id");
   DROP TYPE "public"."enum_business_info_social_media_platform";`)
 }
