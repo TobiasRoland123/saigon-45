@@ -9,7 +9,7 @@ import React from 'react'
 // Async server component: it awaits the `opening-hours` global, so it can't use
 // the `React.FC` type (that can't return a Promise). RenderHero renders it as
 // JSX, which supports async server components.
-export const HighImpactHero = async ({ infoItems, links, media, richText }: Page['hero']) => {
+export const HighImpactHero = async ({ links, media, richText }: Page['hero']) => {
   const openingHours = await getCachedGlobal('opening-hours', 1)()
 
   return (
