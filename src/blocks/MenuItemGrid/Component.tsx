@@ -24,7 +24,10 @@ const getItemHref = (item: MenuItem) => {
   return link?.url
 }
 
-const MenuItemRow: React.FC<{ items: MenuItem[] }> = ({ items }) => {
+const MenuItemRow: React.FC<{ items: MenuItem[]; startIndex: number }> = ({
+  items,
+  startIndex,
+}) => {
   const gridClassName = cn(
     'grid gap-8',
     items.length === 1
@@ -42,7 +45,7 @@ const MenuItemRow: React.FC<{ items: MenuItem[] }> = ({ items }) => {
           ctaLabel={item.link?.label}
           description={item.description}
           href={getItemHref(item)}
-          index={index + 5}
+          index={startIndex + index}
           key={item.id ?? `${item.name}-${index}`}
           media={item.media}
           name={item.name}
@@ -57,15 +60,15 @@ const MenuItemRow: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 export const MenuItemGridBlock: React.FC<Props> = ({ category, className, heading, items }) => {
   if (!items?.length) return null
 
-  const hasFeaturedLayout = items.length >= 5
-  const featuredItems = hasFeaturedLayout ? items.slice(0, 5) : []
-  const additionalItems = hasFeaturedLayout ? items.slice(5) : items
+  const hasFeaturedLayout = items.length >= 2
+  const featuredItems = hasFeaturedLayout ? items.slice(0, 2) : []
+  const additionalItems = hasFeaturedLayout ? items.slice(2) : items
   const remainingRows = Array.from({ length: Math.ceil(additionalItems.length / 3) }, (_, row) =>
     additionalItems.slice(row * 3, row * 3 + 3),
   )
 
   return (
-    <section className={cn('bg-[#06100e] py-12 md:py-20', className)}>
+    <section className={cn('py-12 md:py-20', className)}>
       <div className="container">
         <div className="mb-8 flex flex-col justify-between gap-3 border-b border-primary-fixed/20 pb-5 md:mb-10 md:flex-row md:items-end">
           <h2 className="text-4xl leading-none font-extrabold tracking-tight text-primary-fixed md:text-6xl">
@@ -101,7 +104,11 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
         {remainingRows.length ? (
           <div className="mt-8 space-y-8">
             {remainingRows.map((row, index) => (
-              <MenuItemRow items={row} key={index} />
+              <MenuItemRow
+                items={row}
+                key={index}
+                startIndex={(hasFeaturedLayout ? 2 : 0) + index * 3}
+              />
             ))}
           </div>
         ) : null}
