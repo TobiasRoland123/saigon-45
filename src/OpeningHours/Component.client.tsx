@@ -4,7 +4,7 @@ import React, { useSyncExternalStore } from 'react'
 
 import { Icon } from '@/components/icons'
 import { cn } from '@/utilities/ui'
-import { getOpenStatus, type DaySchedule } from './getOpenStatus'
+import { getOpenStatus, type WeekSchedule } from './getOpenStatus'
 import Link from 'next/link'
 
 const VENUE_TIME_ZONE = 'Europe/Copenhagen'
@@ -62,7 +62,7 @@ function getServerMinuteOfWeek(): number | null {
 type Props = {
   address: string
   addressUrl: string
-  days: DaySchedule[] | null | undefined
+  days: WeekSchedule | null | undefined
   className?: string
 }
 

@@ -2071,17 +2071,73 @@ export interface OpeningHour {
    */
   addressUrl: string;
   /**
-   * One row per day. Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.
+   * Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.
    */
-  days?:
-    | {
-        day: '1' | '2' | '3' | '4' | '5' | '6' | '0';
-        closed?: boolean | null;
-        opensAt?: string | null;
-        closesAt?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  days: {
+    monday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    tuesday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    wednesday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    thursday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    friday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    saturday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+    sunday: {
+      /**
+       * Day name shown to visitors, e.g. "Mandag".
+       */
+      label: string;
+      closed?: boolean | null;
+      opensAt?: string | null;
+      closesAt?: string | null;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2180,11 +2236,62 @@ export interface OpeningHoursSelect<T extends boolean = true> {
   days?:
     | T
     | {
-        day?: T;
-        closed?: T;
-        opensAt?: T;
-        closesAt?: T;
-        id?: T;
+        monday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        tuesday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        wednesday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        thursday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        friday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        saturday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
+        sunday?:
+          | T
+          | {
+              label?: T;
+              closed?: T;
+              opensAt?: T;
+              closesAt?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

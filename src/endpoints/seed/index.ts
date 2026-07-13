@@ -29,43 +29,15 @@ const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engi
 const openingHoursData = {
   address: 'Rødovre Centrum 41',
   addressUrl: 'https://maps.app.goo.gl/hyo5nd2EUuAJ4tok7',
-  days: [
-    {
-      day: '1',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-    {
-      day: '2',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-    {
-      day: '3',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-    {
-      day: '4',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-    {
-      day: '5',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-    {
-      day: '6',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-    {
-      day: '0',
-      opensAt: '10:00',
-      closesAt: '20:00',
-    },
-  ],
+  days: {
+    monday: { label: 'Mandag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    tuesday: { label: 'Tirsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    wednesday: { label: 'Onsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    thursday: { label: 'Torsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    friday: { label: 'Fredag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    saturday: { label: 'Lørdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
+    sunday: { label: 'Søndag', closed: false, opensAt: '10:00', closesAt: '19:00' },
+  },
 } satisfies Partial<OpeningHour>
 
 // Next.js revalidation errors are normal when seeding the database without a server running

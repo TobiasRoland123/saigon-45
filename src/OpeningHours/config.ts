@@ -1,32 +1,68 @@
-import type { GlobalConfig, TextFieldSingleValidation } from 'payload'
+import type { Field, GlobalConfig, TextFieldSingleValidation } from 'payload'
 
 import { revalidateOpeningHours } from './hooks/revalidateOpeningHours'
 
-// Values match JavaScript's Date.getDay() so the frontend can look a day up directly:
-// 0 = Sunday ... 6 = Saturday.
-const dayOptions = [
-  { label: 'Mandag', value: '1' },
-  { label: 'Tirsdag', value: '2' },
-  { label: 'Onsdag', value: '3' },
-  { label: 'Torsdag', value: '4' },
-  { label: 'Fredag', value: '5' },
-  { label: 'Lørdag', value: '6' },
-  { label: 'Søndag', value: '0' },
-]
-
-// Seed one row per weekday so editors just fill in times instead of adding rows.
-const defaultDays = dayOptions.map(({ value }) => ({
-  day: value,
-  closed: false,
-  opensAt: '11:00',
-  closesAt: '21:00',
-}))
-
-// Accepts an empty string (field not required) or a 24h "HH:mm" value.
-const validateTime: TextFieldSingleValidation = (value) => {
-  if (!value) return true
+// Requires a 24h "HH:mm" value whenever the day is not marked closed.
+const validateTime: TextFieldSingleValidation = (value, { siblingData }) => {
+  if ((siblingData as { closed?: boolean })?.closed) return true
+  if (!value) return 'Required unless the day is marked "Closed all day"'
   return /^([01]\d|2[0-3]):[0-5]\d$/.test(value) || 'Use 24-hour HH:mm format, e.g. 20:00'
 }
+
+// One fixed group per weekday: the week is always complete, no missing or
+// duplicate days. `name` is the stable code-facing key; `label` is what
+// editors see and what the frontend prints (e.g. "Mandag").
+const dayField = (name: string, defaultLabel: string): Field => ({
+  name,
+  type: 'group',
+  label: defaultLabel,
+  fields: [
+    {
+      name: 'label',
+      type: 'text',
+      required: true,
+      defaultValue: defaultLabel,
+      admin: {
+        description: 'Day name shown to visitors, e.g. "Mandag".',
+      },
+    },
+    {
+      name: 'closed',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Closed all day',
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'opensAt',
+          type: 'text',
+          label: 'Opens at',
+          defaultValue: '11:00',
+          validate: validateTime,
+          admin: {
+            placeholder: '10:00',
+            width: '50%',
+            condition: (_, siblingData) => !siblingData?.closed,
+          },
+        },
+        {
+          name: 'closesAt',
+          type: 'text',
+          label: 'Closes at',
+          defaultValue: '21:00',
+          validate: validateTime,
+          admin: {
+            placeholder: '20:00',
+            width: '50%',
+            condition: (_, siblingData) => !siblingData?.closed,
+          },
+        },
+      ],
+    },
+  ],
+})
 
 export const OpeningHours: GlobalConfig = {
   slug: 'opening-hours',
@@ -56,58 +92,20 @@ export const OpeningHours: GlobalConfig = {
     },
     {
       name: 'days',
-      type: 'array',
+      type: 'group',
       label: 'Weekly hours',
-      defaultValue: defaultDays,
-      maxRows: 7,
       admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/OpeningHours/RowLabel#RowLabel',
-        },
         description:
-          'One row per day. Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.',
+          'Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.',
       },
       fields: [
-        {
-          name: 'day',
-          type: 'select',
-          required: true,
-          options: dayOptions,
-        },
-        {
-          name: 'closed',
-          type: 'checkbox',
-          defaultValue: false,
-          label: 'Closed all day',
-        },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'opensAt',
-              type: 'text',
-              label: 'Opens at',
-              validate: validateTime,
-              admin: {
-                placeholder: '10:00',
-                width: '50%',
-                condition: (_, siblingData) => !siblingData?.closed,
-              },
-            },
-            {
-              name: 'closesAt',
-              type: 'text',
-              label: 'Closes at',
-              validate: validateTime,
-              admin: {
-                placeholder: '20:00',
-                width: '50%',
-                condition: (_, siblingData) => !siblingData?.closed,
-              },
-            },
-          ],
-        },
+        dayField('monday', 'Mandag'),
+        dayField('tuesday', 'Tirsdag'),
+        dayField('wednesday', 'Onsdag'),
+        dayField('thursday', 'Torsdag'),
+        dayField('friday', 'Fredag'),
+        dayField('saturday', 'Lørdag'),
+        dayField('sunday', 'Søndag'),
       ],
     },
   ],

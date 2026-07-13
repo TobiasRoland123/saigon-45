@@ -1,12 +1,22 @@
 // Pure, timezone-aware open/closed logic shared by the pill component.
-// `day` values match Date.getDay(): 0 = Sunday ... 6 = Saturday.
+// The schedule has one fixed entry per weekday; `label` is the editor-chosen
+// display name for the day (e.g. "Mandag").
 
 export type DaySchedule = {
-  day?: string | null
+  label?: string | null
   closed?: boolean | null
   opensAt?: string | null // "HH:mm"
   closesAt?: string | null // "HH:mm"
-  id?: string | null
+}
+
+export type WeekSchedule = {
+  monday?: DaySchedule | null
+  tuesday?: DaySchedule | null
+  wednesday?: DaySchedule | null
+  thursday?: DaySchedule | null
+  friday?: DaySchedule | null
+  saturday?: DaySchedule | null
+  sunday?: DaySchedule | null
 }
 
 export type OpenStatus = {
@@ -14,7 +24,16 @@ export type OpenStatus = {
   label: string
 }
 
-const WEEKDAY_NAMES = ['SØNDAG', 'MANDAG', 'TIRSDAG', 'ONSDAG', 'TORSDAG', 'FREDAG', 'LØRDAG']
+// Index matches Date.getDay(): 0 = Sunday ... 6 = Saturday.
+const DAY_KEYS = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+] as const
 
 // "20:00" -> minutes since midnight, or null if unusable.
 const toMinutes = (time?: string | null): number | null => {
@@ -36,7 +55,7 @@ type Normalized = { open: number; close: number } | null
 
 // Returns the day's open window in minutes, treating a closing time that is
 // <= the opening time as crossing midnight (e.g. 18:00–02:00 -> close 26:00).
-const windowFor = (entry?: DaySchedule): Normalized => {
+const windowFor = (entry?: DaySchedule | null): Normalized => {
   if (!entry || entry.closed) return null
   const open = toMinutes(entry.opensAt)
   const close = toMinutes(entry.closesAt)
@@ -46,30 +65,27 @@ const windowFor = (entry?: DaySchedule): Normalized => {
 
 /**
  * Computes whether the venue is open at `now` and a human label.
- * @param days  Weekly schedule (any subset of the 7 days; missing = closed).
+ * @param week  Weekly schedule with one entry per day (missing = closed).
  * @param now   Current time already expressed in the venue's local timezone
  *              (see resolveNow in Component.client.tsx).
  */
 export const getOpenStatus = (
-  days: DaySchedule[] | null | undefined,
+  week: WeekSchedule | null | undefined,
   now: { weekday: number; minutes: number },
 ): OpenStatus => {
-  const byDay = new Map<number, DaySchedule>()
-  for (const entry of days ?? []) {
-    if (entry?.day != null) byDay.set(Number(entry.day), entry)
-  }
+  const dayAt = (index: number): DaySchedule | null | undefined => week?.[DAY_KEYS[index % 7]!]
 
   const today = now.weekday
   const yesterday = (today + 6) % 7
 
   // 1) Still inside yesterday's window that ran past midnight?
-  const yWindow = windowFor(byDay.get(yesterday))
+  const yWindow = windowFor(dayAt(yesterday))
   if (yWindow && yWindow.close > 1440 && now.minutes < yWindow.close - 1440) {
     return { isOpen: true, label: `Åben indtil ${fmt(yWindow.close)}` }
   }
 
   // 2) Inside today's window?
-  const tWindow = windowFor(byDay.get(today))
+  const tWindow = windowFor(dayAt(today))
   if (tWindow && now.minutes >= tWindow.open && now.minutes < tWindow.close) {
     return { isOpen: true, label: `Åben indtil ${fmt(tWindow.close)}` }
   }
@@ -82,10 +98,12 @@ export const getOpenStatus = (
   // 4) Closed now — find the next day that opens.
   for (let offset = 1; offset <= 7; offset++) {
     const dayIndex = (today + offset) % 7
-    const window = windowFor(byDay.get(dayIndex))
+    const entry = dayAt(dayIndex)
+    const window = windowFor(entry)
     if (!window) continue
 
-    const when = offset === 1 ? 'i morgen' : `på ${WEEKDAY_NAMES[dayIndex]}`
+    const dayName = entry?.label ?? ''
+    const when = offset === 1 ? 'i morgen' : `på ${dayName}`
     return { isOpen: false, label: `Lukket - Åbner igen ${when}, klokken ${fmt(window.open)}` }
   }
 
