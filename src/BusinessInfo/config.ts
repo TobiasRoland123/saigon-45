@@ -1,6 +1,8 @@
 import type { Field, GlobalConfig, TextFieldSingleValidation } from 'payload'
 
-import { revalidateOpeningHours } from './hooks/revalidateOpeningHours'
+import { socialPlatformOptions } from '@/components/icons/socialIconRegistry'
+import { validatePhoneNumber } from '@/utilities/validatePhoneNumber'
+import { revalidateBusinessInfo } from './hooks/revalidateBusinessInfo'
 
 // Requires a 24h "HH:mm" value whenever the day is not marked closed.
 const validateTime: TextFieldSingleValidation = (value, { siblingData }) => {
@@ -64,9 +66,12 @@ const dayField = (name: string, defaultLabel: string): Field => ({
   ],
 })
 
-export const OpeningHours: GlobalConfig = {
-  slug: 'opening-hours',
-  label: 'Opening Hours',
+// Single source of truth for the shop's static facts — address, contact,
+// weekly opening hours and social links. Consumed by the hero pill and the
+// Find Us block, and editable at /admin under Settings → Business Info.
+export const BusinessInfo: GlobalConfig = {
+  slug: 'business-info',
+  label: 'Business Info',
   access: {
     read: () => true,
   },
@@ -76,28 +81,70 @@ export const OpeningHours: GlobalConfig = {
   fields: [
     {
       name: 'address',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'Shown on the left of the opening-hours pill, e.g. "Rødovre Centrum 41".',
-      },
+      type: 'group',
+      fields: [
+        {
+          name: 'street',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'Street and number, e.g. "Rødovre Centrum 45".',
+          },
+        },
+        {
+          name: 'zipCity',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'Postal code and city, e.g. "2610 Rødovre".',
+          },
+        },
+        {
+          name: 'extraDetails',
+          type: 'text',
+          admin: {
+            description: 'Optional extra line, e.g. "(Find os i stueetagen ved indgang D)".',
+          },
+        },
+        {
+          name: 'googleMapsUrl',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'Link to the address on Google Maps, e.g. "https://goo.gl/maps/...".',
+          },
+        },
+      ],
     },
     {
-      name: 'addressUrl',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'Link to adress on Google Maps, e.g. "https://goo.gl/maps/..."',
-      },
+      name: 'contact',
+      type: 'group',
+      fields: [
+        {
+          name: 'phone',
+          type: 'text',
+          required: true,
+          validate: ((value) => {
+            const result = validatePhoneNumber(value ?? '')
+            return result.valid ? true : (result.error ?? 'Ugyldigt telefonnummer')
+          }) as TextFieldSingleValidation,
+        },
+        {
+          name: 'email',
+          type: 'email',
+        },
+      ],
     },
     {
-      name: 'days',
+      name: 'openingHours',
       type: 'group',
       label: 'Weekly hours',
       admin: {
         description:
           'Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.',
       },
+      // The 7 dayFields sit DIRECTLY in this group (no nested `days`) so the
+      // generated type is structurally identical to WeekSchedule.
       fields: [
         dayField('monday', 'Mandag'),
         dayField('tuesday', 'Tirsdag'),
@@ -108,9 +155,28 @@ export const OpeningHours: GlobalConfig = {
         dayField('sunday', 'Søndag'),
       ],
     },
+    {
+      name: 'socialMedia',
+      type: 'array',
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          required: true,
+          options: socialPlatformOptions,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          label: 'Profile URL',
+        },
+      ],
+      maxRows: socialPlatformOptions.length,
+    },
   ],
   hooks: {
-    afterChange: [revalidateOpeningHours],
+    afterChange: [revalidateBusinessInfo],
   },
   versions: false,
 }

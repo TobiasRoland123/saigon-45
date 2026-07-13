@@ -2,7 +2,7 @@ import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
 import { readFile, stat } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
 
-import type { OpeningHour } from '@/payload-types'
+import type { BusinessInfo } from '@/payload-types'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -26,19 +26,28 @@ const collections: CollectionSlug[] = [
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
-const openingHoursData = {
-  address: 'Rødovre Centrum 41',
-  addressUrl: 'https://maps.app.goo.gl/hyo5nd2EUuAJ4tok7',
-  days: {
+const businessInfoData = {
+  address: {
+    street: 'Rødovre Centrum 45',
+    zipCity: '2610 Rødovre',
+    extraDetails: '(Find os i stueetagen ved indgang D)',
+    googleMapsUrl: 'https://maps.app.goo.gl/hyo5nd2EUuAJ4tok7',
+  },
+  contact: {
+    phone: '+45 12 34 56 78',
+    email: 'kontakt@saigon45.dk',
+  },
+  openingHours: {
     monday: { label: 'Mandag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     tuesday: { label: 'Tirsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     wednesday: { label: 'Onsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     thursday: { label: 'Torsdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     friday: { label: 'Fredag', closed: false, opensAt: '10:00', closesAt: '20:00' },
     saturday: { label: 'Lørdag', closed: false, opensAt: '10:00', closesAt: '20:00' },
-    sunday: { label: 'Søndag', closed: false, opensAt: '10:00', closesAt: '19:00' },
+    sunday: { label: 'Søndag', closed: false, opensAt: '10:00', closesAt: '20:00' },
   },
-} satisfies Partial<OpeningHour>
+  socialMedia: [],
+} satisfies Partial<BusinessInfo>
 
 // Next.js revalidation errors are normal when seeding the database without a server running
 // i.e. running `yarn seed` locally instead of using the admin UI within an active app
@@ -106,8 +115,8 @@ export const seed = async ({
       },
     }),
     payload.updateGlobal({
-      slug: 'opening-hours',
-      data: openingHoursData,
+      slug: 'business-info',
+      data: businessInfoData,
       depth: 0,
       context: {
         disableRevalidate: true,
@@ -415,8 +424,8 @@ export const seed = async ({
       },
     }),
     payload.updateGlobal({
-      slug: 'opening-hours',
-      data: openingHoursData,
+      slug: 'business-info',
+      data: businessInfoData,
     }),
   ])
 
