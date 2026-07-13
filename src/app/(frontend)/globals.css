@@ -300,7 +300,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply flex min-h-screen flex-col bg-background text-foreground;
+    @apply flex min-h-screen flex-col text-foreground;
   }
 }
 

@@ -7,7 +7,6 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import { icon } from '@/fields/icon'
 import { linkGroup } from '@/fields/linkGroup'
 
 export const hero: Field = {
@@ -53,24 +52,6 @@ export const hero: Field = {
         },
       }),
       label: false,
-    },
-    {
-      name: 'infoItems',
-      type: 'array',
-      admin: {
-        condition: (_, { type } = {}) => type === 'highImpact',
-        initCollapsed: true,
-      },
-      fields: [
-        icon(),
-        {
-          name: 'label',
-          type: 'text',
-          required: true,
-        },
-      ],
-      label: 'Info items',
-      maxRows: 3,
     },
     linkGroup({
       overrides: {
