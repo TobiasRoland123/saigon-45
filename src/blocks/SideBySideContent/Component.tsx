@@ -7,7 +7,7 @@ import { Icon } from '@/components/icons'
 export function SideBySideContentBlock(props: SideBySideContentBlockProps) {
   const { description, eyebrow, features, heading, imageCallout, media, primaryLink } = props
   return (
-    <section className="pt-24">
+    <section className="mt-24 bg-background py-24">
       <div className="container grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div className="max-w-2xl pr-8">
           <p className="mb-8 inline-flex rounded-full bg-primary px-4 py-2 text-xs font-extrabold tracking-[0.14em] text-primary-foreground uppercase">

@@ -4,12 +4,15 @@ import * as migration_20260701_122522 from './20260701_122522'
 import * as migration_20260703_191909 from './20260703_191909'
 import * as migration_20260703_215908_feature_highlights_block from './20260703_215908_feature_highlights_block'
 import * as migration_20260704_205136 from './20260704_205136'
+import * as migration_20260707_081532__ from './20260707_081532__'
 import * as migration_20260707_082606_side_by_side_content_block from './20260707_082606_side_by_side_content_block'
 import * as migration_20260707_200303 from './20260707_200303'
 import * as migration_20260707_200805 from './20260707_200805'
 import * as migration_20260707_211847_reviews_block from './20260707_211847_reviews_block'
 import * as migration_20260710_173633 from './20260710_173633'
+import * as migration_20260712_192435_opening_hours_fixed_days from './20260712_192435_opening_hours_fixed_days'
 import * as migration_20260712_215840 from './20260712_215840'
+import * as migration_20260713_112318 from './20260713_112318'
 
 export const migrations = [
   {
@@ -43,6 +46,11 @@ export const migrations = [
     name: '20260704_205136',
   },
   {
+    up: migration_20260707_081532__.up,
+    down: migration_20260707_081532__.down,
+    name: '20260707_081532__',
+  },
+  {
     up: migration_20260707_082606_side_by_side_content_block.up,
     down: migration_20260707_082606_side_by_side_content_block.down,
     name: '20260707_082606_side_by_side_content_block',
@@ -68,8 +76,18 @@ export const migrations = [
     name: '20260710_173633',
   },
   {
+    up: migration_20260712_192435_opening_hours_fixed_days.up,
+    down: migration_20260712_192435_opening_hours_fixed_days.down,
+    name: '20260712_192435_opening_hours_fixed_days',
+  },
+  {
     up: migration_20260712_215840.up,
     down: migration_20260712_215840.down,
     name: '20260712_215840',
+  },
+  {
+    up: migration_20260713_112318.up,
+    down: migration_20260713_112318.down,
+    name: '20260713_112318',
   },
 ]

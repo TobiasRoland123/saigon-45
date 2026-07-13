@@ -188,7 +188,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
   }
 
   return (
-    <section className="bg-background py-8 text-primary-foreground md:py-12">
+    <section className="mt-24 text-primary-foreground">
       <div className="container">
         <div className="relative overflow-hidden rounded-4xl bg-on-primary-fixed px-6 py-12 shadow-2xl shadow-black/35 md:rounded-[2.75rem] md:px-16 md:py-20 lg:px-20">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_50%,color-mix(in_srgb,var(--color-primary-muted)_16%,transparent),transparent_32%),radial-gradient(circle_at_82%_24%,color-mix(in_srgb,var(--color-primary)_22%,transparent),transparent_35%)]" />

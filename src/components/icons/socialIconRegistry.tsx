@@ -18,7 +18,7 @@ type SocialIconComponent = ComponentType<SVGProps<SVGSVGElement>>
 const brandIcon = (icon: SimpleIcon): SocialIconComponent => {
   const BrandIcon: SocialIconComponent = ({ fill, ...props }) => (
     <svg
-      fill={fill ?? `#${icon.hex}`}
+      fill={fill ?? 'currentColor'}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
