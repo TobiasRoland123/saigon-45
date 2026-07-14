@@ -910,24 +910,6 @@ export interface MenuItemGridBlock {
           id?: string | null;
         }[]
       | null;
-    /**
-     * Optional destination for the menu item.
-     */
-    link: {
-      type?: ('reference' | 'custom') | null;
-      newTab?: boolean | null;
-      reference?:
-        | ({
-            relationTo: 'pages';
-            value: number | Page;
-          } | null)
-        | ({
-            relationTo: 'posts';
-            value: number | Post;
-          } | null);
-      url?: string | null;
-      label: string;
-    };
     id?: string | null;
   }[];
   id?: string | null;
@@ -1484,15 +1466,6 @@ export interface MenuItemGridBlockSelect<T extends boolean = true> {
           | {
               label?: T;
               id?: T;
-            };
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
             };
         id?: T;
       };

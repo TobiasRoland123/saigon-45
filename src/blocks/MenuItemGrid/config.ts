@@ -1,7 +1,5 @@
 import type { Block } from 'payload'
 
-import { link } from '@/fields/link'
-
 export const MenuItemGrid: Block = {
   slug: 'menuItemGrid',
   interfaceName: 'MenuItemGridBlock',
@@ -78,15 +76,6 @@ export const MenuItemGrid: Block = {
             singular: 'Badge',
           },
         },
-        link({
-          appearances: false,
-          overrides: {
-            admin: {
-              description: 'Optional destination for the menu item.',
-            },
-            label: 'CTA',
-          },
-        }),
       ],
       labels: {
         plural: 'Menu items',

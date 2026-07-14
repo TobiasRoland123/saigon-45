@@ -14,6 +14,7 @@ import * as migration_20260712_192435_opening_hours_fixed_days from './20260712_
 import * as migration_20260712_215840 from './20260712_215840'
 import * as migration_20260713_112318 from './20260713_112318'
 import * as migration_20260713_194909 from './20260713_194909'
+import * as migration_20260714_235000_restore_opening_hours from './20260714_235000_restore_opening_hours'
 
 export const migrations = [
   {
@@ -95,5 +96,10 @@ export const migrations = [
     up: migration_20260713_194909.up,
     down: migration_20260713_194909.down,
     name: '20260713_194909',
+  },
+  {
+    up: migration_20260714_235000_restore_opening_hours.up,
+    down: migration_20260714_235000_restore_opening_hours.down,
+    name: '20260714_235000_restore_opening_hours',
   },
 ]
