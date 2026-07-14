@@ -20,11 +20,11 @@ const InfoRow = ({
   children: React.ReactNode
 }) => (
   <div className="flex gap-5">
-    <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-on-primary-fixed/10 text-on-primary-fixed">
-      <Icon name={icon} className="size-6" />
+    <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-on-primary-fixed/10 text-on-primary-container">
+      <Icon name={icon} className="size-8" />
     </div>
     <div>
-      <dt className="text-xl font-bold text-on-primary-fixed">{label}</dt>
+      <dt className="text-xl font-bold text-on-primary-container">{label}</dt>
       <dd className="mt-1 space-y-0.5 text-lg leading-relaxed text-on-primary-fixed/80">
         {children}
       </dd>
@@ -46,9 +46,9 @@ export const FindUsBlock = async (props: FindUsBlockProps) => {
 
   return (
     <section className="mt-24 bg-primary-fixed/45 py-16 md:py-24">
-      <div className="container grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="container grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
         <div>
-          <h2 className="text-4xl leading-tight font-extrabold text-on-primary-fixed md:text-5xl">
+          <h2 className="text-4xl leading-tight font-extrabold text-on-primary-container md:text-5xl">
             {heading}
           </h2>
 
@@ -91,7 +91,7 @@ export const FindUsBlock = async (props: FindUsBlockProps) => {
           )}
         </div>
 
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] shadow-xl shadow-black/10">
+        <div className="relative aspect-4/3 w-full overflow-hidden rounded-[1.75rem] shadow-xl shadow-black/10">
           <Media
             fill
             imgClassName="object-cover"
