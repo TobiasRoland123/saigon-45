@@ -898,6 +898,10 @@ export interface MenuItemGridBlock {
      */
     price: string;
     /**
+     * Display this menu item with the highlighted card layout.
+     */
+    highlighted?: boolean | null;
+    /**
      * Optional dietary or promotional labels.
      */
     badges?:
@@ -1474,6 +1478,7 @@ export interface MenuItemGridBlockSelect<T extends boolean = true> {
         name?: T;
         description?: T;
         price?: T;
+        highlighted?: T;
         badges?:
           | T
           | {

@@ -31,6 +31,7 @@ export const menu: (args: MenuArgs) => RequiredDataFromCollectionSlug<'pages'> =
           badges: [{ label: 'Frisk' }, { label: 'Glutenfri option' }],
           description:
             '2 stk. rispapirruller med kylling, rejer og salater. Serveres med hjemmelavet hoisin sauce og knuste jordnødder.',
+          highlighted: true,
           link: orderLink,
           media: menuImages[0].id,
           name: '1. Sommerruller',

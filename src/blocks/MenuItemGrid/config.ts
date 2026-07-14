@@ -51,6 +51,15 @@ export const MenuItemGrid: Block = {
           required: true,
         },
         {
+          name: 'highlighted',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description: 'Display this menu item with the highlighted card layout.',
+          },
+          label: 'Highlight menu item',
+        },
+        {
           name: 'badges',
           type: 'array',
           admin: {
