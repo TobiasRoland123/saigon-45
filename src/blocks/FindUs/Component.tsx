@@ -32,10 +32,13 @@ const InfoRow = ({
   </div>
 )
 
-// Async server component: address, hours and phone are pulled from the shared
-// Business Info global at render time, so only presentation fields come from
-// the block itself. Gracefully degrades to just heading + image if the global
-// is empty. RenderBlocks is a server component, so an async block is fine.
+// Async server component: address, hours and phone come from the shared
+// Business Info global; only presentation fields live on the block. Pages
+// are statically prerendered, so this runs at build/revalidate time — the
+// global's afterChange hook revalidates `global_business-info`, so CMS
+// edits show up without a rebuild. Degrades to heading + image if the
+// global is empty.
+
 export const FindUsBlock = async (props: FindUsBlockProps) => {
   const { heading, addressLabel, hoursLabel, contactLabel, buttonLabel, media } = props
 
