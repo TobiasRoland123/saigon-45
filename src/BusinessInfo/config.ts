@@ -11,6 +11,12 @@ const validateTime: TextFieldSingleValidation = (value, { siblingData }) => {
   return /^([01]\d|2[0-3]):[0-5]\d$/.test(value) || 'Use 24-hour HH:mm format, e.g. 20:00'
 }
 
+// Delegates to the shared phone validator, surfacing its error message.
+const validatePhone: TextFieldSingleValidation = (value) => {
+  const result = validatePhoneNumber(value ?? '')
+  return result.valid ? true : (result.error ?? 'Ugyldigt telefonnummer')
+}
+
 // One fixed group per weekday: the week is always complete, no missing or
 // duplicate days. `name` is the stable code-facing key; `label` is what
 // editors see and what the frontend prints (e.g. "Mandag").
@@ -41,7 +47,6 @@ const dayField = (name: string, defaultLabel: string): Field => ({
           name: 'opensAt',
           type: 'text',
           label: 'Opens at',
-          defaultValue: '11:00',
           validate: validateTime,
           admin: {
             placeholder: '10:00',
@@ -53,7 +58,6 @@ const dayField = (name: string, defaultLabel: string): Field => ({
           name: 'closesAt',
           type: 'text',
           label: 'Closes at',
-          defaultValue: '21:00',
           validate: validateTime,
           admin: {
             placeholder: '20:00',
@@ -124,10 +128,7 @@ export const BusinessInfo: GlobalConfig = {
           name: 'phone',
           type: 'text',
           required: true,
-          validate: ((value) => {
-            const result = validatePhoneNumber(value ?? '')
-            return result.valid ? true : (result.error ?? 'Ugyldigt telefonnummer')
-          }) as TextFieldSingleValidation,
+          validate: validatePhone,
         },
         {
           name: 'email',
