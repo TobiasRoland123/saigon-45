@@ -8,7 +8,6 @@ export const FindUs: Block = {
       name: 'heading',
       type: 'text',
       required: true,
-      defaultValue: 'Besøg os i dag',
       admin: {
         description: 'Adresse, åbningstider og telefonnummer hentes fra Settings → Business Info.',
       },
@@ -17,25 +16,21 @@ export const FindUs: Block = {
       name: 'addressLabel',
       type: 'text',
       required: true,
-      defaultValue: 'Adresse',
     },
     {
       name: 'hoursLabel',
       type: 'text',
       required: true,
-      defaultValue: 'Åbningstider',
     },
     {
       name: 'contactLabel',
       type: 'text',
       required: true,
-      defaultValue: 'Kontakt',
     },
     {
       name: 'buttonLabel',
       type: 'text',
       required: true,
-      defaultValue: 'Find vej på Google Maps',
     },
     {
       name: 'media',
