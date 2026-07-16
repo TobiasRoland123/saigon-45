@@ -13,6 +13,7 @@ import * as migration_20260710_173633 from './20260710_173633'
 import * as migration_20260712_192435_opening_hours_fixed_days from './20260712_192435_opening_hours_fixed_days'
 import * as migration_20260713_112318 from './20260713_112318'
 import * as migration_20260713_122832_find_us_and_business_info from './20260713_122832_find_us_and_business_info'
+import * as migration_20260716_191428_hero_badge from './20260716_191428_hero_badge'
 
 export const migrations = [
   {
@@ -89,5 +90,10 @@ export const migrations = [
     up: migration_20260713_122832_find_us_and_business_info.up,
     down: migration_20260713_122832_find_us_and_business_info.down,
     name: '20260713_122832_find_us_and_business_info',
+  },
+  {
+    up: migration_20260716_191428_hero_badge.up,
+    down: migration_20260716_191428_hero_badge.down,
+    name: '20260716_191428_hero_badge',
   },
 ]
