@@ -4,6 +4,7 @@ import {
   ArrowRight,
   BadgeCheck,
   Clock,
+  ExternalLink,
   Leaf,
   MapPin,
   Phone,
@@ -29,6 +30,10 @@ export const iconRegistry = {
   clock: {
     label: 'Clock',
     Icon: Clock,
+  },
+  externalLink: {
+    label: 'External link',
+    Icon: ExternalLink,
   },
   mapPin: {
     label: 'Map pin',

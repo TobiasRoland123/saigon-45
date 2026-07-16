@@ -6,6 +6,7 @@ import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FeatureHighlights } from '../../blocks/FeatureHighlights/config'
+import { FindUs } from '../../blocks/FindUs/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { Reviews } from '../../blocks/Reviews/config'
@@ -89,6 +90,7 @@ export const Pages: CollectionConfig = {
                 Reviews,
                 MenuHighlights,
                 SideBySideContent,
+                FindUs,
               ],
               required: true,
               admin: {

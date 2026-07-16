@@ -12,6 +12,7 @@ import * as migration_20260707_211847_reviews_block from './20260707_211847_revi
 import * as migration_20260710_173633 from './20260710_173633'
 import * as migration_20260712_192435_opening_hours_fixed_days from './20260712_192435_opening_hours_fixed_days'
 import * as migration_20260713_112318 from './20260713_112318'
+import * as migration_20260713_122832_find_us_and_business_info from './20260713_122832_find_us_and_business_info'
 
 export const migrations = [
   {
@@ -83,5 +84,10 @@ export const migrations = [
     up: migration_20260713_112318.up,
     down: migration_20260713_112318.down,
     name: '20260713_112318',
+  },
+  {
+    up: migration_20260713_122832_find_us_and_business_info.up,
+    down: migration_20260713_122832_find_us_and_business_info.down,
+    name: '20260713_122832_find_us_and_business_info',
   },
 ]
