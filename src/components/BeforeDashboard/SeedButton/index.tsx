@@ -1,88 +1,42 @@
 'use client'
 
-import React, { Fragment, useCallback, useState } from 'react'
 import { toast } from '@payloadcms/ui'
+import React, { useState } from 'react'
 
 import './index.scss'
-
-const SuccessMessage: React.FC = () => (
-  <div>
-    Database seeded! You can now{' '}
-    <a target="_blank" href="/">
-      visit your website
-    </a>
-  </div>
-)
 
 export const SeedButton: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [seeded, setSeeded] = useState(false)
-  const [error, setError] = useState<null | string>(null)
 
-  const handleClick = useCallback(
-    async (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault()
+  const handleClick = async () => {
+    if (
+      !window.confirm(
+        'This will delete and replace all content in the connected database. Continue?',
+      )
+    ) {
+      return
+    }
 
-      if (seeded) {
-        toast.info('Database already seeded.')
-        return
-      }
-      if (loading) {
-        toast.info('Seeding already in progress.')
-        return
-      }
-      if (error) {
-        toast.error(`An error occurred, please refresh and try again.`)
-        return
-      }
+    setLoading(true)
 
-      setLoading(true)
+    try {
+      const response = await fetch('/next/seed', { method: 'POST', credentials: 'include' })
 
-      try {
-        toast.promise(
-          new Promise((resolve, reject) => {
-            try {
-              fetch('/next/seed', { method: 'POST', credentials: 'include' })
-                .then((res) => {
-                  if (res.ok) {
-                    resolve(true)
-                    setSeeded(true)
-                  } else {
-                    reject('An error occurred while seeding.')
-                  }
-                })
-                .catch((error) => {
-                  reject(error)
-                })
-            } catch (error) {
-              reject(error)
-            }
-          }),
-          {
-            loading: 'Seeding with data....',
-            success: <SuccessMessage />,
-            error: 'An error occurred while seeding.',
-          },
-        )
-      } catch (err) {
-        const error = err instanceof Error ? err.message : String(err)
-        setError(error)
-      }
-    },
-    [loading, seeded, error],
-  )
+      if (!response.ok) throw new Error('Unable to seed the database.')
 
-  let message = ''
-  if (loading) message = ' (seeding...)'
-  if (seeded) message = ' (done!)'
-  if (error) message = ` (error: ${error})`
+      setSeeded(true)
+      toast.success('Connected database seeded.')
+    } catch {
+      toast.error('Unable to seed the database.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <Fragment>
-      <button className="seedButton" onClick={handleClick}>
-        Seed your database
-      </button>
-      {message}
-    </Fragment>
+    <button className="seedButton" disabled={loading || seeded} onClick={handleClick} type="button">
+      {loading ? 'Seeding...' : seeded ? 'Seeded' : 'Seed connected database'}
+    </button>
   )
 }
