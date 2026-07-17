@@ -8,6 +8,7 @@ type MenuItemCardProps = {
   badges?: { id?: string | null; label: string }[] | null
   description: string
   featured?: boolean
+  fillsRow?: boolean
   index: number
   media: number | MediaType
   name: string
@@ -18,6 +19,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   badges,
   description,
   featured = false,
+  fillsRow = false,
   index,
   media,
   name,
@@ -49,7 +51,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
         <div className="flex items-start justify-between gap-4">
           <h3
             className={cn(
-              'text-sm leading-[1.4] font-bold tracking-[0.01em] text-foreground',
+              'min-w-0 text-sm leading-[1.4] font-bold tracking-[0.01em] text-foreground',
               featured && 'lg:text-2xl lg:leading-[1.3] lg:tracking-normal',
             )}
           >
@@ -84,7 +86,9 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
 
   const className = cn(
     'group flex overflow-hidden rounded-3xl bg-surface-container-lowest shadow-[0_4px_20px_rgba(120,177,160,0.12)] transition-transform duration-200 hover:-translate-y-1',
-    featured && 'lg:col-span-2 lg:h-[21.5rem] lg:flex-row',
+    featured && 'flex-col lg:h-[21.5rem] lg:flex-row',
+    featured && !fillsRow && 'lg:col-span-2',
+    fillsRow && 'lg:col-span-3',
     !featured && 'flex-col',
   )
 

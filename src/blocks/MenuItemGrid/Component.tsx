@@ -11,6 +11,23 @@ type Props = MenuItemGridBlockProps & {
 export const MenuItemGridBlock: React.FC<Props> = ({ category, className, heading, items }) => {
   if (!items?.length) return null
 
+  let occupiedColumns = 0
+  let finalItemFillsRow = false
+
+  for (const [index, item] of items.entries()) {
+    const columnSpan = item.highlighted ? 2 : 1
+
+    if (occupiedColumns + columnSpan > 3) occupiedColumns = 0
+
+    if (index === items.length - 1) {
+      finalItemFillsRow = occupiedColumns === 0
+      break
+    }
+
+    occupiedColumns += columnSpan
+    if (occupiedColumns === 3) occupiedColumns = 0
+  }
+
   return (
     <section className={cn('py-12 md:py-20', className)}>
       <div className="container">
@@ -31,6 +48,7 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
               badges={item.badges}
               description={item.description}
               featured={Boolean(item.highlighted)}
+              fillsRow={finalItemFillsRow && index === items.length - 1}
               index={index}
               key={item.id ?? `${item.name}-${index}`}
               media={item.media}
