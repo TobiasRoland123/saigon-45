@@ -19,7 +19,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ badge, links, media, 
 
           {richText && (
             <RichText
-              className="mt-6 max-w-none text-white [&_h1]:mb-4 [&_h1]:text-4xl [&_h1]:leading-[1.05] [&_h1]:font-extrabold [&_h1]:text-white md:[&_h1]:text-5xl [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-white/85 md:[&_p]:text-lg"
+              className="mt-6 max-w-none text-white [&_a]:text-inverse-primary [&_a]:underline [&_a]:decoration-inverse-primary/50 [&_a]:decoration-2 [&_a]:underline-offset-2 [&_a]:hover:text-tertiary-fixed [&_h1]:mb-4 [&_h1]:text-4xl [&_h1]:leading-[1.05] [&_h1]:font-extrabold [&_h1]:text-white md:[&_h1]:text-5xl [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-white/85 md:[&_p]:text-lg"
               data={richText}
               enableGutter={false}
             />
