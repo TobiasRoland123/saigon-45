@@ -15,32 +15,32 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TYPE "public"."enum__pages_v_blocks_reviews_smiley_icon" ADD VALUE 'mail' BEFORE 'search';
   ALTER TYPE "public"."enum__pages_v_blocks_reviews_smiley_icon" ADD VALUE 'share' BEFORE 'star';
   CREATE TABLE "pages_blocks_contact" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"_path" text NOT NULL,
-  	"id" varchar PRIMARY KEY NOT NULL,
-  	"heading" varchar DEFAULT 'Lad os høre fra dig',
-  	"description" varchar DEFAULT 'Har du spørgsmål til din reservation, vores menu eller ønsker du at høre om selskabsmuligheder? Vores team står altid klar til at hjælpe.',
-  	"phone_label" varchar DEFAULT 'Ring til os',
-  	"email_label" varchar DEFAULT 'Send en mail',
-  	"media_id" integer,
-  	"block_name" varchar
+    "_order" integer NOT NULL,
+    "_parent_id" integer NOT NULL,
+    "_path" text NOT NULL,
+    "id" varchar PRIMARY KEY NOT NULL,
+    "heading" varchar DEFAULT 'Lad os høre fra dig',
+    "description" varchar DEFAULT 'Har du spørgsmål til din reservation, vores menu eller ønsker du at høre om selskabsmuligheder? Vores team står altid klar til at hjælpe.',
+    "phone_label" varchar DEFAULT 'Ring til os',
+    "email_label" varchar DEFAULT 'Send en mail',
+    "media_id" integer,
+    "block_name" varchar
   );
-  
+
   CREATE TABLE "_pages_v_blocks_contact" (
-  	"_order" integer NOT NULL,
-  	"_parent_id" integer NOT NULL,
-  	"_path" text NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"heading" varchar DEFAULT 'Lad os høre fra dig',
-  	"description" varchar DEFAULT 'Har du spørgsmål til din reservation, vores menu eller ønsker du at høre om selskabsmuligheder? Vores team står altid klar til at hjælpe.',
-  	"phone_label" varchar DEFAULT 'Ring til os',
-  	"email_label" varchar DEFAULT 'Send en mail',
-  	"media_id" integer,
-  	"_uuid" varchar,
-  	"block_name" varchar
+    "_order" integer NOT NULL,
+    "_parent_id" integer NOT NULL,
+    "_path" text NOT NULL,
+    "id" serial PRIMARY KEY NOT NULL,
+    "heading" varchar DEFAULT 'Lad os høre fra dig',
+    "description" varchar DEFAULT 'Har du spørgsmål til din reservation, vores menu eller ønsker du at høre om selskabsmuligheder? Vores team står altid klar til at hjælpe.',
+    "phone_label" varchar DEFAULT 'Ring til os',
+    "email_label" varchar DEFAULT 'Send en mail',
+    "media_id" integer,
+    "_uuid" varchar,
+    "block_name" varchar
   );
-  
+
   ALTER TABLE "pages_blocks_contact" ADD CONSTRAINT "pages_blocks_contact_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_contact" ADD CONSTRAINT "pages_blocks_contact_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_contact" ADD CONSTRAINT "_pages_v_blocks_contact_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
