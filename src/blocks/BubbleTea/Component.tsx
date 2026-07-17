@@ -30,9 +30,12 @@ export function BubbleTeaBlock({ className, heading, priceLabel, products, subti
           </p>
         </div>
 
-        <div className="relative mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 md:mt-16 md:gap-x-10">
+        <div className="relative mx-auto mt-12 flex max-w-5xl flex-wrap justify-center gap-x-6 gap-y-10 md:mt-16 md:gap-x-10">
           {products.map((product, index) => (
-            <article className="min-w-0 text-center" key={product.id ?? index}>
+            <article
+              className="min-w-0 flex-1 basis-[calc(50%-0.75rem)] text-center sm:basis-[calc(25%-1.875rem)]"
+              key={product.id ?? index}
+            >
               <div className="relative mx-auto aspect-square w-full max-w-48 overflow-hidden rounded-full border-4 border-surface-container-lowest bg-surface-container-low shadow-[0_12px_28px_rgba(12,31,28,0.14)]">
                 <Media
                   fill
