@@ -201,6 +201,10 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Small pill shown above the heading (e.g. "Our Journey", "New Menu").
+     */
+    badge?: string | null;
     media?: (number | null) | Media;
   };
   layout: (
@@ -1278,6 +1282,7 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
+        badge?: T;
         media?: T;
       };
   layout?:

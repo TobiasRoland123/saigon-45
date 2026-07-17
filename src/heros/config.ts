@@ -59,6 +59,15 @@ export const hero: Field = {
       },
     }),
     {
+      name: 'badge',
+      type: 'text',
+      label: 'Badge / pill label',
+      admin: {
+        condition: (_, { type } = {}) => type === 'mediumImpact',
+        description: 'Small pill shown above the heading (e.g. "Our Journey", "New Menu").',
+      },
+    },
+    {
       name: 'media',
       type: 'upload',
       admin: {
