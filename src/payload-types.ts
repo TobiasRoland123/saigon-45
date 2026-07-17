@@ -219,6 +219,7 @@ export interface Page {
     | MenuHighlightsBlock
     | SideBySideContentBlock
     | FindUsBlock
+    | BubbleTeaBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1024,6 +1025,26 @@ export interface FindUsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock".
+ */
+export interface BubbleTeaBlock {
+  heading: string;
+  subtitle: string;
+  /**
+   * Short price text shown in the highlighted pill, for example “Fra 45 kr.”
+   */
+  priceLabel: string;
+  products: {
+    media: number | Media;
+    name: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bubbleTea';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1337,6 +1358,7 @@ export interface PagesSelect<T extends boolean = true> {
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
         findUs?: T | FindUsBlockSelect<T>;
+        bubbleTea?: T | BubbleTeaBlockSelect<T>;
       };
   meta?:
     | T
@@ -1572,6 +1594,24 @@ export interface FindUsBlockSelect<T extends boolean = true> {
   contactLabel?: T;
   buttonLabel?: T;
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock_select".
+ */
+export interface BubbleTeaBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subtitle?: T;
+  priceLabel?: T;
+  products?:
+    | T
+    | {
+        media?: T;
+        name?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
