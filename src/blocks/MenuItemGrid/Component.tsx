@@ -25,7 +25,7 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
           ) : null}
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 pt-10 md:grid-cols-2 lg:grid-cols-3">
           {items.map((item, index) => (
             <MenuItemCard
               badges={item.badges}
