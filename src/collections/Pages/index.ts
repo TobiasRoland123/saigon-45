@@ -12,6 +12,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { Reviews } from '../../blocks/Reviews/config'
 import { MenuHighlights } from '../../blocks/MenuHighlights/config'
 import { SideBySideContent } from '@/blocks/SideBySideContent/config'
+import { BubbleTea } from '@/blocks/BubbleTea/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -91,6 +92,7 @@ export const Pages: CollectionConfig = {
                 MenuHighlights,
                 SideBySideContent,
                 FindUs,
+                BubbleTea,
               ],
               required: true,
               admin: {
