@@ -6,21 +6,21 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { OpeningHoursPill } from '@/OpeningHours/Component.client'
 import React from 'react'
 
-// Async server component: it awaits the `opening-hours` global, so it can't use
+// Async server component: it awaits the `business-info` global, so it can't use
 // the `React.FC` type (that can't return a Promise). RenderHero renders it as
 // JSX, which supports async server components.
 export const HighImpactHero = async ({ links, media, richText }: Page['hero']) => {
-  const openingHours = await getCachedGlobal('opening-hours', 1)()
+  const businessInfo = await getCachedGlobal('business-info', 0)()
 
   return (
     <div className="relative -mt-42 flex min-h-screen items-center overflow-hidden pt-26 text-white">
       <div className="relative z-10 container py-16 md:py-24 lg:py-32">
         <div className="max-w-172">
-          {openingHours?.address && (
+          {businessInfo?.address?.street && (
             <OpeningHoursPill
-              address={openingHours.address}
-              addressUrl={openingHours.addressUrl}
-              days={openingHours.days}
+              address={businessInfo.address.street}
+              addressUrl={businessInfo.address.googleMapsUrl}
+              days={businessInfo.openingHours}
               className="mb-8"
             />
           )}

@@ -6,6 +6,7 @@ import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FeatureHighlightsBlock } from '@/blocks/FeatureHighlights/Component'
+import { FindUsBlock } from '@/blocks/FindUs/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { MenuItemGridBlock } from '@/blocks/MenuItemGrid/Component'
@@ -18,6 +19,7 @@ const blockComponents = {
   content: ContentBlock,
   cta: CallToActionBlock,
   featureHighlights: FeatureHighlightsBlock,
+  findUs: FindUsBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   menuItemGrid: MenuItemGridBlock,

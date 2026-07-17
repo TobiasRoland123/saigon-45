@@ -112,12 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    'opening-hours': OpeningHour;
+    'business-info': BusinessInfo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    'opening-hours': OpeningHoursSelect<false> | OpeningHoursSelect<true>;
+    'business-info': BusinessInfoSelect<false> | BusinessInfoSelect<true>;
   };
   locale: null;
   widgets: {
@@ -201,6 +201,10 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Small pill shown above the heading (e.g. "Our Journey", "New Menu").
+     */
+    badge?: string | null;
     media?: (number | null) | Media;
   };
   layout: (
@@ -214,6 +218,7 @@ export interface Page {
     | MenuItemGridBlock
     | MenuHighlightsBlock
     | SideBySideContentBlock
+    | FindUsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -808,6 +813,7 @@ export interface FeatureHighlightsBlock {
       | 'arrowLeft'
       | 'arrowRight'
       | 'clock'
+      | 'externalLink'
       | 'mapPin'
       | 'phone'
       | 'badgeCheck'
@@ -838,6 +844,7 @@ export interface ReviewsBlock {
     | 'arrowLeft'
     | 'arrowRight'
     | 'clock'
+    | 'externalLink'
     | 'mapPin'
     | 'phone'
     | 'badgeCheck'
@@ -853,6 +860,7 @@ export interface ReviewsBlock {
     | 'arrowLeft'
     | 'arrowRight'
     | 'clock'
+    | 'externalLink'
     | 'mapPin'
     | 'phone'
     | 'badgeCheck'
@@ -992,6 +1000,27 @@ export interface SideBySideContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'splitContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FindUsBlock".
+ */
+export interface FindUsBlock {
+  /**
+   * Adresse, åbningstider og telefonnummer hentes fra Settings → Business Info.
+   */
+  heading: string;
+  addressLabel: string;
+  hoursLabel: string;
+  contactLabel: string;
+  buttonLabel: string;
+  /**
+   * Kort/billede vist til højre, fx screenshot af centerkortet.
+   */
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'findUs';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1291,6 +1320,7 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
+        badge?: T;
         media?: T;
       };
   layout?:
@@ -1306,6 +1336,7 @@ export interface PagesSelect<T extends boolean = true> {
         menuItemGrid?: T | MenuItemGridBlockSelect<T>;
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
+        findUs?: T | FindUsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1527,6 +1558,20 @@ export interface SideBySideContentBlockSelect<T extends boolean = true> {
       };
   media?: T;
   imageCallout?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FindUsBlock_select".
+ */
+export interface FindUsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  addressLabel?: T;
+  hoursLabel?: T;
+  contactLabel?: T;
+  buttonLabel?: T;
+  media?: T;
   id?: T;
   blockName?: T;
 }
@@ -2093,22 +2138,36 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "opening-hours".
+ * via the `definition` "business-info".
  */
-export interface OpeningHour {
+export interface BusinessInfo {
   id: number;
-  /**
-   * Shown on the left of the opening-hours pill, e.g. "Rødovre Centrum 41".
-   */
-  address: string;
-  /**
-   * Link to adress on Google Maps, e.g. "https://goo.gl/maps/..."
-   */
-  addressUrl: string;
+  address: {
+    /**
+     * Street and number, e.g. "Rødovre Centrum 45".
+     */
+    street: string;
+    /**
+     * Postal code and city, e.g. "2610 Rødovre".
+     */
+    zipCity: string;
+    /**
+     * Optional extra line, e.g. "(Find os i stueetagen ved indgang D)".
+     */
+    extraDetails?: string | null;
+    /**
+     * Link to the address on Google Maps, e.g. "https://goo.gl/maps/...".
+     */
+    googleMapsUrl: string;
+  };
+  contact: {
+    phone: string;
+    email?: string | null;
+  };
   /**
    * Tick "Closed" for days you are shut. For hours past midnight (e.g. open until 02:00) just set the closing time — it is treated as the next morning.
    */
-  days: {
+  openingHours: {
     monday: {
       /**
        * Day name shown to visitors, e.g. "Mandag".
@@ -2173,6 +2232,13 @@ export interface OpeningHour {
       closesAt?: string | null;
     };
   };
+  socialMedia?:
+    | {
+        platform: 'facebook' | 'instagram' | 'x' | 'linkedin' | 'youtube' | 'tiktok' | 'whatsapp' | 'pinterest';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2263,12 +2329,24 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "opening-hours_select".
+ * via the `definition` "business-info_select".
  */
-export interface OpeningHoursSelect<T extends boolean = true> {
-  address?: T;
-  addressUrl?: T;
-  days?:
+export interface BusinessInfoSelect<T extends boolean = true> {
+  address?:
+    | T
+    | {
+        street?: T;
+        zipCity?: T;
+        extraDetails?: T;
+        googleMapsUrl?: T;
+      };
+  contact?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+      };
+  openingHours?:
     | T
     | {
         monday?:
@@ -2327,6 +2405,13 @@ export interface OpeningHoursSelect<T extends boolean = true> {
               opensAt?: T;
               closesAt?: T;
             };
+      };
+  socialMedia?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
