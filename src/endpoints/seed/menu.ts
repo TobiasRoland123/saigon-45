@@ -90,6 +90,19 @@ export const menu: (args: MenuArgs) => RequiredDataFromCollectionSlug<'pages'> =
         },
       ],
     },
+    {
+      blockName: 'Bubble tea-favoritter',
+      blockType: 'bubbleTea',
+      heading: 'Find din bubble tea-favorit',
+      subtitle:
+        'Vælg mellem frugtige, cremede og klassiske varianter – altid frisklavet med dine yndlingstoppings.',
+      priceLabel: 'Fra 45 kr.',
+      products: [
+        { media: menuImages[0].id, name: 'Classic Milk Tea' },
+        { media: menuImages[1].id, name: 'Mango Passion' },
+        { media: menuImages[2].id, name: 'Strawberry Matcha' },
+      ],
+    },
   ],
   slug: 'menu',
   title: 'Menu',
