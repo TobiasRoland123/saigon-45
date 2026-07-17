@@ -209,6 +209,7 @@ export interface Page {
   };
   layout: (
     | CallToActionBlock
+    | ContactBlock
     | ContentBlock
     | MediaBlock
     | ArchiveBlock
@@ -506,6 +507,23 @@ export interface CallToActionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock".
+ */
+export interface ContactBlock {
+  heading: string;
+  description: string;
+  phoneLabel: string;
+  emailLabel: string;
+  /**
+   * Restaurant image shown beside the contact details.
+   */
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contact';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -819,7 +837,9 @@ export interface FeatureHighlightsBlock {
       | 'phone'
       | 'badgeCheck'
       | 'leaf'
+      | 'mail'
       | 'search'
+      | 'share'
       | 'star'
       | 'quote';
     title: string;
@@ -850,7 +870,9 @@ export interface ReviewsBlock {
     | 'phone'
     | 'badgeCheck'
     | 'leaf'
+    | 'mail'
     | 'search'
+    | 'share'
     | 'star'
     | 'quote';
   smileyTitle: string;
@@ -866,7 +888,9 @@ export interface ReviewsBlock {
     | 'phone'
     | 'badgeCheck'
     | 'leaf'
+    | 'mail'
     | 'search'
+    | 'share'
     | 'star'
     | 'quote';
   smileyLinkLabel: string;
@@ -1348,6 +1372,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        contact?: T | ContactBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
@@ -1395,6 +1420,19 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock_select".
+ */
+export interface ContactBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  phoneLabel?: T;
+  emailLabel?: T;
+  media?: T;
   id?: T;
   blockName?: T;
 }
