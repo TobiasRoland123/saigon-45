@@ -14,18 +14,18 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
   return (
     <section className={cn('py-12 md:py-20', className)}>
       <div className="container">
-        <div className="flex flex-col justify-between gap-3 border-l-8 border-secondary pl-8 md:flex-row md:items-end">
-          <h2 className="py-3 text-4xl leading-none font-bold tracking-tight text-primary">
+        <div className="flex flex-col justify-between gap-3 border-l-4 border-secondary pl-7 md:flex-row md:items-center">
+          <h2 className="text-[2rem] leading-[1.2] font-bold tracking-tight text-primary">
             {heading}
           </h2>
           {category ? (
-            <p className="text-sm font-extrabold tracking-[0.12em] text-outline uppercase">
+            <p className="text-xs leading-[1.2] font-bold tracking-[0.1em] text-outline uppercase">
               {category}
             </p>
           ) : null}
         </div>
 
-        <div className="grid gap-8 pt-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
           {items.map((item, index) => (
             <MenuItemCard
               badges={item.badges}

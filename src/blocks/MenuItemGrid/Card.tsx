@@ -27,8 +27,8 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
     <>
       <div
         className={cn(
-          'relative aspect-[1.45] overflow-hidden bg-surface-container',
-          featured && 'lg:aspect-auto lg:w-[41%]',
+          'relative h-48 w-full shrink-0 overflow-hidden bg-surface-container',
+          featured && 'lg:h-auto lg:w-2/5',
         )}
       >
         <Media
@@ -36,24 +36,41 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
           imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
           priority={index < 2}
           resource={media}
-          size="(max-width: 1024px) 100vw, 33vw"
+          size={featured ? '(max-width: 1024px) 100vw, 31vw' : '(max-width: 1024px) 100vw, 33vw'}
         />
+        {featured ? (
+          <span className="absolute top-6 left-6 rounded-lg bg-[#78b1a0] px-3 py-1 text-xs leading-[1.2] font-bold text-on-primary-fixed">
+            Bestseller
+          </span>
+        ) : null}
       </div>
 
-      <div className={cn('flex flex-1 flex-col p-6 md:p-8', featured && 'lg:p-10')}>
+      <div className={cn('flex flex-1 flex-col p-6', featured && 'lg:p-10')}>
         <div className="flex items-start justify-between gap-4">
-          <h3 className="leading-tight font-extrabold text-foreground md:text-2xl">{name}</h3>
-          <p className="shrink-0 font-extrabold text-secondary">{price}</p>
+          <h3
+            className={cn(
+              'text-sm leading-[1.4] font-bold tracking-[0.01em] text-foreground',
+              featured && 'lg:text-2xl lg:leading-[1.3] lg:tracking-normal',
+            )}
+          >
+            {name}
+          </h3>
+          <p
+            className={cn(
+              'shrink-0 text-sm leading-[1.4] font-bold tracking-[0.01em] text-secondary',
+              featured && 'lg:text-2xl lg:leading-[1.3] lg:tracking-normal',
+            )}
+          >
+            {price}
+          </p>
         </div>
-        <p className="mt-4 text-base leading-relaxed text-on-surface-variant md:text-lg">
-          {description}
-        </p>
+        <p className="mt-2 text-base leading-[1.6] text-on-surface-variant">{description}</p>
 
         {badges?.length ? (
-          <div className="mt-auto flex flex-wrap gap-2 pt-7">
+          <div className="mt-auto flex flex-wrap gap-1 pt-6">
             {badges.map((badge, badgeIndex) => (
               <span
-                className="rounded-sm bg-primary-fixed/70 px-3 py-2 text-sm font-bold text-foreground/80"
+                className="rounded-lg bg-surface-container px-3 py-1 text-xs leading-[1.2] font-bold text-[#1e4141]"
                 key={badge.id ?? `${badge.label}-${badgeIndex}`}
               >
                 {badge.label}
@@ -66,8 +83,8 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   )
 
   const className = cn(
-    'group flex min-h-104 overflow-hidden rounded-[1.75rem] bg-surface-container-lowest shadow-[0_12px_30px_rgba(0,0,0,0.22)] transition-transform duration-200 hover:-translate-y-1',
-    featured && 'lg:col-span-2 lg:min-h-128 lg:flex-row',
+    'group flex overflow-hidden rounded-3xl bg-surface-container-lowest shadow-[0_4px_20px_rgba(120,177,160,0.12)] transition-transform duration-200 hover:-translate-y-1',
+    featured && 'lg:col-span-2 lg:h-[21.5rem] lg:flex-row',
     !featured && 'flex-col',
   )
 
