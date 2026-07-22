@@ -44,7 +44,7 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
           ) : null}
         </div>
 
-        <div className="grid grid-flow-row gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
           {populatedItems.map((item, index) => (
             <MenuItemCard
               badges={item.badges}
