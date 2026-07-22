@@ -914,6 +914,10 @@ export interface MenuItemGridBlock {
 export interface MenuItem {
   id: number;
   media: number | Media;
+  /**
+   * Rettens nummer på menukortet. Foreslås automatisk ud fra det højeste nummer.
+   */
+  number: number;
   name: string;
   description: string;
   /**
@@ -1708,6 +1712,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface MenuItemsSelect<T extends boolean = true> {
   media?: T;
+  number?: T;
   name?: T;
   description?: T;
   price?: T;
