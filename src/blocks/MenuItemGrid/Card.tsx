@@ -5,7 +5,7 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 
 type MenuItemCardProps = {
-  badges?: { id: string | null; label: string }[] | null
+  badges?: { id?: string | null; label: string }[] | null
   description: string
   featured?: boolean
   fillsRow?: boolean

@@ -36,7 +36,7 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
             {heading}
           </h2>
           {category ? (
-            <p className="text-xs leading-[1.2] font-bold tracking-[0.1em] text-outline uppercase">
+            <p className="text-xs leading-[1.2] font-bold tracking-widest text-outline uppercase">
               {category}
             </p>
           ) : null}
