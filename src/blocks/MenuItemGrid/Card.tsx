@@ -73,7 +73,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
             {badges.map((badge, badgeIndex) => (
               <span
                 className="rounded-lg bg-surface-container px-3 py-1 text-xs leading-[1.2] font-bold text-[#1e4141]"
-                key={`${badge.label}-${badgeIndex}`}
+                key={badge.id && `${badge.label}-${badgeIndex}`}
               >
                 {badge.label}
               </span>
