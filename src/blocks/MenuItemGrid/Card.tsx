@@ -83,7 +83,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   )
 
   const className = cn(
-    'group flex w-full overflow-hidden rounded-3xl bg-surface-container-lowest shadow-[0_4px_20px_rgba(120,177,160,0.12)] transition-transform duration-200 hover:-translate-y-1 md:flex-1 md:basis-[calc(50%-0.75rem)] lg:basis-0',
+    'group flex w-full overflow-hidden rounded-3xl bg-surface-container-lowest shadow-[0_4px_20px_rgba(120,177,160,0.25)] transition-transform duration-200 hover:-translate-y-1 md:flex-1 md:basis-[calc(50%-0.75rem)] lg:basis-0',
     featured && 'flex-col lg:h-[21.5rem] lg:flex-row',
     featured ? 'lg:flex-[2]' : 'lg:flex-1',
     !featured && 'flex-col',
