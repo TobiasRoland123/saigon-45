@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     media: Media;
+    'menu-items': MenuItem;
     categories: Category;
     users: User;
     redirects: Redirect;
@@ -92,6 +93,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'menu-items': MenuItemsSelect<false> | MenuItemsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
@@ -897,32 +899,42 @@ export interface MenuItemGridBlock {
    * Category label shown alongside the heading.
    */
   category?: string | null;
-  items: {
-    media: number | Media;
-    name: string;
-    description: string;
-    /**
-     * For example: 49,-
-     */
-    price: string;
-    /**
-     * Display this menu item with the highlighted card layout.
-     */
-    highlighted?: boolean | null;
-    /**
-     * Optional dietary or promotional labels.
-     */
-    badges?:
-      | {
-          label: string;
-          id?: string | null;
-        }[]
-      | null;
-    id?: string | null;
-  }[];
+  /**
+   * Select the menu items to show in this section and arrange their display order.
+   */
+  items: (number | MenuItem)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'menuItemGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu-items".
+ */
+export interface MenuItem {
+  id: number;
+  media: number | Media;
+  name: string;
+  description: string;
+  /**
+   * For example: 49,-
+   */
+  price: string;
+  /**
+   * Display this menu item with the highlighted card layout.
+   */
+  highlighted?: boolean | null;
+  /**
+   * Optional dietary or promotional labels.
+   */
+  badges?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1225,6 +1237,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'menu-items';
+        value: number | MenuItem;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
@@ -1484,22 +1500,7 @@ export interface ReviewsBlockSelect<T extends boolean = true> {
 export interface MenuItemGridBlockSelect<T extends boolean = true> {
   heading?: T;
   category?: T;
-  items?:
-    | T
-    | {
-        media?: T;
-        name?: T;
-        description?: T;
-        price?: T;
-        highlighted?: T;
-        badges?:
-          | T
-          | {
-              label?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+  items?: T;
   id?: T;
   blockName?: T;
 }
@@ -1700,6 +1701,25 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu-items_select".
+ */
+export interface MenuItemsSelect<T extends boolean = true> {
+  media?: T;
+  name?: T;
+  description?: T;
+  price?: T;
+  highlighted?: T;
+  badges?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -7,7 +7,7 @@ import type { BusinessInfo } from '@/payload-types'
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
-import { menu } from './menu'
+import { menu, menuItems } from './menu'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
 import { imageHero1 } from './image-hero-1'
@@ -265,13 +265,26 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
+  const menuItemDocs = await Promise.all(
+    menuItems({
+      menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
+    }).map((data) =>
+      payload.create({
+        collection: 'menu-items',
+        depth: 0,
+        context: {
+          disableRevalidate: true,
+        },
+        data,
+      }),
+    ),
+  )
+
   const [_home, _menu, _contact] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
-      data: menu({
-        menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
-      }),
+      data: menu({ menuItems: menuItemDocs }),
     }),
     payload.create({
       collection: 'pages',

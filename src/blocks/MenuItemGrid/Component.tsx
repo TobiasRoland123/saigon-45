@@ -1,4 +1,4 @@
-import type { MenuItemGridBlock as MenuItemGridBlockProps } from '@/payload-types'
+import type { MenuItem, MenuItemGridBlock as MenuItemGridBlockProps } from '@/payload-types'
 
 import { MenuItemCard } from '@/blocks/MenuItemGrid/Card'
 import { cn } from '@/utilities/ui'
@@ -9,17 +9,19 @@ type Props = MenuItemGridBlockProps & {
 }
 
 export const MenuItemGridBlock: React.FC<Props> = ({ category, className, heading, items }) => {
-  if (!items?.length) return null
+  const populatedItems = items?.filter((item): item is MenuItem => typeof item !== 'number') ?? []
+
+  if (!populatedItems.length) return null
 
   let occupiedColumns = 0
   let finalItemFillsRow = false
 
-  for (const [index, item] of items.entries()) {
+  for (const [index, item] of populatedItems.entries()) {
     const columnSpan = item.highlighted ? 2 : 1
 
     if (occupiedColumns + columnSpan > 3) occupiedColumns = 0
 
-    if (index === items.length - 1) {
+    if (index === populatedItems.length - 1) {
       finalItemFillsRow = occupiedColumns === 0
       break
     }
@@ -42,13 +44,13 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
           ) : null}
         </div>
 
-        <div className="grid gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((item, index) => (
+        <div className="grid grid-flow-row gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
+          {populatedItems.map((item, index) => (
             <MenuItemCard
               badges={item.badges}
               description={item.description}
               featured={Boolean(item.highlighted)}
-              fillsRow={finalItemFillsRow && index === items.length - 1}
+              fillsRow={finalItemFillsRow && index === populatedItems.length - 1}
               index={index}
               key={item.id ?? `${item.name}-${index}`}
               media={item.media}
