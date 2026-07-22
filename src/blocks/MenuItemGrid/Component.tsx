@@ -13,19 +13,19 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
 
   if (!populatedItems.length) return null
 
+  const rows: MenuItem[][] = []
   let occupiedColumns = 0
-  let finalItemFillsRow = false
 
-  for (const [index, item] of populatedItems.entries()) {
+  for (const item of populatedItems) {
     const columnSpan = item.highlighted ? 2 : 1
 
-    if (occupiedColumns + columnSpan > 3) occupiedColumns = 0
-
-    if (index === populatedItems.length - 1) {
-      finalItemFillsRow = occupiedColumns === 0
-      break
+    if (occupiedColumns + columnSpan > 3) {
+      occupiedColumns = 0
     }
 
+    if (occupiedColumns === 0) rows.push([])
+
+    rows.at(-1)?.push(item)
     occupiedColumns += columnSpan
     if (occupiedColumns === 3) occupiedColumns = 0
   }
@@ -44,19 +44,25 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
           ) : null}
         </div>
 
-        <div className="grid gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
-          {populatedItems.map((item, index) => (
-            <MenuItemCard
-              badges={item.badges}
-              description={item.description}
-              featured={Boolean(item.highlighted)}
-              fillsRow={finalItemFillsRow && index === populatedItems.length - 1}
-              index={index}
-              key={item.id ?? `${item.name}-${index}`}
-              media={item.media}
-              name={item.name}
-              price={item.price}
-            />
+        <div className="flex flex-col gap-6 pt-10">
+          {rows.map((row, rowIndex) => (
+            <div
+              className="flex flex-col gap-6 md:flex-row md:flex-wrap lg:flex-nowrap"
+              key={rowIndex}
+            >
+              {row.map((item, columnIndex) => (
+                <MenuItemCard
+                  badges={item.badges}
+                  description={item.description}
+                  featured={Boolean(item.highlighted)}
+                  index={populatedItems.indexOf(item)}
+                  key={item.id ?? `${item.name}-${rowIndex}-${columnIndex}`}
+                  media={item.media}
+                  name={item.name}
+                  price={item.price}
+                />
+              ))}
+            </div>
           ))}
         </div>
       </div>
