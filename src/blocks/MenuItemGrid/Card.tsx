@@ -5,7 +5,7 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 
 type MenuItemCardProps = {
-  badges?: { id?: string | null; label: string }[] | null
+  badges?: { id: string | null; label: string }[] | null
   description: string
   featured?: boolean
   fillsRow?: boolean
@@ -73,7 +73,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
             {badges.map((badge, badgeIndex) => (
               <span
                 className="rounded-lg bg-surface-container px-3 py-1 text-xs leading-[1.2] font-bold text-[#1e4141]"
-                key={badge.id ?? `${badge.label}-${badgeIndex}`}
+                key={`${badge.label}-${badgeIndex}`}
               >
                 {badge.label}
               </span>
