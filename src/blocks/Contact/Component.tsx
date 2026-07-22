@@ -2,7 +2,7 @@ import type { ContactBlock as ContactBlockProps } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { Icon, SocialIcon } from '@/components/icons'
-import { formatPhoneNumber } from '@/utilities/formatPhoneNumber'
+import { formatPhoneHref, formatPhoneNumber } from '@/utilities/formatPhoneNumber'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { cn } from '@/utilities/ui'
 
@@ -57,7 +57,7 @@ export const ContactBlock = async ({
 
   return (
     <section className={cn('container py-12 md:py-20', className)}>
-      <div className="grid overflow-hidden rounded-[2rem] bg-surface-container-lowest shadow-[0_24px_60px_rgba(12,31,28,0.16)] lg:grid-cols-2 lg:rounded-[3rem]">
+      <div className="grid overflow-hidden rounded-4xl bg-surface-container-lowest shadow-[0_24px_60px_rgba(12,31,28,0.16)] lg:grid-cols-2 lg:rounded-[3rem]">
         <div className="order-2 px-6 py-12 sm:px-10 md:px-16 md:py-16 lg:order-1 lg:px-20 lg:py-24">
           <div className="max-w-xl">
             <h2 className="text-4xl leading-tight font-extrabold text-primary md:text-5xl">
@@ -71,7 +71,7 @@ export const ContactBlock = async ({
               <div className="mt-12 space-y-8">
                 {phone && (
                   <ContactRow
-                    href={`tel:${phone.replaceAll(' ', '')}`}
+                    href={formatPhoneHref(phone)}
                     icon="phone"
                     label={phoneLabel}
                     value={phone}
