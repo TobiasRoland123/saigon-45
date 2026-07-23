@@ -1,8 +1,16 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, SelectFieldSingleValidation } from 'payload'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { revalidateMenuItem, revalidateMenuItemDelete } from './MenuItems/hooks/revalidateMenuItem'
+
+const validateDrinkSubtype: SelectFieldSingleValidation = (value, { siblingData }) => {
+  const menuItemData = siblingData as { type?: string }
+
+  if (menuItemData.type !== 'drink') return true
+
+  return value ? true : 'Choose a drink subtype.'
+}
 
 export const MenuItems: CollectionConfig = {
   slug: 'menu-items',
@@ -13,7 +21,7 @@ export const MenuItems: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['number', 'name', 'price', 'updatedAt'],
+    defaultColumns: ['number', 'name', 'type', 'price', 'updatedAt'],
     useAsTitle: 'name',
   },
   defaultSort: 'number',
@@ -50,6 +58,46 @@ export const MenuItems: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'type',
+      type: 'select',
+      admin: {
+        description: 'Choose whether this menu item is food, a drink, or a dessert.',
+        position: 'sidebar',
+      },
+      options: [
+        {
+          label: 'Food',
+          value: 'food',
+        },
+        {
+          label: 'Drink',
+          value: 'drink',
+        },
+        {
+          label: 'Dessert',
+          value: 'dessert',
+        },
+      ],
+      required: true,
+    },
+    {
+      name: 'subtype',
+      type: 'select',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'drink',
+        description: 'Choose the drink subtype.',
+        position: 'sidebar',
+      },
+      label: 'Drink subtype',
+      options: [
+        {
+          label: 'Bubble Tea',
+          value: 'bubble-tea',
+        },
+      ],
+      validate: validateDrinkSubtype,
     },
     {
       name: 'description',

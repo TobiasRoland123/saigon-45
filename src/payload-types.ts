@@ -221,6 +221,7 @@ export interface Page {
     | MenuHighlightsBlock
     | SideBySideContentBlock
     | FindUsBlock
+    | BubbleTeaBlock
   )[];
   meta?: {
     title?: string | null;
@@ -919,6 +920,14 @@ export interface MenuItem {
    */
   number: number;
   name: string;
+  /**
+   * Choose whether this menu item is food, a drink, or a dessert.
+   */
+  type: 'food' | 'drink' | 'dessert';
+  /**
+   * Choose the drink subtype.
+   */
+  subtype?: 'bubble-tea' | null;
   description: string;
   /**
    * For example: 49,-
@@ -1037,6 +1046,25 @@ export interface FindUsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'findUs';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock".
+ */
+export interface BubbleTeaBlock {
+  heading: string;
+  subtitle: string;
+  /**
+   * Short price text shown in the highlighted pill, for example “Fra 45 kr.”
+   */
+  priceLabel: string;
+  /**
+   * Select up to four bubble tea menu items to show in this section.
+   */
+  items: (number | MenuItem)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bubbleTea';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1357,6 +1385,7 @@ export interface PagesSelect<T extends boolean = true> {
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
         findUs?: T | FindUsBlockSelect<T>;
+        bubbleTea?: T | BubbleTeaBlockSelect<T>;
       };
   meta?:
     | T
@@ -1582,6 +1611,18 @@ export interface FindUsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock_select".
+ */
+export interface BubbleTeaBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subtitle?: T;
+  priceLabel?: T;
+  items?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1714,6 +1755,8 @@ export interface MenuItemsSelect<T extends boolean = true> {
   media?: T;
   number?: T;
   name?: T;
+  type?: T;
+  subtype?: T;
   description?: T;
   price?: T;
   highlighted?: T;

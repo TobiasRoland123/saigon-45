@@ -13,6 +13,7 @@ import { MenuItemGridBlock } from '@/blocks/MenuItemGrid/Component'
 import { ReviewsBlock } from '@/blocks/Reviews/Component'
 import { MenuHighlightsBlock } from '@/blocks/MenuHighlights/Component'
 import { SideBySideContentBlock } from '@/blocks/SideBySideContent/Component'
+import { BubbleTeaBlock } from '@/blocks/BubbleTea/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -26,6 +27,7 @@ const blockComponents = {
   reviews: ReviewsBlock,
   menuHighlights: MenuHighlightsBlock,
   splitContent: SideBySideContentBlock,
+  bubbleTea: BubbleTeaBlock,
 }
 
 export const RenderBlocks: React.FC<{
