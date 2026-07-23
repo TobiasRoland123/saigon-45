@@ -13,15 +13,38 @@ export const MenuItems: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['name', 'price', 'updatedAt'],
+    defaultColumns: ['number', 'name', 'price', 'updatedAt'],
     useAsTitle: 'name',
   },
+  defaultSort: 'number',
   fields: [
     {
       name: 'media',
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'number',
+      type: 'number',
+      required: true,
+      unique: true,
+      min: 1,
+      admin: {
+        description: 'Rettens nummer på menukortet. Foreslås automatisk ud fra det højeste nummer.',
+        position: 'sidebar',
+      },
+      // Kører serverside når "Create New"-formularen åbnes
+      defaultValue: async ({ req }) => {
+        const last = await req.payload.find({
+          collection: 'menu-items',
+          limit: 1,
+          sort: '-number',
+          depth: 0,
+          req,
+        })
+        return (last.docs[0]?.number ?? 0) + 1
+      },
     },
     {
       name: 'name',

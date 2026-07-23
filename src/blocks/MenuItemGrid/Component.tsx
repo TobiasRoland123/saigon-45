@@ -59,6 +59,7 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
                   key={item.id ?? `${item.name}-${rowIndex}-${columnIndex}`}
                   media={item.media}
                   name={item.name}
+                  number={item.number}
                   price={item.price}
                 />
               ))}

@@ -11,6 +11,7 @@ type MenuItemCardProps = {
   index: number
   media: number | MediaType
   name: string
+  number: number
   price: string
 }
 
@@ -21,6 +22,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   index,
   media,
   name,
+  number,
   price,
 }) => {
   const content = (
@@ -53,7 +55,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
               featured && 'lg:text-2xl lg:leading-[1.3] lg:tracking-normal',
             )}
           >
-            {name}
+            <span className="text-outline">{number}.</span> {name}
           </h3>
           <p
             className={cn(
