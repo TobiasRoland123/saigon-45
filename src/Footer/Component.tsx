@@ -3,7 +3,7 @@ import React from 'react'
 
 import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
-import { formatPhoneNumber } from '@/utilities/formatPhoneNumber'
+import { formatPhoneHref, formatPhoneNumber } from '@/utilities/formatPhoneNumber'
 import { SocialIcon } from '@/components/icons'
 import RichText from '@/components/RichText'
 
@@ -46,7 +46,7 @@ export async function Footer() {
               <li>{contactData?.ContactAddress}</li>
               {normalizedPhone && (
                 <li>
-                  <a href={`tel:${normalizedPhone.replaceAll(' ', '')}`}>{normalizedPhone}</a>
+                  <a href={formatPhoneHref(normalizedPhone)}>{normalizedPhone}</a>
                 </li>
               )}
               {contactData.ContactOpeningHouse && (

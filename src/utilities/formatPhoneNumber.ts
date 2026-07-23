@@ -18,3 +18,7 @@ export function formatPhoneNumber(input: string): string {
 
   return [prefix, ...groups].filter(Boolean).join(' ')
 }
+
+export function formatPhoneHref(phoneNumber: string): string {
+  return `tel:${phoneNumber.replace(/\s+/g, '')}`
+}

@@ -4,6 +4,7 @@ import { basename, extname, join } from 'node:path'
 
 import type { BusinessInfo } from '@/payload-types'
 
+import { about } from './about'
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
@@ -280,11 +281,14 @@ export const seed = async ({
     ),
   )
 
-  const [_home, _menu, _contact] = await Promise.all([
+  const [_home, _menu, _contact, _about] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
-      data: menu({ menuItems: menuItemDocs }),
+      data: menu({
+        menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
+        menuItems: menuItemDocs,
+      }),
     }),
     payload.create({
       collection: 'pages',
@@ -299,6 +303,11 @@ export const seed = async ({
       collection: 'pages',
       depth: 0,
       data: contactPageData({ contactForm: contactForm }),
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      data: about({ contactImage: image2Doc }),
     }),
   ])
 

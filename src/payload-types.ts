@@ -211,6 +211,7 @@ export interface Page {
   };
   layout: (
     | CallToActionBlock
+    | ContactBlock
     | ContentBlock
     | MediaBlock
     | ArchiveBlock
@@ -221,6 +222,7 @@ export interface Page {
     | MenuHighlightsBlock
     | SideBySideContentBlock
     | FindUsBlock
+    | BubbleTeaBlock
   )[];
   meta?: {
     title?: string | null;
@@ -507,6 +509,23 @@ export interface CallToActionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock".
+ */
+export interface ContactBlock {
+  heading: string;
+  description: string;
+  phoneLabel: string;
+  emailLabel: string;
+  /**
+   * Restaurant image shown beside the contact details.
+   */
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contact';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -820,7 +839,9 @@ export interface FeatureHighlightsBlock {
       | 'phone'
       | 'badgeCheck'
       | 'leaf'
+      | 'mail'
       | 'search'
+      | 'share'
       | 'star'
       | 'quote';
     title: string;
@@ -851,7 +872,9 @@ export interface ReviewsBlock {
     | 'phone'
     | 'badgeCheck'
     | 'leaf'
+    | 'mail'
     | 'search'
+    | 'share'
     | 'star'
     | 'quote';
   smileyTitle: string;
@@ -867,7 +890,9 @@ export interface ReviewsBlock {
     | 'phone'
     | 'badgeCheck'
     | 'leaf'
+    | 'mail'
     | 'search'
+    | 'share'
     | 'star'
     | 'quote';
   smileyLinkLabel: string;
@@ -1037,6 +1062,26 @@ export interface FindUsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'findUs';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock".
+ */
+export interface BubbleTeaBlock {
+  heading: string;
+  subtitle: string;
+  /**
+   * Short price text shown in the highlighted pill, for example “Fra 45 kr.”
+   */
+  priceLabel: string;
+  products: {
+    media: number | Media;
+    name: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bubbleTea';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1347,6 +1392,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;
+        contact?: T | ContactBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
@@ -1357,6 +1403,7 @@ export interface PagesSelect<T extends boolean = true> {
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
         findUs?: T | FindUsBlockSelect<T>;
+        bubbleTea?: T | BubbleTeaBlockSelect<T>;
       };
   meta?:
     | T
@@ -1393,6 +1440,19 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock_select".
+ */
+export interface ContactBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  phoneLabel?: T;
+  emailLabel?: T;
+  media?: T;
   id?: T;
   blockName?: T;
 }
@@ -1577,6 +1637,24 @@ export interface FindUsBlockSelect<T extends boolean = true> {
   contactLabel?: T;
   buttonLabel?: T;
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock_select".
+ */
+export interface BubbleTeaBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subtitle?: T;
+  priceLabel?: T;
+  products?:
+    | T
+    | {
+        media?: T;
+        name?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

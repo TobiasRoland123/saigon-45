@@ -4,6 +4,7 @@ import type { Page } from '@/payload-types'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
+import { ContactBlock } from '@/blocks/Contact/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FeatureHighlightsBlock } from '@/blocks/FeatureHighlights/Component'
 import { FindUsBlock } from '@/blocks/FindUs/Component'
@@ -13,10 +14,12 @@ import { MenuItemGridBlock } from '@/blocks/MenuItemGrid/Component'
 import { ReviewsBlock } from '@/blocks/Reviews/Component'
 import { MenuHighlightsBlock } from '@/blocks/MenuHighlights/Component'
 import { SideBySideContentBlock } from '@/blocks/SideBySideContent/Component'
+import { BubbleTeaBlock } from '@/blocks/BubbleTea/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
+  contact: ContactBlock,
   cta: CallToActionBlock,
   featureHighlights: FeatureHighlightsBlock,
   findUs: FindUsBlock,
@@ -26,6 +29,7 @@ const blockComponents = {
   reviews: ReviewsBlock,
   menuHighlights: MenuHighlightsBlock,
   splitContent: SideBySideContentBlock,
+  bubbleTea: BubbleTeaBlock,
 }
 
 export const RenderBlocks: React.FC<{

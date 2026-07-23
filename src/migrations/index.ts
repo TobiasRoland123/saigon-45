@@ -17,6 +17,8 @@ import * as migration_20260713_122832_find_us_and_business_info from './20260713
 import * as migration_20260713_194909 from './20260713_194909'
 import * as migration_20260714_235000_restore_opening_hours from './20260714_235000_restore_opening_hours'
 import * as migration_20260716_191428_hero_badge from './20260716_191428_hero_badge'
+import * as migration_20260717_131338_bubble_tea_block from './20260717_131338_bubble_tea_block'
+import * as migration_20260717_224744_contact_section from './20260717_224744_contact_section'
 import * as migration_20260722_115040 from './20260722_115040'
 import * as migration_20260723_072602_add_menu_item_number from './20260723_072602_add_menu_item_number'
 
@@ -115,6 +117,16 @@ export const migrations = [
     up: migration_20260716_191428_hero_badge.up,
     down: migration_20260716_191428_hero_badge.down,
     name: '20260716_191428_hero_badge',
+  },
+  {
+    up: migration_20260717_131338_bubble_tea_block.up,
+    down: migration_20260717_131338_bubble_tea_block.down,
+    name: '20260717_131338_bubble_tea_block',
+  },
+  {
+    up: migration_20260717_224744_contact_section.up,
+    down: migration_20260717_224744_contact_section.down,
+    name: '20260717_224744_contact_section',
   },
   {
     up: migration_20260722_115040.up,
