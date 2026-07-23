@@ -9,6 +9,7 @@ import { FeatureHighlights } from '../../blocks/FeatureHighlights/config'
 import { FindUs } from '../../blocks/FindUs/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { MenuItemGrid } from '../../blocks/MenuItemGrid/config'
 import { Reviews } from '../../blocks/Reviews/config'
 import { MenuHighlights } from '../../blocks/MenuHighlights/config'
 import { SideBySideContent } from '@/blocks/SideBySideContent/config'
@@ -88,6 +89,7 @@ export const Pages: CollectionConfig = {
                 FormBlock,
                 FeatureHighlights,
                 Reviews,
+                MenuItemGrid,
                 MenuHighlights,
                 SideBySideContent,
                 FindUs,

@@ -67,7 +67,7 @@ export const HighlightCard: React.FC<HighlightCardProps> = ({
           <p className="mt-6 text-sm leading-relaxed text-on-surface-variant">{description}</p>
 
           {link?.href && (
-            <span className="mt-auto inline-flex items-center gap-4 pt-12 text-xl font-bold text-primary no-underline hover:text-primary/80">
+            <span className="no-underline mt-auto inline-flex items-center gap-4 pt-12 text-xl font-bold text-primary hover:text-primary/80">
               {link.label} <Icon name="arrowRight" className="size-5" />
             </span>
           )}

@@ -11,9 +11,14 @@ import * as migration_20260707_200805 from './20260707_200805'
 import * as migration_20260707_211847_reviews_block from './20260707_211847_reviews_block'
 import * as migration_20260710_173633 from './20260710_173633'
 import * as migration_20260712_192435_opening_hours_fixed_days from './20260712_192435_opening_hours_fixed_days'
+import * as migration_20260712_215840 from './20260712_215840'
 import * as migration_20260713_112318 from './20260713_112318'
 import * as migration_20260713_122832_find_us_and_business_info from './20260713_122832_find_us_and_business_info'
+import * as migration_20260713_194909 from './20260713_194909'
+import * as migration_20260714_235000_restore_opening_hours from './20260714_235000_restore_opening_hours'
 import * as migration_20260716_191428_hero_badge from './20260716_191428_hero_badge'
+import * as migration_20260722_115040 from './20260722_115040'
+import * as migration_20260723_072602_add_menu_item_number from './20260723_072602_add_menu_item_number'
 
 export const migrations = [
   {
@@ -82,6 +87,11 @@ export const migrations = [
     name: '20260712_192435_opening_hours_fixed_days',
   },
   {
+    up: migration_20260712_215840.up,
+    down: migration_20260712_215840.down,
+    name: '20260712_215840',
+  },
+  {
     up: migration_20260713_112318.up,
     down: migration_20260713_112318.down,
     name: '20260713_112318',
@@ -92,8 +102,28 @@ export const migrations = [
     name: '20260713_122832_find_us_and_business_info',
   },
   {
+    up: migration_20260713_194909.up,
+    down: migration_20260713_194909.down,
+    name: '20260713_194909',
+  },
+  {
+    up: migration_20260714_235000_restore_opening_hours.up,
+    down: migration_20260714_235000_restore_opening_hours.down,
+    name: '20260714_235000_restore_opening_hours',
+  },
+  {
     up: migration_20260716_191428_hero_badge.up,
     down: migration_20260716_191428_hero_badge.down,
     name: '20260716_191428_hero_badge',
+  },
+  {
+    up: migration_20260722_115040.up,
+    down: migration_20260722_115040.down,
+    name: '20260722_115040',
+  },
+  {
+    up: migration_20260723_072602_add_menu_item_number.up,
+    down: migration_20260723_072602_add_menu_item_number.down,
+    name: '20260723_072602_add_menu_item_number',
   },
 ]
