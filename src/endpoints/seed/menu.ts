@@ -89,6 +89,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Classic Milk Tea',
     number: 9,
     price: '45,-',
+    subtype: 'bubble-tea',
     type: 'drink',
   },
   {
@@ -97,6 +98,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Mango Passion',
     number: 10,
     price: '49,-',
+    subtype: 'bubble-tea',
     type: 'drink',
   },
   {
@@ -105,6 +107,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Strawberry Matcha',
     number: 11,
     price: '52,-',
+    subtype: 'bubble-tea',
     type: 'drink',
   },
 ]

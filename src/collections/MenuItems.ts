@@ -1,8 +1,16 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, SelectFieldSingleValidation } from 'payload'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { revalidateMenuItem, revalidateMenuItemDelete } from './MenuItems/hooks/revalidateMenuItem'
+
+const validateDrinkSubtype: SelectFieldSingleValidation = (value, { siblingData }) => {
+  const menuItemData = siblingData as { type?: string }
+
+  if (menuItemData.type !== 'drink') return true
+
+  return value ? true : 'Choose a drink subtype.'
+}
 
 export const MenuItems: CollectionConfig = {
   slug: 'menu-items',
@@ -73,6 +81,23 @@ export const MenuItems: CollectionConfig = {
         },
       ],
       required: true,
+    },
+    {
+      name: 'subtype',
+      type: 'select',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'drink',
+        description: 'Choose the drink subtype.',
+        position: 'sidebar',
+      },
+      label: 'Drink subtype',
+      options: [
+        {
+          label: 'Bubble Tea',
+          value: 'bubble-tea',
+        },
+      ],
+      validate: validateDrinkSubtype,
     },
     {
       name: 'description',

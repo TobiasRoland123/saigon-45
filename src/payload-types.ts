@@ -924,6 +924,10 @@ export interface MenuItem {
    * Choose whether this menu item is food, a drink, or a dessert.
    */
   type: 'food' | 'drink' | 'dessert';
+  /**
+   * Choose the drink subtype.
+   */
+  subtype?: 'bubble-tea' | null;
   description: string;
   /**
    * For example: 49,-
@@ -1055,7 +1059,7 @@ export interface BubbleTeaBlock {
    */
   priceLabel: string;
   /**
-   * Select up to four drink menu items to show in this section.
+   * Select up to four bubble tea menu items to show in this section.
    */
   items: (number | MenuItem)[];
   id?: string | null;
@@ -1752,6 +1756,7 @@ export interface MenuItemsSelect<T extends boolean = true> {
   number?: T;
   name?: T;
   type?: T;
+  subtype?: T;
   description?: T;
   price?: T;
   highlighted?: T;

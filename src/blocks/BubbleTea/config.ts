@@ -32,14 +32,17 @@ export const BubbleTea: Block = {
       minRows: 1,
       maxRows: 4,
       admin: {
-        description: 'Select up to four drink menu items to show in this section.',
+        description: 'Select up to four bubble tea menu items to show in this section.',
       },
       filterOptions: {
+        subtype: {
+          equals: 'bubble-tea',
+        },
         type: {
           equals: 'drink',
         },
       },
-      label: 'Drink menu items',
+      label: 'Bubble tea menu items',
     },
   ],
   labels: {

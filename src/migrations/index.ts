@@ -21,6 +21,7 @@ import * as migration_20260717_131338_bubble_tea_block from './20260717_131338_b
 import * as migration_20260722_115040 from './20260722_115040'
 import * as migration_20260723_072602_add_menu_item_number from './20260723_072602_add_menu_item_number'
 import * as migration_20260723_172437_add_menu_item_type_and_bubble_tea_items from './20260723_172437_add_menu_item_type_and_bubble_tea_items'
+import * as migration_20260723_192345_add_bubble_tea_menu_item_subtype from './20260723_192345_add_bubble_tea_menu_item_subtype'
 
 export const migrations = [
   {
@@ -137,5 +138,10 @@ export const migrations = [
     up: migration_20260723_172437_add_menu_item_type_and_bubble_tea_items.up,
     down: migration_20260723_172437_add_menu_item_type_and_bubble_tea_items.down,
     name: '20260723_172437_add_menu_item_type_and_bubble_tea_items',
+  },
+  {
+    up: migration_20260723_192345_add_bubble_tea_menu_item_subtype.up,
+    down: migration_20260723_192345_add_bubble_tea_menu_item_subtype.down,
+    name: '20260723_192345_add_bubble_tea_menu_item_subtype',
   },
 ]
