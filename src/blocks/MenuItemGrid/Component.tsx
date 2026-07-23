@@ -1,4 +1,4 @@
-import type { MenuItemGridBlock as MenuItemGridBlockProps } from '@/payload-types'
+import type { MenuItem, MenuItemGridBlock as MenuItemGridBlockProps } from '@/payload-types'
 
 import { MenuItemCard } from '@/blocks/MenuItemGrid/Card'
 import { cn } from '@/utilities/ui'
@@ -9,21 +9,23 @@ type Props = MenuItemGridBlockProps & {
 }
 
 export const MenuItemGridBlock: React.FC<Props> = ({ category, className, heading, items }) => {
-  if (!items?.length) return null
+  const populatedItems = items?.filter((item): item is MenuItem => typeof item !== 'number') ?? []
 
+  if (!populatedItems.length) return null
+
+  const rows: MenuItem[][] = []
   let occupiedColumns = 0
-  let finalItemFillsRow = false
 
-  for (const [index, item] of items.entries()) {
+  for (const item of populatedItems) {
     const columnSpan = item.highlighted ? 2 : 1
 
-    if (occupiedColumns + columnSpan > 3) occupiedColumns = 0
-
-    if (index === items.length - 1) {
-      finalItemFillsRow = occupiedColumns === 0
-      break
+    if (occupiedColumns + columnSpan > 3) {
+      occupiedColumns = 0
     }
 
+    if (occupiedColumns === 0) rows.push([])
+
+    rows.at(-1)?.push(item)
     occupiedColumns += columnSpan
     if (occupiedColumns === 3) occupiedColumns = 0
   }
@@ -36,25 +38,32 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
             {heading}
           </h2>
           {category ? (
-            <p className="text-xs leading-[1.2] font-bold tracking-[0.1em] text-outline uppercase">
+            <p className="text-xs leading-[1.2] font-bold tracking-widest text-outline uppercase">
               {category}
             </p>
           ) : null}
         </div>
 
-        <div className="grid gap-6 pt-10 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((item, index) => (
-            <MenuItemCard
-              badges={item.badges}
-              description={item.description}
-              featured={Boolean(item.highlighted)}
-              fillsRow={finalItemFillsRow && index === items.length - 1}
-              index={index}
-              key={item.id ?? `${item.name}-${index}`}
-              media={item.media}
-              name={item.name}
-              price={item.price}
-            />
+        <div className="flex flex-col gap-6 pt-10">
+          {rows.map((row, rowIndex) => (
+            <div
+              className="flex flex-col gap-6 md:flex-row md:flex-wrap lg:flex-nowrap"
+              key={rowIndex}
+            >
+              {row.map((item, columnIndex) => (
+                <MenuItemCard
+                  badges={item.badges}
+                  description={item.description}
+                  featured={Boolean(item.highlighted)}
+                  index={populatedItems.indexOf(item)}
+                  key={item.id ?? `${item.name}-${rowIndex}-${columnIndex}`}
+                  media={item.media}
+                  name={item.name}
+                  number={item.number}
+                  price={item.price}
+                />
+              ))}
+            </div>
           ))}
         </div>
       </div>

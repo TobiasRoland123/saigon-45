@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
+import { MenuItems } from './collections/MenuItems'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
@@ -77,7 +78,7 @@ export default buildConfig({
   //   },
   //   push: false,
   // }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, MenuItems, Categories, Users],
   folders: {
     slug: 'payload-folders',
   },

@@ -18,6 +18,8 @@ import * as migration_20260713_194909 from './20260713_194909'
 import * as migration_20260714_235000_restore_opening_hours from './20260714_235000_restore_opening_hours'
 import * as migration_20260716_191428_hero_badge from './20260716_191428_hero_badge'
 import * as migration_20260717_131338_bubble_tea_block from './20260717_131338_bubble_tea_block'
+import * as migration_20260722_115040 from './20260722_115040'
+import * as migration_20260723_072602_add_menu_item_number from './20260723_072602_add_menu_item_number'
 
 export const migrations = [
   {
@@ -119,5 +121,15 @@ export const migrations = [
     up: migration_20260717_131338_bubble_tea_block.up,
     down: migration_20260717_131338_bubble_tea_block.down,
     name: '20260717_131338_bubble_tea_block',
+  },
+  {
+    up: migration_20260722_115040.up,
+    down: migration_20260722_115040.down,
+    name: '20260722_115040',
+  },
+  {
+    up: migration_20260723_072602_add_menu_item_number.up,
+    down: migration_20260723_072602_add_menu_item_number.down,
+    name: '20260723_072602_add_menu_item_number',
   },
 ]
