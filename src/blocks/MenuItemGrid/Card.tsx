@@ -8,10 +8,10 @@ type MenuItemCardProps = {
   badges?: { id?: string | null; label: string }[] | null
   description: string
   featured?: boolean
-  fillsRow?: boolean
   index: number
   media: number | MediaType
   name: string
+  number: number
   price: string
 }
 
@@ -19,10 +19,10 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   badges,
   description,
   featured = false,
-  fillsRow = false,
   index,
   media,
   name,
+  number,
   price,
 }) => {
   const content = (
@@ -55,7 +55,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
               featured && 'lg:text-2xl lg:leading-[1.3] lg:tracking-normal',
             )}
           >
-            {name}
+            <span className="text-outline">{number}.</span> {name}
           </h3>
           <p
             className={cn(
@@ -73,7 +73,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
             {badges.map((badge, badgeIndex) => (
               <span
                 className="rounded-lg bg-surface-container px-3 py-1 text-xs leading-[1.2] font-bold text-[#1e4141]"
-                key={badge.id ?? `${badge.label}-${badgeIndex}`}
+                key={badge.id && `${badge.label}-${badgeIndex}`}
               >
                 {badge.label}
               </span>
@@ -85,10 +85,9 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   )
 
   const className = cn(
-    'group flex overflow-hidden rounded-3xl bg-surface-container-lowest shadow-[0_4px_20px_rgba(120,177,160,0.12)] transition-transform duration-200 hover:-translate-y-1',
+    'group flex w-full overflow-hidden rounded-3xl bg-surface-container-lowest shadow-[0_4px_20px_rgba(120,177,160,0.25)] transition-transform duration-200 hover:-translate-y-1 md:flex-1 md:basis-[calc(50%-0.75rem)] lg:basis-0',
     featured && 'flex-col lg:h-[21.5rem] lg:flex-row',
-    featured && !fillsRow && 'lg:col-span-2',
-    fillsRow && 'lg:col-span-3',
+    featured ? 'lg:flex-[2]' : 'lg:flex-1',
     !featured && 'flex-col',
   )
 
