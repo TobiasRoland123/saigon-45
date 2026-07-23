@@ -24,31 +24,22 @@ export const BubbleTea: Block = {
       },
     },
     {
-      name: 'products',
-      type: 'array',
+      name: 'items',
+      type: 'relationship',
+      relationTo: 'menu-items',
+      hasMany: true,
       required: true,
       minRows: 1,
       maxRows: 4,
       admin: {
-        initCollapsed: true,
+        description: 'Select up to four drink menu items to show in this section.',
       },
-      fields: [
-        {
-          name: 'media',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
+      filterOptions: {
+        type: {
+          equals: 'drink',
         },
-        {
-          name: 'name',
-          type: 'text',
-          required: true,
-        },
-      ],
-      labels: {
-        plural: 'Bubble tea products',
-        singular: 'Bubble tea product',
       },
+      label: 'Drink menu items',
     },
   ],
   labels: {

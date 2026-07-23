@@ -13,7 +13,7 @@ export const MenuItems: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['number', 'name', 'price', 'updatedAt'],
+    defaultColumns: ['number', 'name', 'type', 'price', 'updatedAt'],
     useAsTitle: 'name',
   },
   defaultSort: 'number',
@@ -49,6 +49,29 @@ export const MenuItems: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
+      required: true,
+    },
+    {
+      name: 'type',
+      type: 'select',
+      admin: {
+        description: 'Choose whether this menu item is food, a drink, or a dessert.',
+        position: 'sidebar',
+      },
+      options: [
+        {
+          label: 'Food',
+          value: 'food',
+        },
+        {
+          label: 'Drink',
+          value: 'drink',
+        },
+        {
+          label: 'Dessert',
+          value: 'dessert',
+        },
+      ],
       required: true,
     },
     {

@@ -1,4 +1,4 @@
-import type { BubbleTeaBlock as BubbleTeaBlockProps } from '@/payload-types'
+import type { BubbleTeaBlock as BubbleTeaBlockProps, MenuItem } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { cn } from '@/utilities/ui'
@@ -7,8 +7,10 @@ type Props = BubbleTeaBlockProps & {
   className?: string
 }
 
-export function BubbleTeaBlock({ className, heading, priceLabel, products, subtitle }: Props) {
-  if (!products?.length) return null
+export function BubbleTeaBlock({ className, heading, items, priceLabel, subtitle }: Props) {
+  const populatedItems = items?.filter((item): item is MenuItem => typeof item !== 'number') ?? []
+
+  if (!populatedItems.length) return null
 
   return (
     <section className={cn('container py-16 md:py-24', className)}>
@@ -31,22 +33,22 @@ export function BubbleTeaBlock({ className, heading, priceLabel, products, subti
         </div>
 
         <div className="relative mx-auto mt-12 flex max-w-5xl flex-wrap justify-center gap-x-6 gap-y-10 md:mt-16 md:gap-x-10">
-          {products.map((product, index) => (
+          {populatedItems.map((item, index) => (
             <article
               className="min-w-0 flex-1 basis-[calc(50%-0.75rem)] text-center sm:basis-[calc(25%-1.875rem)]"
-              key={product.id ?? index}
+              key={item.id ?? index}
             >
               <div className="relative mx-auto aspect-square w-full max-w-48 overflow-hidden rounded-full border-4 border-surface-container-lowest bg-surface-container-low shadow-[0_12px_28px_rgba(12,31,28,0.14)]">
                 <Media
                   fill
                   imgClassName="object-cover"
                   priority={index < 2}
-                  resource={product.media}
+                  resource={item.media}
                   size="(max-width: 640px) 42vw, (max-width: 1024px) 22vw, 192px"
                 />
               </div>
               <h3 className="mt-4 text-base leading-snug font-bold text-primary md:text-lg">
-                {product.name}
+                {item.name}
               </h3>
             </article>
           ))}

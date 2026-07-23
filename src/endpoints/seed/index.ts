@@ -280,13 +280,16 @@ export const seed = async ({
     ),
   )
 
+  const foodMenuItems = menuItemDocs.filter(({ type }) => type === 'food')
+  const bubbleTeaItems = menuItemDocs.filter(({ type }) => type === 'drink')
+
   const [_home, _menu, _contact] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
       data: menu({
-        menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
-        menuItems: menuItemDocs,
+        bubbleTeaItems,
+        foodMenuItems,
       }),
     }),
     payload.create({

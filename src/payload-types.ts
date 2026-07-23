@@ -920,6 +920,10 @@ export interface MenuItem {
    */
   number: number;
   name: string;
+  /**
+   * Choose whether this menu item is food, a drink, or a dessert.
+   */
+  type: 'food' | 'drink' | 'dessert';
   description: string;
   /**
    * For example: 49,-
@@ -1050,11 +1054,10 @@ export interface BubbleTeaBlock {
    * Short price text shown in the highlighted pill, for example “Fra 45 kr.”
    */
   priceLabel: string;
-  products: {
-    media: number | Media;
-    name: string;
-    id?: string | null;
-  }[];
+  /**
+   * Select up to four drink menu items to show in this section.
+   */
+  items: (number | MenuItem)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'bubbleTea';
@@ -1610,13 +1613,7 @@ export interface BubbleTeaBlockSelect<T extends boolean = true> {
   heading?: T;
   subtitle?: T;
   priceLabel?: T;
-  products?:
-    | T
-    | {
-        media?: T;
-        name?: T;
-        id?: T;
-      };
+  items?: T;
   id?: T;
   blockName?: T;
 }
@@ -1754,6 +1751,7 @@ export interface MenuItemsSelect<T extends boolean = true> {
   media?: T;
   number?: T;
   name?: T;
+  type?: T;
   description?: T;
   price?: T;
   highlighted?: T;
