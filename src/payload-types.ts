@@ -221,6 +221,7 @@ export interface Page {
     | MenuHighlightsBlock
     | SideBySideContentBlock
     | FindUsBlock
+    | BubbleTeaBlock
   )[];
   meta?: {
     title?: string | null;
@@ -919,11 +920,28 @@ export interface MenuItem {
    */
   number: number;
   name: string;
+  /**
+   * Choose whether this menu item is food, a drink, or a dessert.
+   */
+  type: 'food' | 'drink' | 'dessert';
+  /**
+   * Choose the drink subtype.
+   */
+  subtype?: 'bubble-tea' | null;
   description: string;
   /**
    * For example: 49,-
    */
-  price: string;
+  price?: string | null;
+  /**
+   * Price in kr. for Medium, for example 46.
+   */
+  mediumPrice?: number | null;
+  /**
+   * Only fill in if the drink is also sold in Large.
+   */
+  largePrice?: number | null;
+  isPopular?: boolean | null;
   /**
    * Display this menu item with the highlighted card layout.
    */
@@ -1037,6 +1055,76 @@ export interface FindUsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'findUs';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock".
+ */
+export interface BubbleTeaBlock {
+  /**
+   * Highlight: vælg 4 varianter der fremhæves, plus en knap til den fulde liste. Vis alle: viser automatisk alle bubble teas fra menukortet og hele toppingslisten.
+   */
+  mode: 'highlight' | 'full';
+  heading: string;
+  subtitle: string;
+  /**
+   * Vises kun i highlight. Vælg intern side eller custom URL (fx /menu#bubble-tea).
+   */
+  viewAll?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  /**
+   * Explains what the “M” and “L” badges on each product mean.
+   */
+  sizeLegend: {
+    mediumLabel: string;
+    largeLabel: string;
+  };
+  /**
+   * Badge text shown on every product marked as popular.
+   */
+  popularLabel: string;
+  /**
+   * Vælg op til 4 bubble tea-varianter der skal fremhæves i denne sektion.
+   */
+  items?: (number | MenuItem)[] | null;
+  /**
+   * Teksten om ekstra toppings. Den fulde liste vises kun i “vis alle”.
+   */
+  toppings: {
+    /**
+     * Overskrift på den fulde toppings-liste (kun i “vis alle”).
+     */
+    heading?: string | null;
+    /**
+     * Kort prislabel der vises i pillen i begge tilstande.
+     */
+    priceLabel: string;
+    /**
+     * Toppings der vises i den fulde liste (kun i “vis alle”).
+     */
+    items?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bubbleTea';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1357,6 +1445,7 @@ export interface PagesSelect<T extends boolean = true> {
         menuHighlights?: T | MenuHighlightsBlockSelect<T>;
         splitContent?: T | SideBySideContentBlockSelect<T>;
         findUs?: T | FindUsBlockSelect<T>;
+        bubbleTea?: T | BubbleTeaBlockSelect<T>;
       };
   meta?:
     | T
@@ -1582,6 +1671,46 @@ export interface FindUsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BubbleTeaBlock_select".
+ */
+export interface BubbleTeaBlockSelect<T extends boolean = true> {
+  mode?: T;
+  heading?: T;
+  subtitle?: T;
+  viewAll?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  sizeLegend?:
+    | T
+    | {
+        mediumLabel?: T;
+        largeLabel?: T;
+      };
+  popularLabel?: T;
+  items?: T;
+  toppings?:
+    | T
+    | {
+        heading?: T;
+        priceLabel?: T;
+        items?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1714,8 +1843,13 @@ export interface MenuItemsSelect<T extends boolean = true> {
   media?: T;
   number?: T;
   name?: T;
+  type?: T;
+  subtype?: T;
   description?: T;
   price?: T;
+  mediumPrice?: T;
+  largePrice?: T;
+  isPopular?: T;
   highlighted?: T;
   badges?:
     | T
