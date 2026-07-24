@@ -1,17 +1,19 @@
 import type { RequiredDataFromCollectionSlug } from 'payload'
 
-import type { Media } from '@/payload-types'
+import type { Media, MenuItem } from '@/payload-types'
 
 type HomeArgs = {
   heroImage: Media
   menuImages: [Media, Media, Media]
   metaImage: Media
+  bubbleTeaItems: MenuItem[]
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
   heroImage,
   menuImages,
   metaImage,
+  bubbleTeaItems,
 }) => ({
   title: 'Forside',
   slug: 'home',
@@ -131,6 +133,23 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           link: { type: 'custom', label: 'Se snacks', url: '/menu' },
         },
       ],
+    },
+    {
+      blockName: 'Bubble tea-favoritter',
+      blockType: 'bubbleTea',
+      mode: 'highlight',
+      heading: 'Find din bubble tea-favorit',
+      subtitle:
+        'Vælg mellem frugtige, cremede og klassiske varianter – altid frisklavet med dine yndlingstoppings.',
+      sizeLegend: { mediumLabel: 'Medium', largeLabel: 'Large' },
+      popularLabel: 'Populær',
+      viewAll: { type: 'custom', url: '/menu#bubble-tea', label: 'Se alle varianter' },
+      // Highlight only shows four hand-picked variants; the full list lives on /menu.
+      items: bubbleTeaItems.slice(0, 4).map(({ id }) => id),
+      toppings: {
+        heading: 'Ekstra Toppings',
+        priceLabel: '+4 kr pr. stk.',
+      },
     },
     {
       blockName: 'Catering og selskaber',

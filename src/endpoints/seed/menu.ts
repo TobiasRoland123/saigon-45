@@ -6,6 +6,11 @@ type MenuArgs = {
   menuImages: [Media, Media, Media, Media]
 }
 
+type MenuPageArgs = {
+  bubbleTeaItems: MenuItem[]
+  foodMenuItems: MenuItem[]
+}
+
 export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 'updatedAt'>[] = ({
   menuImages,
 }) => [
@@ -18,6 +23,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Sommerruller',
     number: 1,
     price: '49,-',
+    type: 'food',
   },
   {
     description: '5 stk. med kylling, rejer og grøntsager. Serveres med sød chilisauce.',
@@ -25,6 +31,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Forårsruller',
     number: 2,
     price: '79,-',
+    type: 'food',
   },
   {
     badges: [{ label: 'Vegansk' }],
@@ -33,6 +40,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Vegetar ruller',
     number: 3,
     price: '69,-',
+    type: 'food',
   },
   {
     description: '6 stk. sprøde rejer serveret med chili mayo.',
@@ -40,6 +48,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Tempura rejer',
     number: 4,
     price: '79,-',
+    type: 'food',
   },
   {
     description: '6 stk. fyldt med kylling og rejer. Serveres med sød chilisauce.',
@@ -47,6 +56,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Sprøde wantons',
     number: 5,
     price: '79,-',
+    type: 'food',
   },
   {
     description: '6 dampede dumplings med saftig kylling, ingefær og forårsløg.',
@@ -54,6 +64,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Gyoza med kylling',
     number: 6,
     price: '69,-',
+    type: 'food',
   },
   {
     badges: [{ label: 'Stærk' }],
@@ -62,6 +73,7 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Satay kylling',
     number: 7,
     price: '75,-',
+    type: 'food',
   },
   {
     description: 'Sprøde grøntsager og svampe i en let tempuradej med dip.',
@@ -69,12 +81,47 @@ export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 
     name: 'Tempura grøntsager',
     number: 8,
     price: '59,-',
+    type: 'food',
+  },
+  {
+    description: 'Klassisk sort te med mælk, brun sukker-sirup og tapiokaperler.',
+    media: menuImages[0].id,
+    name: 'Classic Milk Tea',
+    number: 9,
+    price: '45,-',
+    mediumPrice: 46,
+    largePrice: 52,
+    isPopular: true,
+    subtype: 'bubble-tea',
+    type: 'drink',
+  },
+  {
+    description: 'Frugtig mango- og passionsfrugt-te med tapiokaperler.',
+    media: menuImages[1].id,
+    name: 'Mango Passion',
+    number: 10,
+    price: '49,-',
+    mediumPrice: 52,
+    largePrice: 56,
+    subtype: 'bubble-tea',
+    type: 'drink',
+  },
+  {
+    description: 'Cremet matcha med jordbærpuré, mælk og tapiokaperler.',
+    media: menuImages[2].id,
+    name: 'Strawberry Matcha',
+    number: 11,
+    price: '52,-',
+    mediumPrice: 54,
+    subtype: 'bubble-tea',
+    type: 'drink',
   },
 ]
 
-export const menu: (
-  args: MenuArgs & { menuItems: MenuItem[] },
-) => RequiredDataFromCollectionSlug<'pages'> = ({ menuImages, menuItems }) => ({
+export const menu: (args: MenuPageArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
+  bubbleTeaItems,
+  foodMenuItems,
+}) => ({
   _status: 'published',
   hero: {
     type: 'none',
@@ -85,20 +132,34 @@ export const menu: (
       blockType: 'menuItemGrid',
       category: 'Appetizers',
       heading: 'Forretter',
-      items: menuItems.map(({ id }) => id),
+      items: foodMenuItems.map(({ id }) => id),
     },
     {
       blockName: 'Bubble tea-favoritter',
       blockType: 'bubbleTea',
+      mode: 'full',
       heading: 'Find din bubble tea-favorit',
       subtitle:
         'Vælg mellem frugtige, cremede og klassiske varianter – altid frisklavet med dine yndlingstoppings.',
-      priceLabel: 'Fra 45 kr.',
-      products: [
-        { media: menuImages[0].id, name: 'Classic Milk Tea' },
-        { media: menuImages[1].id, name: 'Mango Passion' },
-        { media: menuImages[2].id, name: 'Strawberry Matcha' },
-      ],
+      sizeLegend: { mediumLabel: 'Medium', largeLabel: 'Large' },
+      popularLabel: 'Populær',
+      items: bubbleTeaItems.map(({ id }) => id),
+      toppings: {
+        heading: 'Ekstra Toppings',
+        priceLabel: '+4 kr pr. stk.',
+        items: [
+          { label: 'Tapioca Pearls' },
+          { label: 'Hantian Pearls' },
+          { label: 'Strawberry Boba' },
+          { label: 'Mango Boba' },
+          { label: 'Blueberry Boba' },
+          { label: 'Passionsfruit Boba' },
+          { label: 'Lychee Boba' },
+          { label: 'Green Apple Boba' },
+          { label: 'Peach Boba' },
+          { label: 'Cream Cheese' },
+        ],
+      },
     },
   ],
   slug: 'menu',
