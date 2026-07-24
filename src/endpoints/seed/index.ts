@@ -1,4 +1,5 @@
 import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
+import { randomUUID } from 'node:crypto'
 import { readFile, stat } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
 
@@ -61,6 +62,8 @@ export const seed = async ({
   payload: Payload
   req: PayloadRequest
 }): Promise<void> => {
+  const seedRunID = randomUUID()
+
   payload.logger.info('Seeding database...')
 
   // we need to clear the media directory before seeding
@@ -155,10 +158,10 @@ export const seed = async ({
   payload.logger.info(`— Seeding media...`)
 
   const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
-    getLocalSeedFile('image-post1.webp'),
-    getLocalSeedFile('image-post2.webp'),
-    getLocalSeedFile('image-post3.webp'),
-    getLocalSeedFile('image-hero1.webp'),
+    getLocalSeedFile('image-post1.webp', seedRunID),
+    getLocalSeedFile('image-post2.webp', seedRunID),
+    getLocalSeedFile('image-post3.webp', seedRunID),
+    getLocalSeedFile('image-hero1.webp', seedRunID),
   ])
 
   const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
@@ -453,12 +456,14 @@ export const seed = async ({
   payload.logger.info('Seeded database successfully!')
 }
 
-async function getLocalSeedFile(filename: string): Promise<File> {
+async function getLocalSeedFile(filename: string, seedRunID: string): Promise<File> {
   const filePath = join(process.cwd(), 'src', 'endpoints', 'seed', filename)
   const [data, file] = await Promise.all([readFile(filePath), stat(filePath)])
 
   return {
-    name: basename(filePath),
+    // Payload derives all image-size filenames from this name, so this seed-run
+    // prefix prevents Blob collisions without breaking generated-size URLs.
+    name: `${seedRunID}-${basename(filePath)}`,
     data,
     mimetype: `image/${extname(filePath).slice(1)}`,
     size: file.size,
