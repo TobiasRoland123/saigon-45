@@ -18,6 +18,7 @@ import * as migration_20260713_194909 from './20260713_194909'
 import * as migration_20260714_235000_restore_opening_hours from './20260714_235000_restore_opening_hours'
 import * as migration_20260716_191428_hero_badge from './20260716_191428_hero_badge'
 import * as migration_20260717_131338_bubble_tea_block from './20260717_131338_bubble_tea_block'
+import * as migration_20260717_224744_contact_section from './20260717_224744_contact_section'
 import * as migration_20260722_115040 from './20260722_115040'
 import * as migration_20260723_072602_add_menu_item_number from './20260723_072602_add_menu_item_number'
 import * as migration_20260723_122931_bubble_tea_sizes_and_toppings from './20260723_122931_bubble_tea_sizes_and_toppings'
@@ -129,6 +130,11 @@ export const migrations = [
     name: '20260717_131338_bubble_tea_block',
   },
   {
+    up: migration_20260717_224744_contact_section.up,
+    down: migration_20260717_224744_contact_section.down,
+    name: '20260717_224744_contact_section',
+  },
+  {
     up: migration_20260722_115040.up,
     down: migration_20260722_115040.down,
     name: '20260722_115040',
@@ -139,14 +145,14 @@ export const migrations = [
     name: '20260723_072602_add_menu_item_number',
   },
   {
-    up: migration_20260723_172437_add_menu_item_type_and_bubble_tea_items.up,
-    down: migration_20260723_172437_add_menu_item_type_and_bubble_tea_items.down,
-    name: '20260723_172437_add_menu_item_type_and_bubble_tea_items',
-  },
-  {
     up: migration_20260723_122931_bubble_tea_sizes_and_toppings.up,
     down: migration_20260723_122931_bubble_tea_sizes_and_toppings.down,
     name: '20260723_122931_bubble_tea_sizes_and_toppings',
+  },
+  {
+    up: migration_20260723_172437_add_menu_item_type_and_bubble_tea_items.up,
+    down: migration_20260723_172437_add_menu_item_type_and_bubble_tea_items.down,
+    name: '20260723_172437_add_menu_item_type_and_bubble_tea_items',
   },
   {
     up: migration_20260723_192345_add_bubble_tea_menu_item_subtype.up,

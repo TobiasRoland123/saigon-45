@@ -6,9 +6,11 @@ import {
   Clock,
   ExternalLink,
   Leaf,
+  Mail,
   MapPin,
   Phone,
   Search,
+  Share2,
   Star,
   Quote,
 } from 'lucide-react'
@@ -51,9 +53,17 @@ export const iconRegistry = {
     label: 'Leaf',
     Icon: Leaf,
   },
+  mail: {
+    label: 'Mail',
+    Icon: Mail,
+  },
   search: {
     label: 'Search',
     Icon: Search,
+  },
+  share: {
+    label: 'Share',
+    Icon: Share2,
   },
   star: {
     label: 'Star',
