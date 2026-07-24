@@ -12,7 +12,7 @@ type MenuItemCardProps = {
   media: number | MediaType
   name: string
   number: number
-  price: string
+  price?: string | null
 }
 
 export const MenuItemCard: React.FC<MenuItemCardProps> = ({

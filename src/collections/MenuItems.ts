@@ -1,8 +1,28 @@
-import type { CollectionConfig, SelectFieldSingleValidation } from 'payload'
+import type {
+  CollectionConfig,
+  FieldHook,
+  PayloadRequest,
+  SelectFieldSingleValidation,
+} from 'payload'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { revalidateMenuItem, revalidateMenuItemDelete } from './MenuItems/hooks/revalidateMenuItem'
+
+// The next free menu number = highest existing number + 1. Used both when creating a
+// new item and when duplicating one (duplication would otherwise copy the existing
+// number and fail the unique constraint).
+const getNextMenuNumber = async (req: PayloadRequest): Promise<number> => {
+  const last = await req.payload.find({
+    collection: 'menu-items',
+    limit: 1,
+    sort: '-number',
+    depth: 0,
+    req,
+  })
+
+  return (last.docs[0]?.number ?? 0) + 1
+}
 
 const validateDrinkSubtype: SelectFieldSingleValidation = (value, { siblingData }) => {
   const menuItemData = siblingData as { type?: string }
@@ -11,6 +31,22 @@ const validateDrinkSubtype: SelectFieldSingleValidation = (value, { siblingData 
 
   return value ? true : 'Choose a drink subtype.'
 }
+
+// Clear the stored subtype whenever the item is no longer a drink
+const resetSubtypeForNonDrink: FieldHook = ({ siblingData, value }) => {
+  const menuItemData = siblingData as { type?: string }
+
+  return menuItemData.type === 'drink' ? value : null
+}
+
+// Clear bubble-tea-only fields when the item is not a bubble tea. Accepts type values and null for the field
+const resetWhenNotBubbleTea =
+  (fallback: unknown): FieldHook =>
+  ({ siblingData, value }) => {
+    const menuItemData = siblingData as { subtype?: string | null }
+
+    return menuItemData.subtype === 'bubble-tea' ? value : fallback
+  }
 
 export const MenuItems: CollectionConfig = {
   slug: 'menu-items',
@@ -43,15 +79,11 @@ export const MenuItems: CollectionConfig = {
         position: 'sidebar',
       },
       // Kører serverside når "Create New"-formularen åbnes
-      defaultValue: async ({ req }) => {
-        const last = await req.payload.find({
-          collection: 'menu-items',
-          limit: 1,
-          sort: '-number',
-          depth: 0,
-          req,
-        })
-        return (last.docs[0]?.number ?? 0) + 1
+      defaultValue: ({ req }) => getNextMenuNumber(req),
+      hooks: {
+        // Ved duplikering ville nummeret ellers blive kopieret og bryde unique-reglen.
+        // Tildel i stedet det næste ledige nummer.
+        beforeDuplicate: [({ req }) => getNextMenuNumber(req)],
       },
     },
     {
@@ -98,6 +130,9 @@ export const MenuItems: CollectionConfig = {
         },
       ],
       validate: validateDrinkSubtype,
+      hooks: {
+        beforeChange: [resetSubtypeForNonDrink],
+      },
     },
     {
       name: 'description',
@@ -109,8 +144,53 @@ export const MenuItems: CollectionConfig = {
       type: 'text',
       admin: {
         description: 'For example: 49,-',
+        condition: (_, siblingData) => siblingData?.subtype !== 'bubble-tea',
       },
       required: true,
+    },
+    {
+      type: 'row',
+      admin: {
+        condition: (_, siblingData) => siblingData?.subtype === 'bubble-tea',
+      },
+      fields: [
+        {
+          name: 'mediumPrice',
+          type: 'number',
+          min: 0,
+          admin: {
+            width: '50%',
+            description: 'Price in kr. for Medium, for example 46.',
+          },
+          hooks: {
+            beforeChange: [resetWhenNotBubbleTea(null)],
+          },
+        },
+        {
+          name: 'largePrice',
+          type: 'number',
+          min: 0,
+          admin: {
+            width: '50%',
+            description: 'Only fill in if the drink is also sold in Large.',
+          },
+          hooks: {
+            beforeChange: [resetWhenNotBubbleTea(null)],
+          },
+        },
+      ],
+    },
+    {
+      name: 'isPopular',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        condition: (_, siblingData) => siblingData?.subtype === 'bubble-tea',
+      },
+      label: 'Show as popular',
+      hooks: {
+        beforeChange: [resetWhenNotBubbleTea(false)],
+      },
     },
     {
       name: 'highlighted',
