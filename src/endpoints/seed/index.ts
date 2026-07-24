@@ -5,6 +5,7 @@ import { basename, extname, join } from 'node:path'
 
 import type { BusinessInfo } from '@/payload-types'
 
+import { about } from './about'
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
@@ -268,11 +269,15 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const menuItemDocs = await Promise.all(
-    menuItems({
-      menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
-    }).map((data) =>
-      payload.create({
+  // Create menu items sequentially — not with `Promise.all`. The parallel
+  // transactions race on the `menu_items_badges` sub-table, inserting a badge
+  // before its parent row is visible and tripping the foreign-key constraint.
+  const menuItemDocs = []
+  for (const data of menuItems({
+    menuImages: [image1Doc, image2Doc, image3Doc, imageHomeDoc],
+  })) {
+    menuItemDocs.push(
+      await payload.create({
         collection: 'menu-items',
         depth: 0,
         context: {
@@ -280,14 +285,20 @@ export const seed = async ({
         },
         data,
       }),
-    ),
-  )
+    )
+  }
 
-  const [_home, _menu, _contact] = await Promise.all([
+  const foodMenuItems = menuItemDocs.filter(({ type }) => type === 'food')
+  const bubbleTeaItems = menuItemDocs.filter(({ type }) => type === 'drink')
+
+  const [_home, _menu, _contact, _about] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
-      data: menu({ menuItems: menuItemDocs }),
+      data: menu({
+        bubbleTeaItems,
+        foodMenuItems,
+      }),
     }),
     payload.create({
       collection: 'pages',
@@ -296,12 +307,18 @@ export const seed = async ({
         heroImage: imageHomeDoc,
         menuImages: [image1Doc, image2Doc, image3Doc],
         metaImage: image2Doc,
+        bubbleTeaItems,
       }),
     }),
     payload.create({
       collection: 'pages',
       depth: 0,
       data: contactPageData({ contactForm: contactForm }),
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      data: about({ contactImage: image2Doc }),
     }),
   ])
 

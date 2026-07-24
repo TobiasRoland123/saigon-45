@@ -3,7 +3,7 @@ import type { IconName } from '@/components/icons'
 
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { formatWeekSummary } from '@/OpeningHours/formatWeekSummary'
-import { formatPhoneNumber } from '@/utilities/formatPhoneNumber'
+import { formatPhoneHref, formatPhoneNumber } from '@/utilities/formatPhoneNumber'
 import { Media } from '@/components/Media'
 import { Icon } from '@/components/icons'
 import { buttonVariants } from '@/components/ui/button'
@@ -74,7 +74,7 @@ export const FindUsBlock = async (props: FindUsBlockProps) => {
 
             {phone && (
               <InfoRow icon="phone" label={contactLabel}>
-                <a href={`tel:${phone.replaceAll(' ', '')}`} className="hover:underline">
+                <a href={formatPhoneHref(phone)} className="hover:underline">
                   {phone}
                 </a>
               </InfoRow>

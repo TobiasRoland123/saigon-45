@@ -4,6 +4,7 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
+import { Contact } from '../../blocks/Contact/config'
 import { Content } from '../../blocks/Content/config'
 import { FeatureHighlights } from '../../blocks/FeatureHighlights/config'
 import { FindUs } from '../../blocks/FindUs/config'
@@ -13,6 +14,7 @@ import { MenuItemGrid } from '../../blocks/MenuItemGrid/config'
 import { Reviews } from '../../blocks/Reviews/config'
 import { MenuHighlights } from '../../blocks/MenuHighlights/config'
 import { SideBySideContent } from '@/blocks/SideBySideContent/config'
+import { BubbleTea } from '@/blocks/BubbleTea/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -83,6 +85,7 @@ export const Pages: CollectionConfig = {
               type: 'blocks',
               blocks: [
                 CallToAction,
+                Contact,
                 Content,
                 MediaBlock,
                 Archive,
@@ -93,6 +96,7 @@ export const Pages: CollectionConfig = {
                 MenuHighlights,
                 SideBySideContent,
                 FindUs,
+                BubbleTea,
               ],
               required: true,
               admin: {
