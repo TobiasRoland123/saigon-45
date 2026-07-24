@@ -23,6 +23,7 @@ const collections: CollectionSlug[] = [
   'pages',
   'posts',
   'forms',
+  'menu-items',
   'media',
   'categories',
 ]
@@ -73,25 +74,6 @@ export const seed = async ({
   // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
 
-  const existingMedia = await payload.find({
-    collection: 'media',
-    depth: 0,
-    pagination: false,
-  })
-
-  // Delete through Payload so the Vercel Blob adapter removes the stored files too.
-  for (const media of existingMedia.docs) {
-    await payload.delete({
-      collection: 'media',
-      id: media.id,
-      depth: 0,
-      req,
-      context: {
-        disableRevalidate: true,
-      },
-    })
-  }
-
   // clear the database
   await Promise.all([
     payload.updateGlobal({
@@ -129,13 +111,29 @@ export const seed = async ({
     }),
   ])
 
-  await Promise.all(
-    collections
-      .filter((collection) => collection !== 'media')
-      .map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-  )
-  for (const collection of collections) {
+  // Delete dependencies before media. For example, every menu item requires a media record.
+  // Keep this serial to avoid deadlocks between related tables.
+  for (const collection of collections.filter((collection) => collection !== 'media')) {
     await payload.db.deleteMany({ collection, req, where: {} })
+  }
+
+  const existingMedia = await payload.find({
+    collection: 'media',
+    depth: 0,
+    pagination: false,
+  })
+
+  // Delete through Payload so the Vercel Blob adapter removes the stored files too.
+  for (const media of existingMedia.docs) {
+    await payload.delete({
+      collection: 'media',
+      id: media.id,
+      depth: 0,
+      req,
+      context: {
+        disableRevalidate: true,
+      },
+    })
   }
 
   for (const collection of collections) {
