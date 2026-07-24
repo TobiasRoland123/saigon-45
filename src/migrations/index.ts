@@ -20,8 +20,12 @@ import * as migration_20260716_191428_hero_badge from './20260716_191428_hero_ba
 import * as migration_20260717_131338_bubble_tea_block from './20260717_131338_bubble_tea_block'
 import * as migration_20260722_115040 from './20260722_115040'
 import * as migration_20260723_072602_add_menu_item_number from './20260723_072602_add_menu_item_number'
+import * as migration_20260723_122931_bubble_tea_sizes_and_toppings from './20260723_122931_bubble_tea_sizes_and_toppings'
 import * as migration_20260723_172437_add_menu_item_type_and_bubble_tea_items from './20260723_172437_add_menu_item_type_and_bubble_tea_items'
 import * as migration_20260723_192345_add_bubble_tea_menu_item_subtype from './20260723_192345_add_bubble_tea_menu_item_subtype'
+import * as migration_20260723_200000_add_bubble_tea_menu_item_sizes from './20260723_200000_add_bubble_tea_menu_item_sizes'
+import * as migration_20260724_090000_menu_item_price_nullable from './20260724_090000_menu_item_price_nullable'
+import * as migration_20260724_100000_bubble_tea_display_mode from './20260724_100000_bubble_tea_display_mode'
 
 export const migrations = [
   {
@@ -140,8 +144,28 @@ export const migrations = [
     name: '20260723_172437_add_menu_item_type_and_bubble_tea_items',
   },
   {
+    up: migration_20260723_122931_bubble_tea_sizes_and_toppings.up,
+    down: migration_20260723_122931_bubble_tea_sizes_and_toppings.down,
+    name: '20260723_122931_bubble_tea_sizes_and_toppings',
+  },
+  {
     up: migration_20260723_192345_add_bubble_tea_menu_item_subtype.up,
     down: migration_20260723_192345_add_bubble_tea_menu_item_subtype.down,
     name: '20260723_192345_add_bubble_tea_menu_item_subtype',
+  },
+  {
+    up: migration_20260723_200000_add_bubble_tea_menu_item_sizes.up,
+    down: migration_20260723_200000_add_bubble_tea_menu_item_sizes.down,
+    name: '20260723_200000_add_bubble_tea_menu_item_sizes',
+  },
+  {
+    up: migration_20260724_090000_menu_item_price_nullable.up,
+    down: migration_20260724_090000_menu_item_price_nullable.down,
+    name: '20260724_090000_menu_item_price_nullable',
+  },
+  {
+    up: migration_20260724_100000_bubble_tea_display_mode.up,
+    down: migration_20260724_100000_bubble_tea_display_mode.down,
+    name: '20260724_100000_bubble_tea_display_mode',
   },
 ]

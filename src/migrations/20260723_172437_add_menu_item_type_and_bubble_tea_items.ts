@@ -60,7 +60,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
         product.media_id,
         product.name,
         block.subtitle,
-        block.price_label,
         0 AS source_priority,
         block._parent_id AS page_id,
         product._order
@@ -76,7 +75,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
         product.media_id,
         product.name,
         block.subtitle,
-        block.price_label,
         1 AS source_priority,
         block._parent_id AS page_id,
         product._order
@@ -90,8 +88,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       SELECT DISTINCT ON (media_id, name)
         media_id,
         name,
-        subtitle,
-        price_label
+        subtitle
       FROM legacy_products
       ORDER BY media_id, name, source_priority, page_id, _order
     ),
@@ -108,7 +105,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
         media_id,
         name,
         subtitle,
-        price_label,
         COALESCE((SELECT MAX(number) FROM "menu_items"), 0)
           + ROW_NUMBER() OVER (ORDER BY name, media_id) AS number
       FROM missing_products
@@ -129,7 +125,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
         name,
         'drink',
         COALESCE(NULLIF(subtitle, ''), 'Bubble tea'),
-        COALESCE(price_label, ''),
+        '',
         false
       FROM numbered_products
       RETURNING id, media_id, name
