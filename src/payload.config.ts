@@ -19,9 +19,50 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const r2EnvironmentVariables = [
+  process.env.R2_BUCKET,
+  process.env.R2_ACCESS_KEY_ID,
+  process.env.R2_SECRET_ACCESS_KEY,
+  process.env.R2_ENDPOINT,
+  process.env.R2_PUBLIC_URL,
+]
+const isR2Configured = r2EnvironmentVariables.every(Boolean)
+const r2PublicURL = process.env.R2_PUBLIC_URL?.replace(/\/$/, '')
+
+const mediaStorage = isR2Configured
+  ? s3Storage({
+      collections: {
+        media: {
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => {
+            const key = prefix ? `${prefix}/${filename}` : filename
+
+            return `${r2PublicURL}/${key}`
+          },
+        },
+      },
+      bucket: process.env.R2_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+        },
+        endpoint: process.env.R2_ENDPOINT,
+        forcePathStyle: true,
+        region: 'auto',
+      },
+    })
+  : vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN || '',
+    })
 
 export default buildConfig({
   admin: {
@@ -85,16 +126,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [
     ...plugins,
-    vercelBlobStorage({
-      collections: {
-        media: true,
-      },
-      // Seed uploads may reuse the same source filenames. Keep each upload
-      // addressable in Blob storage so rerunning the seed does not fail when
-      // an earlier run already uploaded the file.
-      addRandomSuffix: true,
-      token: process.env.BLOB_READ_WRITE_TOKEN || '',
-    }),
+    mediaStorage,
   ],
   globals: [Header, Footer, BusinessInfo],
   secret: process.env.PAYLOAD_SECRET,

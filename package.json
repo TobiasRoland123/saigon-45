@@ -16,6 +16,7 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "lint-staged": "lint-staged",
+    "migrate:blob-to-r2": "tsx scripts/migrate-vercel-blob-to-r2.mts",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
@@ -25,6 +26,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1093.0",
     "@payloadcms/admin-bar": "3.82.1",
     "@payloadcms/db-postgres": "^3.82.1",
     "@payloadcms/db-vercel-postgres": "3.82.1",
@@ -36,6 +38,7 @@
     "@payloadcms/plugin-search": "3.82.1",
     "@payloadcms/plugin-seo": "3.82.1",
     "@payloadcms/richtext-lexical": "3.82.1",
+    "@payloadcms/storage-s3": "3.82.1",
     "@payloadcms/storage-vercel-blob": "3.82.1",
     "@payloadcms/ui": "3.82.1",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -91,7 +94,7 @@
     "vite-tsconfig-paths": "6.0.5",
     "vitest": "4.1.6"
   },
-  "packageManager": "pnpm@11.15.1",
+  "packageManager": "pnpm@11.17.0+sha512.cca3cea332ad254bb84145f966d19f4879615210346fc92c79a047f23a0d7b3cca3c3792f0076ba1f1831d277efbcf0a9119b31a9a60eca7fb3d6231f331ef72",
   "engines": {
     "node": ">=24.15.0"
   }

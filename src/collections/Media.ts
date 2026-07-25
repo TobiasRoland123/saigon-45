@@ -14,6 +14,26 @@ import { authenticated } from '../access/authenticated'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const webpFormatOptions = {
+  format: 'webp' as const,
+  options: {
+    quality: 82,
+  },
+}
+
+const getAdminThumbnail = ({ doc }: { doc: Record<string, unknown> }): null | string => {
+  const sizes = doc.sizes
+
+  if (!sizes || typeof sizes !== 'object') return null
+
+  const thumbnail = (sizes as Record<string, unknown>).thumbnail
+
+  if (!thumbnail || typeof thumbnail !== 'object') return null
+
+  const url = (thumbnail as Record<string, unknown>).url
+
+  return typeof url === 'string' ? url : null
+}
 
 export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({
   data,
@@ -87,35 +107,43 @@ export const Media: CollectionConfig = {
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
     staticDir: path.resolve(dirname, '../../public/media'),
-    adminThumbnail: 'thumbnail',
+    adminThumbnail: getAdminThumbnail,
     focalPoint: true,
+    formatOptions: webpFormatOptions,
     imageSizes: [
       {
+        formatOptions: webpFormatOptions,
         name: 'thumbnail',
         width: 300,
       },
       {
+        formatOptions: webpFormatOptions,
         name: 'square',
         width: 500,
         height: 500,
       },
       {
+        formatOptions: webpFormatOptions,
         name: 'small',
         width: 600,
       },
       {
+        formatOptions: webpFormatOptions,
         name: 'medium',
         width: 900,
       },
       {
+        formatOptions: webpFormatOptions,
         name: 'large',
         width: 1400,
       },
       {
+        formatOptions: webpFormatOptions,
         name: 'xlarge',
         width: 1920,
       },
       {
+        formatOptions: webpFormatOptions,
         name: 'og',
         width: 1200,
         height: 630,

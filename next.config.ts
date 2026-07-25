@@ -11,6 +11,10 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
 
+const imageRemoteURLs = [NEXT_PUBLIC_SERVER_URL, process.env.R2_PUBLIC_URL].filter(
+  (url): url is string => Boolean(url),
+)
+
 const nextConfig: NextConfig = {
   // Temporarily required on Windows until Next.js fixes Turbopack Sass resolution.
   // See: https://github.com/vercel/next.js/issues/86431
@@ -18,22 +22,21 @@ const nextConfig: NextConfig = {
     loadPaths: ['./node_modules/@payloadcms/ui/dist/scss/'],
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     localPatterns: [
       {
         pathname: '/api/media/file/**',
       },
     ],
-    qualities: [100],
-    remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
-        const url = new URL(item)
+    qualities: [82],
+    remotePatterns: imageRemoteURLs.map((item) => {
+      const url = new URL(item)
 
-        return {
-          hostname: url.hostname,
-          protocol: url.protocol.replace(':', '') as 'http' | 'https',
-        }
-      }),
-    ],
+      return {
+        hostname: url.hostname,
+        protocol: url.protocol.replace(':', '') as 'http' | 'https',
+      }
+    }),
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

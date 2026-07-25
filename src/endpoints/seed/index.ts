@@ -1,4 +1,5 @@
 import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
+import { randomUUID } from 'node:crypto'
 import { readFile, stat } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
 
@@ -22,6 +23,7 @@ const collections: CollectionSlug[] = [
   'pages',
   'posts',
   'forms',
+  'menu-items',
   'media',
   'categories',
 ]
@@ -62,6 +64,8 @@ export const seed = async ({
   payload: Payload
   req: PayloadRequest
 }): Promise<void> => {
+  const seedRunID = randomUUID()
+
   payload.logger.info('Seeding database...')
 
   // we need to clear the media directory before seeding
@@ -69,25 +73,6 @@ export const seed = async ({
   // this is because while `yarn seed` drops the database
   // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
-
-  const existingMedia = await payload.find({
-    collection: 'media',
-    depth: 0,
-    pagination: false,
-  })
-
-  // Delete through Payload so the Vercel Blob adapter removes the stored files too.
-  for (const media of existingMedia.docs) {
-    await payload.delete({
-      collection: 'media',
-      id: media.id,
-      depth: 0,
-      req,
-      context: {
-        disableRevalidate: true,
-      },
-    })
-  }
 
   // clear the database
   await Promise.all([
@@ -126,13 +111,29 @@ export const seed = async ({
     }),
   ])
 
-  await Promise.all(
-    collections
-      .filter((collection) => collection !== 'media')
-      .map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-  )
-  for (const collection of collections) {
+  // Delete dependencies before media. For example, every menu item requires a media record.
+  // Keep this serial to avoid deadlocks between related tables.
+  for (const collection of collections.filter((collection) => collection !== 'media')) {
     await payload.db.deleteMany({ collection, req, where: {} })
+  }
+
+  const existingMedia = await payload.find({
+    collection: 'media',
+    depth: 0,
+    pagination: false,
+  })
+
+  // Delete through Payload so the Vercel Blob adapter removes the stored files too.
+  for (const media of existingMedia.docs) {
+    await payload.delete({
+      collection: 'media',
+      id: media.id,
+      depth: 0,
+      req,
+      context: {
+        disableRevalidate: true,
+      },
+    })
   }
 
   for (const collection of collections) {
@@ -156,10 +157,10 @@ export const seed = async ({
   payload.logger.info(`— Seeding media...`)
 
   const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
-    getLocalSeedFile('image-post1.webp'),
-    getLocalSeedFile('image-post2.webp'),
-    getLocalSeedFile('image-post3.webp'),
-    getLocalSeedFile('image-hero1.webp'),
+    getLocalSeedFile('image-post1.webp', seedRunID),
+    getLocalSeedFile('image-post2.webp', seedRunID),
+    getLocalSeedFile('image-post3.webp', seedRunID),
+    getLocalSeedFile('image-hero1.webp', seedRunID),
   ])
 
   const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
@@ -470,12 +471,14 @@ export const seed = async ({
   payload.logger.info('Seeded database successfully!')
 }
 
-async function getLocalSeedFile(filename: string): Promise<File> {
+async function getLocalSeedFile(filename: string, seedRunID: string): Promise<File> {
   const filePath = join(process.cwd(), 'src', 'endpoints', 'seed', filename)
   const [data, file] = await Promise.all([readFile(filePath), stat(filePath)])
 
   return {
-    name: basename(filePath),
+    // Payload derives all image-size filenames from this name, so this seed-run
+    // prefix prevents Blob collisions without breaking generated-size URLs.
+    name: `${seedRunID}-${basename(filePath)}`,
     data,
     mimetype: `image/${extname(filePath).slice(1)}`,
     size: file.size,
