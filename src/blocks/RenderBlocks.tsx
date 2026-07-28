@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 
 import type { Page } from '@/payload-types'
 
+import { cn } from '@/utilities/ui'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
@@ -26,6 +27,12 @@ const blockComponents = {
   splitContent: SideBySideContentBlock,
 }
 
+// Block types that paint their own full-bleed background and can therefore sit
+// flush against the footer (the footer's top border acts as the divider). Every
+// other block is transparent at the section level, so when it is the last block
+// on the page it needs bottom spacing to avoid kissing the footer.
+const FULL_BLEED_BLOCK_TYPES = new Set<keyof typeof blockComponents>(['featureHighlights'])
+
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
 }> = (props) => {
@@ -43,8 +50,11 @@ export const RenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
 
             if (Block) {
+              const isLast = index === blocks.length - 1
+              const needsFooterGap = isLast && !FULL_BLEED_BLOCK_TYPES.has(blockType)
+
               return (
-                <div key={index}>
+                <div key={index} className={cn(needsFooterGap && 'pb-24 md:pb-32')}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
