@@ -21,7 +21,7 @@ export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText 
         {children ||
           (richText && (
             <RichText
-              className="mb-8 max-w-none [&_h1]:mb-5 [&_h1]:text-3xl [&_h1]:leading-[1.05] [&_h1]:font-extrabold [&_h1]:tracking-normal [&_h1]:text-surface-tint md:[&_h1]:text-6xl [&_p]:max-w-156 [&_p]:text-base [&_p]:leading-8 md:[&_p]:text-lg"
+              className="mb-8 max-w-none [&_a]:text-inverse-primary [&_a]:underline [&_a]:decoration-inverse-primary/50 [&_a]:decoration-2 [&_a]:underline-offset-2 [&_a]:hover:text-tertiary-fixed [&_h1]:mb-5 [&_h1]:text-3xl [&_h1]:leading-[1.05] [&_h1]:font-extrabold [&_h1]:tracking-normal [&_h1]:text-surface-tint md:[&_h1]:text-6xl [&_p]:max-w-156 [&_p]:text-base [&_p]:leading-8 md:[&_p]:text-lg"
               data={richText}
               enableGutter={false}
             />
