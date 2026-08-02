@@ -1,4 +1,5 @@
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 // For local Docker Postgres, swap the line above for the generic adapter:
 // import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
@@ -124,10 +125,12 @@ export default buildConfig({
     slug: 'payload-folders',
   },
   cors: [getServerSideURL()].filter(Boolean),
-  plugins: [
-    ...plugins,
-    mediaStorage,
-  ],
+  email: resendAdapter({
+    apiKey: process.env.RESEND_API_KEY || '',
+    defaultFromAddress: process.env.RESEND_FROM_ADDRESS || '',
+    defaultFromName: process.env.RESEND_FROM_NAME || '',
+  }),
+  plugins: [...plugins, mediaStorage],
   globals: [Header, Footer, BusinessInfo],
   secret: process.env.PAYLOAD_SECRET,
   sharp,

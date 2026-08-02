@@ -30,6 +30,7 @@
     "@payloadcms/admin-bar": "3.82.1",
     "@payloadcms/db-postgres": "^3.82.1",
     "@payloadcms/db-vercel-postgres": "3.82.1",
+    "@payloadcms/email-resend": "3.82.1",
     "@payloadcms/live-preview-react": "3.82.1",
     "@payloadcms/next": "3.82.1",
     "@payloadcms/plugin-form-builder": "3.82.1",

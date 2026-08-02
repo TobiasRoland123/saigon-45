@@ -55,6 +55,8 @@ export const plugins: Plugin[] = [
     generateURL,
   }),
   formBuilderPlugin({
+    // Forms without an explicit recipient send business notifications here.
+    defaultToEmail: process.env.RESEND_TO_ADDRESS,
     fields: {
       payment: false,
     },

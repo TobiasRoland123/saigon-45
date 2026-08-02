@@ -35,8 +35,8 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
   createdAt: '2023-01-12T21:47:41.374Z',
   emails: [
     {
-      emailFrom: '"Payload" \u003Cdemo@payloadcms.com\u003E',
-      emailTo: '{{email}}',
+      // The plugin falls back to RESEND_TO_ADDRESS and the adapter's verified sender.
+      replyTo: '{{email}}',
       message: {
         root: {
           type: 'root',
@@ -50,7 +50,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
                   format: 0,
                   mode: 'normal',
                   style: '',
-                  text: 'Your contact form submission was successfully received.',
+                  text: 'A new contact form submission was received.\n\n{{*:table}}',
                   version: 1,
                 },
               ],
@@ -67,7 +67,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
           version: 1,
         },
       },
-      subject: "You've received a new message.",
+      subject: 'New contact form submission',
     },
   ],
   fields: [
