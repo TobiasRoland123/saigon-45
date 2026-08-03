@@ -1,6 +1,6 @@
 # Resend email
 
-This project sends transactional email through Payload's official `@payloadcms/email-resend` adapter. Contact-form submissions create a business notification; the recipient falls back to `RESEND_TO_ADDRESS` and the sender falls back to the configured Resend sender.
+This project sends transactional email through Payload's official `@payloadcms/email-resend` adapter when all four Resend environment variables are present. Contact-form submissions create a business notification; the recipient falls back to `RESEND_TO_ADDRESS` and the sender falls back to the configured Resend sender.
 
 For example, a contact form submission from `visitor@example.com` sends a notification to `RESEND_TO_ADDRESS`, from `RESEND_FROM_NAME <RESEND_FROM_ADDRESS>`, with Reply-To set to `visitor@example.com`.
 
@@ -21,6 +21,10 @@ For example, a contact form submission from `visitor@example.com` sends a notifi
 5. Submit the contact form and confirm delivery and Reply-To behavior.
 
 The API key remains server-only: do not add a `NEXT_PUBLIC_` prefix, commit it, or paste it into client-side code.
+
+## Before a Resend domain is ready
+
+Resend is deliberately optional. Until the client has supplied all four variables above, Payload uses its built-in console email adapter instead. A contact form submission is still validated, stored, and shown its normal confirmation message; it simply does not deliver email. This also applies when only some of the four variables are configured, preventing an incomplete setup from calling Resend with invalid credentials or an unverified sender.
 
 ## Form-builder behavior and limitations
 
