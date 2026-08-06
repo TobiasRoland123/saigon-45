@@ -1,4 +1,5 @@
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 // For local Docker Postgres, swap the line above for the generic adapter:
 // import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
@@ -33,6 +34,14 @@ const r2EnvironmentVariables = [
 ]
 const isR2Configured = r2EnvironmentVariables.every(Boolean)
 const r2PublicURL = process.env.R2_PUBLIC_URL?.replace(/\/$/, '')
+
+const resendEnvironmentVariables = [
+  process.env.RESEND_API_KEY,
+  process.env.RESEND_FROM_ADDRESS,
+  process.env.RESEND_FROM_NAME,
+  process.env.RESEND_TO_ADDRESS,
+]
+const isResendConfigured = resendEnvironmentVariables.every(Boolean)
 
 const mediaStorage = isR2Configured
   ? s3Storage({
@@ -124,10 +133,18 @@ export default buildConfig({
     slug: 'payload-folders',
   },
   cors: [getServerSideURL()].filter(Boolean),
-  plugins: [
-    ...plugins,
-    mediaStorage,
-  ],
+  // Email is optional until the client has a verified Resend domain. Without
+  // the complete setup, Payload's console adapter keeps form submissions working.
+  ...(isResendConfigured
+    ? {
+        email: resendAdapter({
+          apiKey: process.env.RESEND_API_KEY!,
+          defaultFromAddress: process.env.RESEND_FROM_ADDRESS!,
+          defaultFromName: process.env.RESEND_FROM_NAME!,
+        }),
+      }
+    : {}),
+  plugins: [...plugins, mediaStorage],
   globals: [Header, Footer, BusinessInfo],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
