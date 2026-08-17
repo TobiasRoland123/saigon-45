@@ -11,8 +11,180 @@ type MenuPageArgs = {
   foodMenuItems: MenuItem[]
 }
 
-/** Antal food-items nedenfor. Bubble tea nummereres videre herfra. */
-const FOOD_ITEM_COUNT = 8
+type SeedFoodItem = {
+  badges?: { label: string }[]
+  description: string
+  highlighted?: boolean
+  name: string
+  price: string
+}
+
+type SeedFoodSection = {
+  category: string
+  heading: string
+  items: SeedFoodItem[]
+}
+
+/**
+ * Maden fra menukortet, i menukortets rækkefølge. Priserne følger Wolt.
+ *
+ * `number` i collection'en er unique og skal være >= 1, så menukortets egne
+ * numre kan ikke bruges direkte (7a er ikke et tal, og bubble tea genbruger
+ * 00-26). Retterne nummereres derfor fortløbende 1-19 i den rækkefølge de står
+ * her, hvilket matcher kortet på nær 7a og fremefter.
+ */
+const foodSections: SeedFoodSection[] = [
+  {
+    category: 'Appetizers',
+    heading: 'Forretter',
+    items: [
+      {
+        badges: [{ label: 'Frisk' }],
+        description:
+          '2 stk. rispapirruller med kylling, rejer og salater. Serveres med hjemmelavet hoisin sauce og knuste jordnødder.',
+        highlighted: true,
+        name: 'Sommerruller (2 stk.)',
+        price: '49,-',
+      },
+      {
+        description:
+          'Hjemmelavede forårsruller med kylling, rejer, grøntsager, løg og sød chilisauce.',
+        name: 'Hjemmelavede forårsruller (5 stk.)',
+        price: '89,-',
+      },
+      {
+        badges: [{ label: 'Vegetar' }],
+        description: 'Hjemmelavede vegetarforårsruller med grøntsagsmix.',
+        name: 'Vegetar forårsruller (5 stk.)',
+        price: '79,-',
+      },
+      {
+        description: 'Tempura rejer med citron og spicy mayo.',
+        name: 'Tempura rejer (6 stk.)',
+        price: '89,-',
+      },
+      {
+        description: 'Med kylling og rejer. Serveres med spicy mayo.',
+        name: 'Hjemmelavede wantons (6 stk.)',
+        price: '89,-',
+      },
+      {
+        badges: [{ label: 'Vegetar' }],
+        description: 'Med salt og spicy mayo.',
+        name: 'Edamame bønner',
+        price: '59,-',
+      },
+      {
+        description: 'Fried dumplings med kylling og grøntsager og soya sauce.',
+        name: 'Fried dumplings (6 stk.)',
+        price: '79,-',
+      },
+      {
+        badges: [{ label: 'Vegetar' }],
+        description: 'Friturestegte mini vegetariske forårsruller.',
+        name: 'Mini vegetar forårsruller (8 stk.)',
+        price: '59,-',
+      },
+    ],
+  },
+  {
+    category: 'Salads',
+    heading: 'Salater',
+    items: [
+      {
+        description: 'Salat med marineret kylling, salatmix, peanuts og spicy fiskesauce.',
+        name: 'Kylling salat',
+        price: '109,-',
+      },
+      {
+        description: 'Marineret oksekød med mixed salat, peanuts og spicy fiskesauce.',
+        name: 'Oksekød salat',
+        price: '129,-',
+      },
+    ],
+  },
+  {
+    category: 'Wok',
+    heading: 'Wok retter',
+    items: [
+      {
+        description:
+          'Valgfrit protein med spicy østerssauce, sæsons grøntsager, løg og sweet basilikum. Serveres med ris.',
+        name: 'Wokretter med spicy østerssauce',
+        price: '139,-',
+      },
+      {
+        description:
+          'Valgfrit protein stegt i ingefær og hvidløg, østerssauce og sæsons grøntsager. Toppet med koriander og cashewnødder. Serveres med ris.',
+        name: 'Wokretter med ingefær sauce',
+        price: '139,-',
+      },
+      {
+        description:
+          'Tempura kylling i sur-sød sauce, grøntsager, løg, ananas og koriander. Serveres med ris.',
+        name: 'Kylling i sur-sød sauce',
+        price: '139,-',
+      },
+      {
+        badges: [{ label: 'Vegetar' }],
+        description:
+          'Tofu stegt i hvidløg soya sauce med sæsons grøntsager, ingefær, hvidløg og koriander. Serveres med ris.',
+        name: 'Stegt tofu i soya sauce',
+        price: '139,-',
+      },
+    ],
+  },
+  {
+    category: 'Rice & Noodles',
+    heading: 'Stegte ris / nudler',
+    items: [
+      {
+        description:
+          'Stegte ris med valgfrit protein, mixed grøntsager og æg. Toppet med koriander og lime.',
+        name: 'Stegte ris med østerssauce',
+        price: '139,-',
+      },
+      {
+        description:
+          'Stegte nudler med valgfrit protein og spicy østerssauce, mixed grøntsager og sweet basilikum.',
+        name: 'Ris nudler i spicy østerssauce',
+        price: '139,-',
+      },
+      {
+        badges: [{ label: 'Stærk' }],
+        description:
+          'Stegte nudler med valgfrit protein, tamarind chilisauce, fiskesauce, spidskål, æg og bønnespirer. Toppet med koriander, lime og peanuts.',
+        name: 'Phad Thai nudler',
+        price: '139,-',
+      },
+    ],
+  },
+  {
+    category: 'Curry',
+    heading: 'Vietnamesiske karry retter',
+    items: [
+      {
+        badges: [{ label: 'Stærk' }],
+        description:
+          'Vietnamesisk gul karry med valgfrit protein, kokosmælk, fiskesauce, broccoli, blomkål, peberfrugt og sweet basilikum. Serveres med ris.',
+        name: 'Gul karry',
+        price: '139,-',
+      },
+      {
+        badges: [{ label: 'Stærk' }],
+        description:
+          'Vietnamesisk rød karry med valgfrit protein, kokosmælk, fiskesauce, broccoli, blomkål, peberfrugt og sweet basilikum. Serveres med ris.',
+        name: 'Rød karry',
+        price: '139,-',
+      },
+    ],
+  },
+]
+
+const foodItems = foodSections.flatMap(({ items }) => items)
+
+/** Alle retter nummereres først, så bubble tea kan fortsætte derefter. */
+const FOOD_ITEM_COUNT = foodItems.length
 
 type BubbleTeaTier = 'premium' | 'standard'
 
@@ -24,7 +196,7 @@ const bubbleTeaPrices: Record<BubbleTeaTier, { largePrice: number; mediumPrice: 
 
 /**
  * Alle bubble teas fra menukortet, i menukortets rækkefølge.
- * Kommentaren viser menukortets eget nummer (00-26).
+ * Kommentaren viser menukortets eget nummer (00-27).
  */
 const bubbleTeas: {
   description: string
@@ -58,7 +230,7 @@ const bubbleTeas: {
   // 09
   { description: 'Med Tapioca', name: 'Pearls Milk Tea', tier: 'standard' },
   // 10
-  { description: 'Med Grante Apple Boba', name: 'Coconut Milk Tea', tier: 'standard' },
+  { description: 'Med Granat Apple Boba', name: 'Coconut Milk Tea', tier: 'standard' },
   // 11
   { description: 'Med Tapioca og mælk', name: 'Matcha Milk Tea', tier: 'standard' },
   // 12
@@ -67,8 +239,10 @@ const bubbleTeas: {
   { description: 'Med Tapioca', name: 'Caramel Milk Tea', tier: 'standard' },
   // 26
   { description: 'Med Tapioca', name: 'Brownsugar Milk Tea', tier: 'standard' },
+  // 27 — kun på Wolt, ikke på det trykte menukort
+  { description: 'Med Tapioca', name: 'Thai Milk Tea', tier: 'standard' },
   // 14
-  { description: 'Med Apple Boba', name: 'Apple Ice Tea', tier: 'standard' },
+  { description: 'Med Apple Boba', name: 'Green Apple Ice Tea', tier: 'standard' },
   // 15
   { description: 'Med Watermelon Boba', name: 'Watermelon Ice Tea', tier: 'standard' },
   // 16
@@ -78,15 +252,15 @@ const bubbleTeas: {
   // 18
   { description: 'Med Mango Boba', name: 'Mango Ice Tea', tier: 'standard' },
   // 19
-  { description: 'Med Passionfruit Boba', name: 'Sweet Passionfruit', tier: 'standard' },
+  { description: 'Med Passion Fruit Boba', name: 'Sweet Passion Fruit', tier: 'standard' },
   // 20
   { description: 'Med Lychee Boba', name: 'Lychee Ombre', tier: 'standard' },
   // 21
   { description: 'Med Kiwi Boba', name: 'Kiwi Ice Tea', tier: 'standard' },
   // 22
-  { description: 'Med Honeydrew Boba', name: 'Honeydrew Ice Tea', tier: 'standard' },
+  { description: 'Med Honeydraw Boba', name: 'Honeydraw Ice Tea', tier: 'standard' },
   // 23
-  { description: 'Med Pinaapple Boba', name: 'Pinaapple Ice Tea', tier: 'standard' },
+  { description: 'Med Pineapple Boba', name: 'Pineapple Ice Tea', tier: 'standard' },
   // 24
   { description: 'Med Cherry Boba', name: 'Cherry Ice Tea', tier: 'standard' },
   // 25
@@ -96,78 +270,16 @@ const bubbleTeas: {
 export const menuItems: (args: MenuArgs) => Omit<MenuItem, 'createdAt' | 'id' | 'updatedAt'>[] = ({
   menuImages,
 }) => [
-  {
-    badges: [{ label: 'Frisk' }, { label: 'Glutenfri option' }],
-    description:
-      '2 stk. rispapirruller med kylling, rejer og salater. Serveres med hjemmelavet hoisin sauce og knuste jordnødder.',
-    highlighted: true,
-    media: menuImages[0].id,
-    name: 'Sommerruller',
-    number: 1,
-    price: '49,-',
-    type: 'food',
-  },
-  {
-    description: '5 stk. med kylling, rejer og grøntsager. Serveres med sød chilisauce.',
-    media: menuImages[1].id,
-    name: 'Forårsruller',
-    number: 2,
-    price: '79,-',
-    type: 'food',
-  },
-  {
-    badges: [{ label: 'Vegansk' }],
-    description: '5 stk. fyldt med grøntsager og glasnudler. Serveres med vegetar-sauce.',
-    media: menuImages[2].id,
-    name: 'Vegetar ruller',
-    number: 3,
-    price: '69,-',
-    type: 'food',
-  },
-  {
-    description: '6 stk. sprøde rejer serveret med chili mayo.',
-    media: menuImages[3].id,
-    name: 'Tempura rejer',
-    number: 4,
-    price: '79,-',
-    type: 'food',
-  },
-  {
-    description: '6 stk. fyldt med kylling og rejer. Serveres med sød chilisauce.',
-    media: menuImages[0].id,
-    name: 'Sprøde wantons',
-    number: 5,
-    price: '79,-',
-    type: 'food',
-  },
-  {
-    description: '6 dampede dumplings med saftig kylling, ingefær og forårsløg.',
-    media: menuImages[1].id,
-    name: 'Gyoza med kylling',
-    number: 6,
-    price: '69,-',
-    type: 'food',
-  },
-  {
-    badges: [{ label: 'Stærk' }],
-    description: 'Sprøde kyllingespyd med satay-sauce og et strejf af chili.',
-    media: menuImages[2].id,
-    name: 'Satay kylling',
-    number: 7,
-    price: '75,-',
-    type: 'food',
-  },
-  {
-    description: 'Sprøde grøntsager og svampe i en let tempuradej med dip.',
-    media: menuImages[3].id,
-    name: 'Tempura grøntsager',
-    number: 8,
-    price: '59,-',
-    type: 'food',
-  },
-  // `number` er unique på tværs af hele menuen og skal være >= 1, så bubble tea
-  // fortsætter nummereringen efter forretterne i stedet for at bruge menukortets
-  // egne numre (00-26). Menukortets nummer står som kommentar i `bubbleTeas`.
+  ...foodItems.map(({ badges, description, highlighted, name, price }, index) => ({
+    ...(badges ? { badges } : {}),
+    description,
+    ...(highlighted ? { highlighted } : {}),
+    media: menuImages[index % menuImages.length].id,
+    name,
+    number: index + 1,
+    price,
+    type: 'food' as const,
+  })),
   ...bubbleTeas.map(({ description, isPopular, name, tier }, index) => {
     const { largePrice, mediumPrice } = bubbleTeaPrices[tier]
 
@@ -195,13 +307,17 @@ export const menu: (args: MenuPageArgs) => RequiredDataFromCollectionSlug<'pages
     type: 'none',
   },
   layout: [
-    {
-      blockName: 'Forretter',
-      blockType: 'menuItemGrid',
-      category: 'Appetizers',
-      heading: 'Forretter',
-      items: foodMenuItems.map(({ id }) => id),
-    },
+    ...foodSections.map(({ category, heading, items }) => {
+      const names = new Set(items.map(({ name }) => name))
+
+      return {
+        blockName: heading,
+        blockType: 'menuItemGrid' as const,
+        category,
+        heading,
+        items: foodMenuItems.filter(({ name }) => names.has(name)).map(({ id }) => id),
+      }
+    }),
     {
       blockName: 'Bubble tea-favoritter',
       blockType: 'bubbleTea',

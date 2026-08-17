@@ -148,7 +148,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       items: bubbleTeaItems.slice(0, 4).map(({ id }) => id),
       toppings: {
         heading: 'Ekstra Toppings',
-        priceLabel: '+4 kr pr. stk.',
+        priceLabel: '+5 kr pr. ske',
       },
     },
     {
