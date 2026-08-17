@@ -11,7 +11,8 @@ type MenuItemCardProps = {
   index: number
   media: number | MediaType
   name: string
-  number: number
+  /** Nummeret som det står på menukortet, fx "00" eller "7a". */
+  number: string
   price?: string | null
 }
 

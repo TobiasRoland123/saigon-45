@@ -943,6 +943,10 @@ export interface MenuItem {
    * Rettens nummer på menukortet. Foreslås automatisk ud fra det højeste nummer.
    */
   number: number;
+  /**
+   * Nummeret som det står på menukortet, fx "00" eller "7a". Lad stå tomt for at bruge nummeret ovenfor.
+   */
+  displayNumber?: string | null;
   name: string;
   /**
    * Choose whether this menu item is food, a drink, or a dessert.
@@ -1880,6 +1884,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface MenuItemsSelect<T extends boolean = true> {
   media?: T;
   number?: T;
+  displayNumber?: T;
   name?: T;
   type?: T;
   subtype?: T;

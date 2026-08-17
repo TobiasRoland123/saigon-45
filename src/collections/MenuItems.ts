@@ -87,6 +87,16 @@ export const MenuItems: CollectionConfig = {
       },
     },
     {
+      name: 'displayNumber',
+      type: 'text',
+      admin: {
+        description:
+          'Nummeret som det står på menukortet, fx "00" eller "7a". Lad stå tomt for at bruge nummeret ovenfor.',
+        position: 'sidebar',
+      },
+      label: 'Nummer på menukortet',
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
