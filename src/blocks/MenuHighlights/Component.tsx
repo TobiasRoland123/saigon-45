@@ -3,6 +3,7 @@ import type { MenuHighlightsBlock as MenuHighlightsBlockProps } from '@/payload-
 import { HighlightCard } from '@/blocks/MenuHighlights/Card'
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { toAnchorId } from '@/utilities/toAnchorId'
 
 type Props = MenuHighlightsBlockProps & {
   className?: string
@@ -28,7 +29,7 @@ export const MenuHighlightsBlock: React.FC<Props> = ({ cards, className, heading
   if (!cards?.length) return null
 
   return (
-    <section className={cn('container pt-16', className)}>
+    <section className={cn('container scroll-mt-24 pt-16', className)} id={toAnchorId(heading)}>
       <div className="mx-auto mb-12 max-w-4xl text-center md:mb-16">
         <h2 className="text-4xl leading-tight font-bold text-primary">{heading}</h2>
         {intro && (

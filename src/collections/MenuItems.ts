@@ -75,7 +75,8 @@ export const MenuItems: CollectionConfig = {
       unique: true,
       min: 1,
       admin: {
-        description: 'Rettens nummer på menukortet. Foreslås automatisk ud fra det højeste nummer.',
+        description:
+          'Rettens nummer i systemet. Hvis der ikke sættes et nummer neden for, bruges dette som default. Foreslås automatisk ud fra det højeste ledige nummer.',
         position: 'sidebar',
       },
       // Kører serverside når "Create New"-formularen åbnes

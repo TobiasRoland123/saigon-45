@@ -1,13 +1,13 @@
 import type { Block } from 'payload'
 
+import { uniqueHeadingField } from '@/fields/uniqueHeading'
+
 export const Contact: Block = {
   slug: 'contact',
   interfaceName: 'ContactBlock',
   fields: [
     {
-      name: 'heading',
-      type: 'text',
-      required: true,
+      ...uniqueHeadingField,
       defaultValue: 'Lad os høre fra dig',
     },
     {

@@ -515,6 +515,9 @@ export interface CallToActionBlock {
  * via the `definition` "ContactBlock".
  */
 export interface ContactBlock {
+  /**
+   * Must be unique on the page — it becomes the section's #anchor link target.
+   */
   heading: string;
   description: string;
   phoneLabel: string;
@@ -919,6 +922,9 @@ export interface ReviewsBlock {
  * via the `definition` "MenuItemGridBlock".
  */
 export interface MenuItemGridBlock {
+  /**
+   * Must be unique on the page — it becomes the section's #anchor link target.
+   */
   heading: string;
   /**
    * Category label shown alongside the heading.
@@ -940,7 +946,7 @@ export interface MenuItem {
   id: number;
   media: number | Media;
   /**
-   * Rettens nummer på menukortet. Foreslås automatisk ud fra det højeste nummer.
+   * Rettens nummer i systemet. Hvis der ikke sættes et nummer neden for, bruges dette som default. Foreslås automatisk ud fra det højeste ledige nummer.
    */
   number: number;
   name: string;
@@ -987,6 +993,9 @@ export interface MenuItem {
  * via the `definition` "MenuHighlightsBlock".
  */
 export interface MenuHighlightsBlock {
+  /**
+   * Must be unique on the page — it becomes the section's #anchor link target.
+   */
   heading: string;
   intro?: string | null;
   cards: {
@@ -1028,6 +1037,9 @@ export interface MenuHighlightsBlock {
  */
 export interface SideBySideContentBlock {
   eyebrow: string;
+  /**
+   * Must be unique on the page — it becomes the section's #anchor link target.
+   */
   heading: string;
   description: string;
   features: {
@@ -1065,7 +1077,7 @@ export interface SideBySideContentBlock {
  */
 export interface FindUsBlock {
   /**
-   * Adresse, åbningstider og telefonnummer hentes fra Settings → Business Info.
+   * Skal være unik på siden — bruges som #anchor. Adresse, åbningstider og telefonnummer hentes fra Settings → Business Info.
    */
   heading: string;
   addressLabel: string;
@@ -1089,6 +1101,9 @@ export interface BubbleTeaBlock {
    * Highlight: vælg 4 varianter der fremhæves, plus en knap til den fulde liste. Vis alle: viser automatisk alle bubble teas fra menukortet og hele toppingslisten.
    */
   mode: 'highlight' | 'full';
+  /**
+   * Must be unique on the page — it becomes the section's #anchor link target.
+   */
   heading: string;
   subtitle: string;
   /**

@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { uniqueHeadingField } from '@/fields/uniqueHeading'
+
 import { link } from '@/fields/link'
 
 export const SideBySideContent: Block = {
@@ -12,9 +14,7 @@ export const SideBySideContent: Block = {
       required: true,
     },
     {
-      name: 'heading',
-      type: 'text',
-      required: true,
+      ...uniqueHeadingField,
     },
     {
       name: 'description',

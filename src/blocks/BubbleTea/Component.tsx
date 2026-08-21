@@ -8,6 +8,7 @@ import { Icon } from '@/components/icons'
 import { cn } from '@/utilities/ui'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { toAnchorId } from '@/utilities/toAnchorId'
 
 type Props = BubbleTeaBlockProps & {
   className?: string
@@ -60,7 +61,10 @@ export async function BubbleTeaBlock({
   const toppingItems = toppings?.items ?? []
 
   return (
-    <section className={cn('container scroll-mt-24 py-16 md:py-24', className)} id="bubble-tea">
+    <section
+      className={cn('container scroll-mt-24 py-16 md:py-24', className)}
+      id={toAnchorId(heading)}
+    >
       <div className="relative overflow-hidden rounded-4xl bg-primary/10 px-6 py-12 sm:px-10 md:px-14 md:py-16 lg:px-20">
         <div className="pointer-events-none absolute -top-20 -right-20 size-64 rounded-full bg-primary/5 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-20 -left-20 size-64 rounded-full bg-secondary/5 blur-3xl" />
