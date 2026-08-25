@@ -1,15 +1,17 @@
 import type { Block } from 'payload'
 
+import { uniqueHeadingField } from '@/fields/uniqueHeading'
+
 export const FindUs: Block = {
   slug: 'findUs',
   interfaceName: 'FindUsBlock',
   fields: [
     {
-      name: 'heading',
-      type: 'text',
-      required: true,
+      ...uniqueHeadingField,
       admin: {
-        description: 'Adresse, åbningstider og telefonnummer hentes fra Settings → Business Info.',
+        ...uniqueHeadingField.admin,
+        description:
+          'Skal være unik på siden — bruges som #anchor. Adresse, åbningstider og telefonnummer hentes fra Settings → Business Info.',
       },
     },
     {

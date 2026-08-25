@@ -1,14 +1,14 @@
 import type { Block } from 'payload'
 
+import { uniqueHeadingField } from '@/fields/uniqueHeading'
+
 export const MenuItemGrid: Block = {
   slug: 'menuItemGrid',
   interfaceName: 'MenuItemGridBlock',
   fields: [
     {
-      name: 'heading',
-      type: 'text',
+      ...uniqueHeadingField,
       defaultValue: 'Menu',
-      required: true,
     },
     {
       name: 'category',

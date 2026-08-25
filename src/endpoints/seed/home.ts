@@ -71,7 +71,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
                 format: 0,
                 mode: 'normal',
                 style: '',
-                text: 'Friske wokretter, sprøde snacks og farverige drikke – klar til din pause, shoppingtur eller hyggelige aften hjemme.',
+                text: 'Friske wokretter, sprøde snacks og farverige drikke - klar til din pause, shoppingtur eller hyggelige aften hjemme.',
                 version: 1,
               },
             ],

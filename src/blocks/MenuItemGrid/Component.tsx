@@ -3,6 +3,7 @@ import type { MenuItem, MenuItemGridBlock as MenuItemGridBlockProps } from '@/pa
 import { MenuItemCard } from '@/blocks/MenuItemGrid/Card'
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { toAnchorId } from '@/utilities/toAnchorId'
 
 type Props = MenuItemGridBlockProps & {
   className?: string
@@ -31,7 +32,7 @@ export const MenuItemGridBlock: React.FC<Props> = ({ category, className, headin
   }
 
   return (
-    <section className={cn('py-12 md:py-20', className)}>
+    <section className={cn('scroll-mt-24 py-12 md:py-20', className)} id={toAnchorId(heading)}>
       <div className="container">
         <div className="flex flex-col justify-between gap-3 border-l-4 border-secondary pl-7 md:flex-row md:items-center">
           <h2 className="text-[2rem] leading-[1.2] font-bold tracking-tight text-primary">

@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { uniqueHeadingField } from '@/fields/uniqueHeading'
+
 import { link } from '@/fields/link'
 
 export const BubbleTea: Block = {
@@ -27,9 +29,7 @@ export const BubbleTea: Block = {
       },
     },
     {
-      name: 'heading',
-      type: 'text',
-      required: true,
+      ...uniqueHeadingField,
       defaultValue: 'Bubble tea',
     },
     {

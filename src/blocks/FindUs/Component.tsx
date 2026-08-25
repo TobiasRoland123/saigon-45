@@ -8,6 +8,7 @@ import { Media } from '@/components/Media'
 import { Icon } from '@/components/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
+import { toAnchorId } from '@/utilities/toAnchorId'
 
 // A labelled row: circular icon chip + bold label + free-form content lines.
 const InfoRow = ({
@@ -48,7 +49,10 @@ export const FindUsBlock = async (props: FindUsBlockProps) => {
   const phone = contact?.phone ? formatPhoneNumber(contact.phone) : null
 
   return (
-    <section className="mt-24 bg-primary-fixed/45 py-16 md:py-24">
+    <section
+      className="mt-24 scroll-mt-24 bg-primary-fixed/45 py-16 md:py-24"
+      id={toAnchorId(heading)}
+    >
       <div className="container grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
         <div>
           <h2 className="text-4xl leading-tight font-extrabold text-on-primary-container md:text-5xl">

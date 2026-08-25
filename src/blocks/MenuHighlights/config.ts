@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { uniqueHeadingField } from '@/fields/uniqueHeading'
+
 import { link } from '@/fields/link'
 
 export const MenuHighlights: Block = {
@@ -7,9 +9,7 @@ export const MenuHighlights: Block = {
   interfaceName: 'MenuHighlightsBlock',
   fields: [
     {
-      name: 'heading',
-      type: 'text',
-      required: true,
+      ...uniqueHeadingField,
       defaultValue: 'Hvad har du lyst til?',
     },
     {
