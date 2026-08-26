@@ -81,7 +81,7 @@ export async function BubbleTeaBlock({
           <SizeLegend className="mt-7 md:mt-0" largeLabel={largeLabel} mediumLabel={mediumLabel} />
         </div>
 
-        <div className="relative mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:mt-16 md:gap-x-10 lg:grid-cols-4">
+        <div className="relative mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 md:mt-16 md:gap-x-10 lg:grid-cols-4">
           {products.map((product, index) => (
             <ProductCard
               description={product.description}
