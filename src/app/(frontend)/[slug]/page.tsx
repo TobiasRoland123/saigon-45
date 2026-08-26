@@ -12,6 +12,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { cn } from '@/utilities/ui'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -43,6 +44,12 @@ type Args = {
   }>
 }
 
+const shouldRemoveHomepageTopSpacing = (
+  slug: string,
+  heroType: RequiredDataFromCollectionSlug<'pages'>['hero']['type'],
+  firstBlockType?: string,
+) => slug === 'home' && heroType === 'none' && firstBlockType === 'splitContent'
+
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
@@ -65,9 +72,14 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   const { hero, layout } = page
+  const removeHomepageTopSpacing = shouldRemoveHomepageTopSpacing(
+    decodedSlug,
+    hero.type,
+    layout?.[0]?.blockType,
+  )
 
   return (
-    <article className="pt-16">
+    <article className={cn('pt-16', removeHomepageTopSpacing && 'pt-0')}>
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
@@ -75,7 +87,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
+      <RenderBlocks blocks={layout} removeFirstBlockMargin={removeHomepageTopSpacing} />
     </article>
   )
 }
