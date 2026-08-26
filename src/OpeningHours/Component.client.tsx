@@ -83,20 +83,25 @@ export const OpeningHoursPill: React.FC<Props> = ({ address, addressUrl, days, c
   return (
     <div
       className={cn(
-        'inline-flex items-center gap-3 rounded-full bg-[#6b7159] py-3 pr-6 pl-5 text-xs text-white shadow-lg',
+        'flex w-full max-w-full flex-col items-stretch rounded-2xl bg-[#6b7159] px-4 py-3 text-xs text-white shadow-lg sm:inline-flex sm:w-auto sm:flex-row sm:items-center sm:gap-3 sm:rounded-full sm:py-3 sm:pr-6 sm:pl-5',
         className,
       )}
     >
       <span className="flex min-w-0 items-center gap-2">
         <Icon name="mapPin" className="size-5 shrink-0 text-(--color-primary-fixed)" />
-        <Link href={addressUrl} target="_blank" rel="noopener noreferrer">
-          <span className="truncate font-medium">{address}</span>
+        <Link
+          className="min-w-0 flex-1 sm:flex-none"
+          href={addressUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className="font-medium wrap-break-word sm:truncate">{address}</span>
         </Link>
       </span>
 
-      <span aria-hidden className="h-6 w-px bg-white/25" />
+      <span aria-hidden className="my-3 h-px w-full bg-white/25 sm:my-0 sm:h-6 sm:w-px" />
 
-      <span className="flex items-center gap-2">
+      <span className="flex min-w-0 items-center gap-2 sm:flex-none">
         <Icon name="clock" className="size-5 shrink-0 text-(--color-primary-fixed)" />
         {openStatus && (
           <span className="flex items-center gap-2">
@@ -106,7 +111,7 @@ export const OpeningHoursPill: React.FC<Props> = ({ address, addressUrl, days, c
                 openStatus.isOpen ? 'bg-green-400' : 'bg-red-400',
               )}
             />
-            <span className="font-semibold tracking-wide whitespace-nowrap">
+            <span className="font-semibold tracking-wide wrap-break-word whitespace-normal sm:whitespace-nowrap">
               {openStatus.label}
             </span>
           </span>
