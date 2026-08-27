@@ -15,6 +15,7 @@ import { ReviewsBlock } from '@/blocks/Reviews/Component'
 import { MenuHighlightsBlock } from '@/blocks/MenuHighlights/Component'
 import { SideBySideContentBlock } from '@/blocks/SideBySideContent/Component'
 import { BubbleTeaBlock } from '@/blocks/BubbleTea/Component'
+import { cn } from '@/utilities/ui'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -32,10 +33,14 @@ const blockComponents = {
   bubbleTea: BubbleTeaBlock,
 }
 
+const getBlockWrapperClassName = (index: number, removeFirstBlockMargin: boolean) =>
+  cn(index === 0 && removeFirstBlockMargin && '[&>section]:mt-0')
+
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  removeFirstBlockMargin?: boolean
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, removeFirstBlockMargin = false } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -50,7 +55,10 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div key={index}>
+                <div
+                  className={getBlockWrapperClassName(index, removeFirstBlockMargin)}
+                  key={index}
+                >
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
