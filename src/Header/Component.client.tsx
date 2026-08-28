@@ -9,7 +9,6 @@ import { MobileNavBackdrop, MobileNavPanel, MobileNavToggle } from './Nav/Mobile
 import { WoltCTA } from './WoltCTA'
 import { useMobileMenu } from './hooks/useMobileMenu'
 import { SvgMedia } from '@/components/Media'
-import { cn } from '@/utilities/ui'
 
 interface HeaderClientProps {
   data: Header
@@ -20,12 +19,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   return (
     <header suppressHydrationWarning className="relative z-20">
-      <div
-        className={cn(
-          'relative z-20 bg-surface transition-shadow',
-          isOpen && 'rounded-b-3xl shadow-header-menu md:rounded-b-none md:shadow-none',
-        )}
-      >
+      <div className="relative z-20 bg-surface">
         <div className="container flex items-center justify-between gap-3 px-6 py-3 md:py-6">
           <Link href="/" className="flex flex-row items-center gap-2">
             <p className="text-2xl font-bold text-surface-tint md:text-3xl">Saigon 45</p>

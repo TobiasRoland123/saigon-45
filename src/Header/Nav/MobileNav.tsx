@@ -6,6 +6,7 @@ import type { Header as HeaderType } from '@/payload-types'
 
 import { HeaderNav } from './index'
 import { Icon } from '@/components/icons'
+import { cn } from '@/utilities/ui'
 
 const MOBILE_NAV_ID = 'header-mobile-nav'
 
@@ -47,13 +48,18 @@ export const MobileNavPanel: React.FC<PanelProps> = ({ data, isOpen, onClose }) 
   if (!hasNavItems(data)) return null
 
   return (
-    <div
-      id={MOBILE_NAV_ID}
-      hidden={!isOpen}
-      onClick={onClose}
-      className="container px-6 pb-6 md:hidden"
-    >
-      <HeaderNav data={data} orientation="vertical" />
+    <div className="pointer-events-none absolute inset-x-0 top-full overflow-hidden pb-12 md:hidden">
+      <div
+        id={MOBILE_NAV_ID}
+        inert={!isOpen}
+        onClick={onClose}
+        className={cn(
+          'container rounded-b-3xl bg-surface px-6 pb-6 shadow-header-menu transition-transform duration-300 ease-out motion-reduce:transition-none',
+          isOpen ? 'pointer-events-auto translate-y-0' : '-translate-y-full',
+        )}
+      >
+        <HeaderNav data={data} orientation="vertical" />
+      </div>
     </div>
   )
 }
