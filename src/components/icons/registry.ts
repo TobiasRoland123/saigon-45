@@ -8,11 +8,13 @@ import {
   Leaf,
   Mail,
   MapPin,
+  Menu,
   Phone,
   Search,
   Share2,
   Star,
   Quote,
+  X,
 } from 'lucide-react'
 
 export type IconDefinition = {
@@ -40,6 +42,14 @@ export const iconRegistry = {
   mapPin: {
     label: 'Map pin',
     Icon: MapPin,
+  },
+  menu: {
+    label: 'Menu',
+    Icon: Menu,
+  },
+  close: {
+    label: 'Close',
+    Icon: X,
   },
   phone: {
     label: 'Phone',
