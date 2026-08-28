@@ -23,7 +23,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ data, orientation = 'horiz
               key={i}
               {...link}
               appearance="inline"
-              className="flex min-h-15 items-center border-b border-outline-variant py-4 text-2xl font-bold tracking-tight text-on-surface last:border-b-0"
+              className="flex min-h-15 items-center border-b border-outline-variant py-4 text-xl font-bold tracking-tight text-on-surface last:border-b-0"
             />
           )
         })}
