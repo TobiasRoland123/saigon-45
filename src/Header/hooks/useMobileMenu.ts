@@ -1,6 +1,4 @@
-'use client'
-
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Open/close state for the mobile header menu. While open it locks body scroll
@@ -9,8 +7,8 @@ import { useCallback, useEffect, useState } from 'react'
 export const useMobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const close = useCallback(() => setIsOpen(false), [])
-  const toggle = useCallback(() => setIsOpen((open) => !open), [])
+  const close = () => setIsOpen(false)
+  const toggle = () => setIsOpen((open) => !open)
 
   useEffect(() => {
     if (!isOpen) return
