@@ -1,7 +1,7 @@
 import React from 'react'
 import Script from 'next/script'
 
-import { themeLocalStorageKey } from '../ThemeSelector/types'
+import { themeLocalStorageKey } from '../shared'
 
 export const InitTheme: React.FC = () => {
   return (
