@@ -12,7 +12,7 @@ type HeaderNavProps = {
 export const HeaderNav: React.FC<HeaderNavProps> = ({ navItems, orientation = 'horizontal' }) => {
   if (orientation === 'vertical') {
     return (
-      <nav className="flex flex-col">
+      <nav className="container flex flex-col">
         {navItems.map(({ link }, i) => {
           return (
             <CMSLink
