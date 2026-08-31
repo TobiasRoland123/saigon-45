@@ -51,7 +51,7 @@ export const MobileNavPanel: React.FC<PanelProps> = ({ navItems, isOpen, onClose
         inert={!isOpen}
         onClick={onClose}
         className={cn(
-          'container rounded-b-3xl bg-surface px-6 pb-2 shadow-header-menu transition-transform duration-300 ease-out motion-reduce:transition-none',
+          'rounded-b-3xl bg-surface px-6 pb-2 shadow-header-menu transition-transform duration-300 ease-out motion-reduce:transition-none',
           isOpen ? 'pointer-events-auto translate-y-0' : '-translate-y-full',
         )}
       >
