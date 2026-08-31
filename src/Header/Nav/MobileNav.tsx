@@ -1,25 +1,22 @@
-'use client'
-
 import React from 'react'
 
-import type { Header as HeaderType } from '@/payload-types'
+import type { HeaderNavItem } from '../types'
 
 import { HeaderNav } from './index'
 import { Icon } from '@/components/icons'
 import { cn } from '@/utilities/ui'
 
+//ID used for aria-controls and to identify the mobile nav panel for inert attribute
 const MOBILE_NAV_ID = 'header-mobile-nav'
 
-const hasNavItems = (data: HeaderType) => Boolean(data?.navItems?.length)
-
 type ToggleProps = {
-  data: HeaderType
+  navItems: HeaderNavItem[]
   isOpen: boolean
   onToggle: () => void
 }
 
-export const MobileNavToggle: React.FC<ToggleProps> = ({ data, isOpen, onToggle }) => {
-  if (!hasNavItems(data)) return null
+export const MobileNavToggleButton: React.FC<ToggleProps> = ({ navItems, isOpen, onToggle }) => {
+  if (navItems.length === 0) return null
 
   return (
     <button
@@ -39,13 +36,13 @@ export const MobileNavToggle: React.FC<ToggleProps> = ({ data, isOpen, onToggle 
 }
 
 type PanelProps = {
-  data: HeaderType
+  navItems: HeaderNavItem[]
   isOpen: boolean
   onClose: () => void
 }
 
-export const MobileNavPanel: React.FC<PanelProps> = ({ data, isOpen, onClose }) => {
-  if (!hasNavItems(data)) return null
+export const MobileNavPanel: React.FC<PanelProps> = ({ navItems, isOpen, onClose }) => {
+  if (navItems.length === 0) return null
 
   return (
     <div className="pointer-events-none absolute inset-x-0 top-full overflow-hidden pb-12 md:hidden">
@@ -58,7 +55,7 @@ export const MobileNavPanel: React.FC<PanelProps> = ({ data, isOpen, onClose }) 
           isOpen ? 'pointer-events-auto translate-y-0' : '-translate-y-full',
         )}
       >
-        <HeaderNav data={data} orientation="vertical" />
+        <HeaderNav navItems={navItems} orientation="vertical" />
       </div>
     </div>
   )

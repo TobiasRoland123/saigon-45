@@ -5,7 +5,7 @@ import React from 'react'
 import type { Header } from '@/payload-types'
 
 import { HeaderNav } from './Nav'
-import { MobileNavBackdrop, MobileNavPanel, MobileNavToggle } from './Nav/MobileNav'
+import { MobileNavBackdrop, MobileNavPanel, MobileNavToggleButton } from './Nav/MobileNav'
 import { WoltCTA } from './WoltCTA'
 import { useMobileMenu } from './hooks/useMobileMenu'
 import { SvgMedia } from '@/components/Media'
@@ -17,6 +17,9 @@ interface HeaderClientProps {
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const { close, isOpen, toggle } = useMobileMenu()
 
+  const navItems = data?.navItems ?? []
+  const woltLink = data?.WoltCTA?.[0]?.link
+
   return (
     <header suppressHydrationWarning className="relative z-20">
       <div className="relative z-20 bg-surface">
@@ -27,16 +30,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           </Link>
 
           <div className="hidden md:block">
-            <HeaderNav data={data} />
+            <HeaderNav navItems={navItems} />
           </div>
 
           <div className="flex items-center gap-2">
-            <WoltCTA data={data} />
-            <MobileNavToggle data={data} isOpen={isOpen} onToggle={toggle} />
+            <WoltCTA link={woltLink} />
+            <MobileNavToggleButton navItems={navItems} isOpen={isOpen} onToggle={toggle} />
           </div>
         </div>
 
-        <MobileNavPanel data={data} isOpen={isOpen} onClose={close} />
+        <MobileNavPanel navItems={navItems} isOpen={isOpen} onClose={close} />
       </div>
 
       <MobileNavBackdrop isOpen={isOpen} onClose={close} />

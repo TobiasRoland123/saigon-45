@@ -1,19 +1,15 @@
-'use client'
-
 import React from 'react'
 
-import type { Header as HeaderType } from '@/payload-types'
+import type { HeaderNavItem } from '../types'
 
 import { CMSLink } from '@/components/Link'
 
 type HeaderNavProps = {
-  data: HeaderType
+  navItems: HeaderNavItem[]
   orientation?: 'horizontal' | 'vertical'
 }
 
-export const HeaderNav: React.FC<HeaderNavProps> = ({ data, orientation = 'horizontal' }) => {
-  const navItems = data?.navItems || []
-
+export const HeaderNav: React.FC<HeaderNavProps> = ({ navItems, orientation = 'horizontal' }) => {
   if (orientation === 'vertical') {
     return (
       <nav className="flex flex-col">
