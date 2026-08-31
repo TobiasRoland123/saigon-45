@@ -9,6 +9,7 @@ import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { DEFAULT_META_DESCRIPTION, SITE_NAME } from '@/utilities/siteMetadata'
 import { draftMode } from 'next/headers'
 
 import './globals.css'
@@ -24,11 +25,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={plusJakartaSans.variable} lang="en" suppressHydrationWarning>
+    <html className={plusJakartaSans.variable} lang="da" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
         <Providers>
@@ -48,9 +47,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export const metadata: Metadata = {
+  // Inherited by any route that does not export its own `generateMetadata`,
+  // such as the 404 page. Routes that do still override these.
+  description: DEFAULT_META_DESCRIPTION,
+  icons: {
+    apple: '/apple-touch-icon.png',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+  },
   metadataBase: new URL(getServerSideURL()),
   openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-  },
+  title: SITE_NAME,
 }
