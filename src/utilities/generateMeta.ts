@@ -6,6 +6,7 @@ import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
 import { collectionPrefixMap } from './generatePreviewPath'
 import {
+  DEFAULT_META_DESCRIPTION,
   DEFAULT_OG_IMAGE_ALT,
   DEFAULT_OG_IMAGE_HEIGHT,
   DEFAULT_OG_IMAGE_PATH,
@@ -72,12 +73,15 @@ export const generateMeta = async (args: {
 }): Promise<Metadata> => {
   const { collection, doc } = args
 
-  const title = getSiteTitle(doc?.meta?.title)
+  // Returning `undefined` here would strip the root layout's defaults rather
+  // than inherit them, so fall back explicitly.
+  const description = doc?.meta?.description || DEFAULT_META_DESCRIPTION
+  const title = getSiteTitle(doc?.meta?.title || doc?.title)
 
   return {
-    description: doc?.meta?.description,
+    description,
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
+      description,
       images: [getOpenGraphImage(doc?.meta?.image)],
       title,
       url: toAbsoluteURL(getCanonicalPath(collection, doc?.slug)),

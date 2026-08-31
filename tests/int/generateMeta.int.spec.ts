@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { generateMeta } from '@/utilities/generateMeta'
-import { getSiteTitle } from '@/utilities/siteMetadata'
+import { DEFAULT_META_DESCRIPTION, getSiteTitle } from '@/utilities/siteMetadata'
 
 const SERVER_URL = 'https://saigon-45.vercel.app'
 
@@ -15,10 +15,22 @@ afterEach(() => {
   }
 })
 
-const createDocument = ({ imageUrl, slug = 'home' }: { imageUrl?: string; slug?: string } = {}) =>
+const createDocument = ({
+  imageUrl,
+  metaDescription = 'Fresh food in Rødovre Centrum.',
+  metaTitle = 'Asian street food',
+  slug = 'home',
+  title = 'Forside',
+}: {
+  imageUrl?: string
+  metaDescription?: string
+  metaTitle?: string
+  slug?: string
+  title?: string
+} = {}) =>
   ({
     meta: {
-      description: 'Fresh food in Rødovre Centrum.',
+      description: metaDescription,
       image: imageUrl
         ? {
             alt: 'Et bord fyldt med retter',
@@ -34,9 +46,10 @@ const createDocument = ({ imageUrl, slug = 'home' }: { imageUrl?: string; slug?:
             width: 1200,
           }
         : undefined,
-      title: 'Asian street food',
+      title: metaTitle,
     },
     slug,
+    title,
   }) as unknown as Parameters<typeof generateMeta>[0]['doc']
 
 describe('site metadata', () => {
@@ -82,6 +95,32 @@ describe('site metadata', () => {
     expect(metadata.openGraph).toMatchObject({
       images: [{ height: 630, url: `${SERVER_URL}/saigon-45-og.webp`, width: 1200 }],
     })
+  })
+
+  it('falls back to the site description when a page has no SEO description', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
+
+    const metadata = await generateMeta({
+      collection: 'pages',
+      doc: createDocument({ metaDescription: '' }),
+    })
+
+    // Returning `undefined` would strip the root layout's description rather
+    // than inherit it, leaving the page with no description at all.
+    expect(metadata.description).toBe(DEFAULT_META_DESCRIPTION)
+    expect(metadata.openGraph).toMatchObject({ description: DEFAULT_META_DESCRIPTION })
+  })
+
+  it('falls back to the document title when a page has no SEO title', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
+
+    const metadata = await generateMeta({
+      collection: 'pages',
+      doc: createDocument({ metaTitle: '', slug: 'menu', title: 'Menu' }),
+    })
+
+    expect(metadata.title).toBe('Menu | Saigon 45')
+    expect(metadata.openGraph).toMatchObject({ title: 'Menu | Saigon 45' })
   })
 
   it('points og:url at the page itself rather than always at the front page', async () => {

@@ -47,8 +47,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export const metadata: Metadata = {
-  // Inherited by any route that does not export its own `generateMetadata`,
-  // such as the 404 page. Routes that do still override these.
+  // Last-resort defaults for routes that export no `generateMetadata` of their
+  // own, such as the 404 page. CMS pages go through `generateMeta`, which
+  // supplies the same fallbacks itself — a route that returns `undefined` for a
+  // field strips the value here rather than inheriting it.
   description: DEFAULT_META_DESCRIPTION,
   icons: {
     apple: '/apple-touch-icon.png',
