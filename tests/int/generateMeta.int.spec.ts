@@ -3,6 +3,8 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getSiteTitle } from '@/utilities/siteMetadata'
 
+const SERVER_URL = 'https://saigon-45.vercel.app'
+
 const originalServerURL = process.env.NEXT_PUBLIC_SERVER_URL
 
 afterEach(() => {
@@ -13,23 +15,28 @@ afterEach(() => {
   }
 })
 
-const createDocument = (imageUrl?: string) =>
+const createDocument = ({ imageUrl, slug = 'home' }: { imageUrl?: string; slug?: string } = {}) =>
   ({
     meta: {
       description: 'Fresh food in Rødovre Centrum.',
       image: imageUrl
         ? {
+            alt: 'Et bord fyldt med retter',
+            height: 630,
             sizes: {
               og: {
+                height: 630,
                 url: imageUrl,
+                width: 1200,
               },
             },
             url: imageUrl,
+            width: 1200,
           }
         : undefined,
       title: 'Asian street food',
     },
-    slug: 'home',
+    slug,
   }) as unknown as Parameters<typeof generateMeta>[0]['doc']
 
 describe('site metadata', () => {
@@ -39,39 +46,56 @@ describe('site metadata', () => {
   })
 
   it('keeps absolute Open Graph image URLs unchanged', async () => {
-    process.env.NEXT_PUBLIC_SERVER_URL = 'https://saigon-45.vercel.app'
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
     const imageUrl = 'https://pub.example.r2.dev/social-image.webp'
 
-    const metadata = await generateMeta({ doc: createDocument(imageUrl) })
+    const metadata = await generateMeta({
+      collection: 'pages',
+      doc: createDocument({ imageUrl }),
+    })
 
     expect(metadata.openGraph).toMatchObject({
-      images: [{ url: imageUrl }],
+      images: [{ alt: 'Et bord fyldt med retter', height: 630, url: imageUrl, width: 1200 }],
       siteName: 'Saigon 45',
       title: 'Asian street food | Saigon 45',
     })
   })
 
   it('resolves relative Open Graph image URLs against the site URL', async () => {
-    process.env.NEXT_PUBLIC_SERVER_URL = 'https://saigon-45.vercel.app'
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
 
-    const metadata = await generateMeta({ doc: createDocument('/media/social-image.webp') })
+    const metadata = await generateMeta({
+      collection: 'pages',
+      doc: createDocument({ imageUrl: '/media/social-image.webp' }),
+    })
 
     expect(metadata.openGraph).toMatchObject({
-      images: [{ url: 'https://saigon-45.vercel.app/media/social-image.webp' }],
+      images: [{ url: `${SERVER_URL}/media/social-image.webp` }],
     })
   })
 
-  it('uses the food photo when no Open Graph image is selected', async () => {
-    process.env.NEXT_PUBLIC_SERVER_URL = 'https://saigon-45.vercel.app'
+  it('falls back to the default social image when none is selected', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
 
-    const metadata = await generateMeta({ doc: createDocument() })
+    const metadata = await generateMeta({ collection: 'pages', doc: createDocument() })
 
     expect(metadata.openGraph).toMatchObject({
-      images: [
-        {
-          url: 'https://saigon-45.vercel.app/473622995_565282999663129_5661000132917835598_n.webp',
-        },
-      ],
+      images: [{ height: 630, url: `${SERVER_URL}/saigon-45-og.webp`, width: 1200 }],
     })
+  })
+
+  it('points og:url at the page itself rather than always at the front page', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
+
+    const home = await generateMeta({ collection: 'pages', doc: createDocument() })
+    const page = await generateMeta({ collection: 'pages', doc: createDocument({ slug: 'om-os' }) })
+    const post = await generateMeta({
+      collection: 'posts',
+      doc: createDocument({ slug: 'bubble-tea' }),
+    })
+
+    expect(home.openGraph).toMatchObject({ url: `${SERVER_URL}/` })
+    expect(page.openGraph).toMatchObject({ url: `${SERVER_URL}/om-os` })
+    expect(post.openGraph).toMatchObject({ url: `${SERVER_URL}/posts/bubble-tea` })
   })
 })
