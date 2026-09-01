@@ -1,7 +1,11 @@
+// Kept in step with `getServerSideURL` in `src/utilities/getURL.ts` so the
+// sitemap and the page metadata agree on the site's origin.
+// `VERCEL_PROJECT_PRODUCTION_URL` is a bare hostname, so it needs the scheme.
 const SITE_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
-  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-  'https://example.com'
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000')
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {

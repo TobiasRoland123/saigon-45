@@ -86,6 +86,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: '- Saigon 45',
+    },
     user: Users.slug,
     livePreview: {
       breakpoints: [

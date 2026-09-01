@@ -221,6 +221,8 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
     title: 'Asiatisk street food og bubble tea i Rødovre Centrum',
     description:
       'Bestil frisklavede wokretter, sprøde snacks og bubble tea hos os i Rødovre Centrum.',
-    image: metaImage.id,
+    // Left unset on purpose: the seed images are placeholder artwork, so the
+    // social preview falls back to the Saigon 45 photo in `public/` until an
+    // editor picks a real one under Pages > Home > SEO.
   },
 })
