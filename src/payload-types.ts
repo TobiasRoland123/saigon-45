@@ -829,6 +829,10 @@ export interface Form {
  * via the `definition` "FeatureHighlightsBlock".
  */
 export interface FeatureHighlightsBlock {
+  /**
+   * Adds 6rem of spacing above this block.
+   */
+  addTopMargin?: boolean | null;
   items: {
     /**
      * Choose one of the approved project icons.
@@ -1609,6 +1613,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "FeatureHighlightsBlock_select".
  */
 export interface FeatureHighlightsBlockSelect<T extends boolean = true> {
+  addTopMargin?: T;
   items?:
     | T
     | {

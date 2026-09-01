@@ -1,12 +1,16 @@
 import type { FeatureHighlightsBlock as FeatureHighlightsBlockProps } from '@/payload-types'
 import { Icon } from '@/components/icons'
+import { cn } from '@/utilities/ui'
 import React from 'react'
 
-export const FeatureHighlightsBlock: React.FC<FeatureHighlightsBlockProps> = ({ items }) => {
+export const FeatureHighlightsBlock: React.FC<FeatureHighlightsBlockProps> = ({
+  addTopMargin,
+  items,
+}) => {
   if (items.length === 0) return null
 
   return (
-    <section className="bg-primary text-primary-foreground">
+    <section className={cn('bg-primary text-primary-foreground', addTopMargin && 'mt-24')}>
       <div className="container flex flex-col justify-between gap-8 py-8 md:flex-row md:py-9">
         {(items || []).map((item) => (
           <div className="flex items-center gap-5 md:justify-center" key={item.id}>

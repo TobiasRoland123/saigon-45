@@ -7,6 +7,15 @@ export const FeatureHighlights: Block = {
   interfaceName: 'FeatureHighlightsBlock',
   fields: [
     {
+      name: 'addTopMargin',
+      type: 'checkbox',
+      admin: {
+        description: 'Adds 6rem of spacing above this block.',
+      },
+      defaultValue: false,
+      label: 'Add top margin',
+    },
+    {
       name: 'items',
       type: 'array',
       admin: {
