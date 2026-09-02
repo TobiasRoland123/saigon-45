@@ -6,6 +6,10 @@ test.describe('Admin Panel', () => {
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
+    // Seeding boots a full Payload instance and the admin bundle compiles on
+    // first hit in dev — well past Playwright's 30s default for hooks.
+    test.setTimeout(120_000)
+
     await seedTestUser()
 
     const context = await browser.newContext()
