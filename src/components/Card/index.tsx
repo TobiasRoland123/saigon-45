@@ -30,7 +30,7 @@ export const Card: React.FC<{
     <Link
       href={href}
       className={cn(
-        'overflow-hidden rounded-lg border border-border bg-card hover:cursor-pointer',
+        'block overflow-hidden rounded-lg border border-border bg-card hover:cursor-pointer',
         className,
       )}
     >
@@ -64,7 +64,7 @@ export const Card: React.FC<{
         {titleToUse && (
           <div className="prose">
             <h3>
-              <p className="not-prose">{titleToUse}</p>
+              <span className="not-prose">{titleToUse}</span>
             </h3>
           </div>
         )}
