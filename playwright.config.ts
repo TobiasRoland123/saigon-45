@@ -8,6 +8,8 @@ dotenv.config({ path: ['.env.local', '.env'] })
  */
 export default defineConfig({
   testDir: './tests/e2e',
+  /* The Payload admin routes compile on demand in dev, so 30s is too tight. */
+  timeout: 60_000,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
