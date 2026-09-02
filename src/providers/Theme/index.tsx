@@ -1,12 +1,11 @@
 'use client'
 
-import React, { createContext, useCallback, use, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useState } from 'react'
 
 import type { Theme, ThemeContextType } from './types'
 
 import canUseDOM from '@/utilities/canUseDOM'
-import { defaultTheme, getImplicitPreference, themeLocalStorageKey } from './shared'
-import { themeIsValid } from './types'
+import { getImplicitPreference, themeLocalStorageKey } from './shared'
 
 const initialContext: ThemeContextType = {
   setTheme: () => null,
@@ -16,6 +15,8 @@ const initialContext: ThemeContextType = {
 const ThemeContext = createContext(initialContext)
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  // `InitTheme` writes `data-theme` before hydration, so the attribute is
+  // already authoritative when this mounts and needs no effect to re-derive it.
   const [theme, setThemeState] = useState<Theme | undefined>(
     canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : undefined,
   )
@@ -33,25 +34,5 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [])
 
-  useEffect(() => {
-    let themeToSet: Theme = defaultTheme
-    const preference = window.localStorage.getItem(themeLocalStorageKey)
-
-    if (themeIsValid(preference)) {
-      themeToSet = preference
-    } else {
-      const implicitPreference = getImplicitPreference()
-
-      if (implicitPreference) {
-        themeToSet = implicitPreference
-      }
-    }
-
-    document.documentElement.setAttribute('data-theme', themeToSet)
-    setThemeState(themeToSet)
-  }, [])
-
   return <ThemeContext value={{ setTheme, theme }}>{children}</ThemeContext>
 }
-
-export const useTheme = (): ThemeContextType => use(ThemeContext)
