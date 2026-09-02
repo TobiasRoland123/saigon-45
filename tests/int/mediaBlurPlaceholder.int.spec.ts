@@ -8,9 +8,11 @@ type GenerateBlurPlaceholderArgs = Parameters<typeof generateBlurPlaceholder>[0]
 const createHookArgs = async ({
   mimetype,
   operation = 'create',
+  withFile = true,
 }: {
-  mimetype: string
+  mimetype?: string
   operation?: 'create' | 'update'
+  withFile?: boolean
 }) => {
   const data = { alt: 'Test image' }
   const image = await sharp({
@@ -28,12 +30,16 @@ const createHookArgs = async ({
     data,
     operation,
     req: {
-      file: {
-        data: image,
-        mimetype,
-        name: 'test.png',
-        size: image.byteLength,
-      },
+      // Payload only populates `req.file` when a file is actually uploaded, so
+      // a metadata-only edit leaves it undefined.
+      file: withFile
+        ? {
+            data: image,
+            mimetype,
+            name: 'test.png',
+            size: image.byteLength,
+          }
+        : undefined,
       payload: {
         logger: {
           warn: vi.fn(),
@@ -65,8 +71,20 @@ describe('generateBlurPlaceholder', () => {
     expect(result).toBe(args.data)
   })
 
-  it('skips updates so only new uploads are generated automatically', async () => {
+  it('regenerates the placeholder when an update replaces the file', async () => {
     const args = await createHookArgs({ mimetype: 'image/png', operation: 'update' })
+    const result = await generateBlurPlaceholder(asHookArgs(args))
+
+    // The hook keys off an uploaded file rather than the operation, so
+    // swapping the image on an existing record refreshes its placeholder.
+    expect(result).toMatchObject({
+      alt: 'Test image',
+      blurPlaceholder: expect.stringMatching(/^data:image\/webp;base64,/),
+    })
+  })
+
+  it('skips edits that upload no file', async () => {
+    const args = await createHookArgs({ operation: 'update', withFile: false })
     const result = await generateBlurPlaceholder(asHookArgs(args))
 
     expect(result).toBe(args.data)

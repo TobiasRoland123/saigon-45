@@ -35,11 +35,7 @@ const getAdminThumbnail = ({ doc }: { doc: Record<string, unknown> }): null | st
   return typeof url === 'string' ? url : null
 }
 
-export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({
-  data,
-  operation,
-  req,
-}) => {
+export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({ data, req }) => {
   try {
     const file = req.file
     const mimeType = file && 'mimetype' in file ? file.mimetype : undefined
