@@ -23,7 +23,11 @@ describe('getInlineSvgA11yProps', () => {
     })
   })
 
-  it('keeps the button role for an interactive SVG even without alt text', () => {
+  // Contract: callers must supply a non-empty `alt` for interactive SVGs. The
+  // helper keeps button semantics here but cannot invent a name, so this input
+  // yields a nameless control. Making `onClick` render a keyboard-operable,
+  // name-required native <button> is tracked as a follow-up.
+  it('keeps button semantics for an interactive SVG but cannot name it without alt', () => {
     expect(getInlineSvgA11yProps({ alt: '', interactive: true })).toEqual({
       role: 'button',
       'aria-label': '',
