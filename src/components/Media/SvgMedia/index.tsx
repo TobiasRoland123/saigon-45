@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { cn } from '@/utilities/ui'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import type { Media } from '@/payload-types'
+import { getInlineSvgA11yProps } from './a11y'
 
 type SvgRenderMode = 'inline' | 'img'
 
@@ -88,11 +89,10 @@ export const SvgMedia: React.FC<SvgMediaProps> = ({
 
     return (
       <div
-        aria-label={alt}
+        {...getInlineSvgA11yProps({ alt, interactive: Boolean(onClick) })}
         className={cn(className, imgClassName)}
         dangerouslySetInnerHTML={{ __html: inlineSvg.svg }}
         onClick={onClick}
-        role={onClick ? 'button' : 'img'}
       />
     )
   }
