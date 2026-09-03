@@ -69,7 +69,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       style={{ transform }}
       key={review.id}
     >
-      <div className="flex gap-1 text-primary" aria-label={`${rating} ud af ${MAX_STARS} stjerner`}>
+      <div
+        className="flex gap-1 text-primary"
+        role="img"
+        aria-label={`${rating} ud af ${MAX_STARS} stjerner`}
+      >
         {Array.from({ length: MAX_STARS }).map((_, starIndex) => (
           <Icon
             key={starIndex}
@@ -87,7 +91,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       <div className="mt-12 border-t border-surface-dim/15 pt-8">
         <p className="text-sm font-semibold text-inverse-primary">{review.name}</p>
         {review.source && (
-          <p className="mt-1 text-[10px] tracking-[0.16em] text-surface-dim/65 uppercase">
+          <p className="mt-1 text-[10px] tracking-[0.16em] text-surface-dim uppercase">
             {review.source}
           </p>
         )}

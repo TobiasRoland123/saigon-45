@@ -4,7 +4,7 @@ import React from 'react'
 import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
 import { formatPhoneHref, formatPhoneNumber } from '@/utilities/formatPhoneNumber'
-import { SocialIcon } from '@/components/icons'
+import { SocialIcon, socialIconRegistry } from '@/components/icons'
 import RichText from '@/components/RichText'
 
 export async function Footer() {
@@ -32,14 +32,14 @@ export async function Footer() {
           <div className="flex flex-col items-start gap-4 md:col-start-1 md:col-end-7 md:row-start-1 md:row-end-2">
             <p className="text-2xl">{aboutData.AboutLabel}</p>
             <p>{aboutData.AboutSaigon45}</p>
-            <span className="text-sm text-primary-muted">
+            <span className="text-sm text-primary-fixed">
               &copy; {currentYear} {aboutData.AboutCopyRightDetails}
             </span>
           </div>
         )}
         {contactData && (
           <div className="flex flex-col items-start gap-4 md:col-start-7 md:col-end-10 md:row-start-1 md:row-end-2">
-            <p className="text-primary-muted uppercase underline decoration-primary-muted underline-offset-3">
+            <p className="text-primary-fixed uppercase underline decoration-primary-fixed underline-offset-3">
               Kontakt & info
             </p>
             <ul className="[&>a]:leading-10 [&>li]:leading-10">
@@ -65,7 +65,7 @@ export async function Footer() {
 
         {socialMediaData && socialMediaData.length > 0 && (
           <div className="flex flex-col items-start gap-4 md:col-start-10 md:col-end-13 md:row-start-1 md:row-end-2">
-            <p className="text-primary-muted uppercase underline decoration-primary-muted underline-offset-3">
+            <p className="text-primary-fixed uppercase underline decoration-primary-fixed underline-offset-3">
               Følg os
             </p>
             <div className="flex flex-wrap items-start gap-4">
@@ -76,6 +76,7 @@ export async function Footer() {
                   <Link
                     key={item.id}
                     href={item.url}
+                    aria-label={socialIconRegistry[item.platform].label}
                     className="flex cursor-pointer items-center justify-center rounded-md bg-white/10 p-2 transition-colors hover:bg-white/20"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -89,7 +90,7 @@ export async function Footer() {
         )}
 
         <div className="flex w-full flex-col items-start gap-4 md:col-start-1 md:col-end-7 md:row-start-2 md:row-end-3">
-          <p className="text-primary-muted uppercase underline decoration-primary-muted underline-offset-3">
+          <p className="text-primary-fixed uppercase underline decoration-primary-fixed underline-offset-3">
             Links
           </p>
           <nav className="flex flex-col gap-4 md:w-full md:flex-row md:justify-between">

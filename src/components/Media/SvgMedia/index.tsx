@@ -92,7 +92,7 @@ export const SvgMedia: React.FC<SvgMediaProps> = ({
         className={cn(className, imgClassName)}
         dangerouslySetInnerHTML={{ __html: inlineSvg.svg }}
         onClick={onClick}
-        role={onClick ? 'button' : undefined}
+        role={onClick ? 'button' : 'img'}
       />
     )
   }

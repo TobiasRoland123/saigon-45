@@ -20,17 +20,17 @@ const InfoRow = ({
   label: string
   children: React.ReactNode
 }) => (
-  <div className="flex gap-5">
+  <li className="flex gap-5">
     <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-on-primary-fixed/10 text-on-primary-container">
       <Icon name={icon} className="size-8" />
     </div>
     <div>
-      <dt className="text-xl font-bold text-on-primary-container">{label}</dt>
-      <dd className="mt-1 space-y-0.5 text-lg leading-relaxed text-on-primary-fixed/80">
+      <p className="text-xl font-bold text-on-primary-container">{label}</p>
+      <div className="mt-1 space-y-0.5 text-lg leading-relaxed text-on-primary-fixed/80">
         {children}
-      </dd>
+      </div>
     </div>
-  </div>
+  </li>
 )
 
 // Async server component: address, hours and phone come from the shared
@@ -59,7 +59,7 @@ export const FindUsBlock = async (props: FindUsBlockProps) => {
             {heading}
           </h2>
 
-          <dl className="mt-10 space-y-8">
+          <ul className="mt-10 space-y-8">
             <InfoRow icon="mapPin" label={addressLabel}>
               {address?.street && <p>{address.street}</p>}
               {address?.zipCity && <p>{address.zipCity}</p>}
@@ -83,7 +83,7 @@ export const FindUsBlock = async (props: FindUsBlockProps) => {
                 </a>
               </InfoRow>
             )}
-          </dl>
+          </ul>
 
           {address?.googleMapsUrl && (
             <a

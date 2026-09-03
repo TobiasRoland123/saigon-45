@@ -19,7 +19,7 @@ export const FeatureHighlightsBlock: React.FC<FeatureHighlightsBlockProps> = ({
             </div>
             <div>
               <p className="text-sm leading-tight font-semibold">{item.title}</p>
-              <p className="mt-1 text-xs leading-tight font-bold tracking-[0.16em] text-primary-foreground/70 uppercase">
+              <p className="mt-1 text-xs leading-tight font-bold tracking-[0.16em] text-primary-foreground uppercase">
                 {item.subtitle}
               </p>
             </div>
