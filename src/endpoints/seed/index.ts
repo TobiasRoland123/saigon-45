@@ -79,7 +79,6 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'header',
       data: {
-        media: null,
         navItems: [],
         WoltCTA: [],
       },
@@ -326,7 +325,6 @@ export const seed = async ({
     payload.updateGlobal({
       slug: 'header',
       data: {
-        media: imageHomeDoc.id,
         navItems: [
           {
             link: {
