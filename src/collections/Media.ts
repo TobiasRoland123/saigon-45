@@ -1,4 +1,9 @@
-import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
+import type {
+  CollectionAfterOperationHook,
+  CollectionBeforeChangeHook,
+  CollectionBeforeOperationHook,
+  CollectionConfig,
+} from 'payload'
 
 import {
   FixedToolbarFeature,
@@ -11,6 +16,8 @@ import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { applyR2MediaCacheControl } from '../utilities/r2CacheControl'
+import { getMediaUrl } from '../utilities/getMediaUrl'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,8 +27,9 @@ const webpFormatOptions = {
     quality: 82,
   },
 }
+const uploadPendingContextKey = 'r2MediaCacheControlPending'
 
-const getAdminThumbnail = ({ doc }: { doc: Record<string, unknown> }): null | string => {
+export const getAdminThumbnail = ({ doc }: { doc: Record<string, unknown> }): null | string => {
   const sizes = doc.sizes
 
   if (!sizes || typeof sizes !== 'object') return null
@@ -31,8 +39,11 @@ const getAdminThumbnail = ({ doc }: { doc: Record<string, unknown> }): null | st
   if (!thumbnail || typeof thumbnail !== 'object') return null
 
   const url = (thumbnail as Record<string, unknown>).url
+  const updatedAt = doc.updatedAt
 
-  return typeof url === 'string' ? url : null
+  return typeof url === 'string'
+    ? getMediaUrl(url, typeof updatedAt === 'string' ? updatedAt : null)
+    : null
 }
 
 export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({ data, req }) => {
@@ -63,6 +74,37 @@ export const generateBlurPlaceholder: CollectionBeforeChangeHook = async ({ data
 
     return data
   }
+}
+
+export const markR2MediaUpload: CollectionBeforeOperationHook<'media'> = ({ req }) => {
+  if (req.file) {
+    req.context[uploadPendingContextKey] = true
+  }
+}
+
+export const setR2MediaCacheControl: CollectionAfterOperationHook<'media'> = async ({
+  req,
+  result,
+}) => {
+  if (!req.context[uploadPendingContextKey]) return result
+
+  if (!result || typeof result !== 'object' || Array.isArray(result) || !('filename' in result)) {
+    return result
+  }
+
+  try {
+    await applyR2MediaCacheControl(result as Parameters<typeof applyR2MediaCacheControl>[0])
+    delete req.context[uploadPendingContextKey]
+  } catch (error) {
+    // Payload's storage hook can perform a nested update. Keeping the marker
+    // lets the outer operation retry once if that first metadata write fails.
+    req.payload.logger.warn({
+      err: error,
+      msg: 'Failed to apply cache-control metadata to R2 media',
+    })
+  }
+
+  return result
 }
 
 export const Media: CollectionConfig = {
@@ -98,7 +140,9 @@ export const Media: CollectionConfig = {
     },
   ],
   hooks: {
+    afterOperation: [setR2MediaCacheControl],
     beforeChange: [generateBlurPlaceholder],
+    beforeOperation: [markR2MediaUpload],
   },
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload

@@ -16,12 +16,14 @@ afterEach(() => {
 })
 
 const createDocument = ({
+  imageUpdatedAt,
   imageUrl,
   metaDescription = 'Fresh food in Rødovre Centrum.',
   metaTitle = 'Asian street food',
   slug = 'home',
   title = 'Forside',
 }: {
+  imageUpdatedAt?: string
   imageUrl?: string
   metaDescription?: string
   metaTitle?: string
@@ -35,6 +37,7 @@ const createDocument = ({
         ? {
             alt: 'Et bord fyldt med retter',
             height: 630,
+            updatedAt: imageUpdatedAt,
             sizes: {
               og: {
                 height: 630,
@@ -84,6 +87,21 @@ describe('site metadata', () => {
 
     expect(metadata.openGraph).toMatchObject({
       images: [{ url: `${SERVER_URL}/media/social-image.webp` }],
+    })
+  })
+
+  it('versions Open Graph image URLs so immutable R2 objects can be replaced safely', async () => {
+    process.env.NEXT_PUBLIC_SERVER_URL = SERVER_URL
+    const imageUrl = 'https://pub.example.r2.dev/social-image.webp'
+    const imageUpdatedAt = '2026-09-04T20:00:00.000Z'
+
+    const metadata = await generateMeta({
+      collection: 'pages',
+      doc: createDocument({ imageUpdatedAt, imageUrl }),
+    })
+
+    expect(metadata.openGraph).toMatchObject({
+      images: [{ url: `${imageUrl}?${encodeURIComponent(imageUpdatedAt)}` }],
     })
   })
 

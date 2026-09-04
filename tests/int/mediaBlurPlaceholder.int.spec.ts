@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { describe, expect, it, vi } from 'vitest'
 
-import { generateBlurPlaceholder } from '@/collections/Media'
+import { generateBlurPlaceholder, getAdminThumbnail } from '@/collections/Media'
 
 type GenerateBlurPlaceholderArgs = Parameters<typeof generateBlurPlaceholder>[0]
 
@@ -88,5 +88,18 @@ describe('generateBlurPlaceholder', () => {
     const result = await generateBlurPlaceholder(asHookArgs(args))
 
     expect(result).toBe(args.data)
+  })
+})
+
+describe('getAdminThumbnail', () => {
+  it('versions remote thumbnails when the media changes', () => {
+    expect(
+      getAdminThumbnail({
+        doc: {
+          sizes: { thumbnail: { url: 'https://pub.example.r2.dev/image-300x169.webp' } },
+          updatedAt: '2026-09-04T20:00:00.000Z',
+        },
+      }),
+    ).toBe('https://pub.example.r2.dev/image-300x169.webp?2026-09-04T20%3A00%3A00.000Z')
   })
 })

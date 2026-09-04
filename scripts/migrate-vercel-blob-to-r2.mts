@@ -1,6 +1,8 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { get, head, list } from '@vercel/blob'
 
+import { R2_MEDIA_CACHE_CONTROL } from '../src/utilities/r2CacheControl'
+
 const requiredEnvironmentVariables = [
   'BLOB_READ_WRITE_TOKEN',
   'R2_BUCKET',
@@ -51,7 +53,7 @@ do {
       new PutObjectCommand({
         Body: source.stream,
         Bucket: process.env.R2_BUCKET,
-        CacheControl: metadata.cacheControl,
+        CacheControl: R2_MEDIA_CACHE_CONTROL,
         ContentDisposition: metadata.contentDisposition,
         ContentType: metadata.contentType,
         Key: blob.pathname,

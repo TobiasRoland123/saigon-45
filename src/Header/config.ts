@@ -10,12 +10,6 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
-      name: 'media',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-    },
-    {
       name: 'navItems',
       type: 'array',
       fields: [

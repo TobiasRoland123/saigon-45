@@ -1,0 +1,4 @@
+{
+  // These are build-time CSS imports in globals.css, not runtime application dependencies.
+  "ignoreDependencies": ["@tailwindcss/typography", "tailwindcss"],
+}

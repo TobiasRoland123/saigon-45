@@ -8,7 +8,7 @@ import { HeaderNav } from './Nav'
 import { MobileNavBackdrop, MobileNavPanel, MobileNavToggleButton } from './Nav/MobileNav'
 import { WoltCTA } from './WoltCTA'
 import { useMobileMenu } from './hooks/useMobileMenu'
-import { SvgMedia } from '@/components/Media'
+import { Logo } from '@/components/Logo'
 
 interface HeaderClientProps {
   data: Header
@@ -24,9 +24,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     <header suppressHydrationWarning className="relative z-20">
       <div className="relative z-20 bg-surface">
         <div className="container flex items-center justify-between gap-3 px-6 py-3 md:py-6">
-          <Link href="/" className="flex flex-row items-center gap-2">
-            <p className="text-2xl font-bold text-surface-tint md:text-3xl">Saigon 45</p>
-            <SvgMedia className="h-8 w-8 md:h-12 md:w-12" resource={data.media} />
+          <Link href="/" className="flex w-full flex-row items-center gap-2">
+            <p className="text-2xl font-bold whitespace-nowrap text-surface-tint md:text-3xl">
+              Saigon 45
+            </p>
+            <Logo size="large" />
           </Link>
 
           <div className="hidden md:block">
