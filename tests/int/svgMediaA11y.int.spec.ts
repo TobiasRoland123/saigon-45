@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-import { getInlineSvgA11yProps } from '@/components/Media/SvgMedia/a11y'
+import { getInlineSvgA11yProps, warnIfUnnamedInteractive } from '@/components/Media/SvgMedia/a11y'
 
 describe('getInlineSvgA11yProps', () => {
   it('hides a decorative SVG (no alt, not interactive) from assistive tech', () => {
@@ -16,21 +16,41 @@ describe('getInlineSvgA11yProps', () => {
     })
   })
 
-  it('exposes an interactive SVG as a button named by its alt', () => {
+  // The interactive case is rendered inside a native <button>/<a> that carries the
+  // accessible name, so the graphic itself must stay silent — otherwise the name is
+  // announced twice.
+  it('hides the graphic when it is wrapped in an interactive control', () => {
     expect(getInlineSvgA11yProps({ alt: 'Open menu', interactive: true })).toEqual({
-      role: 'button',
-      'aria-label': 'Open menu',
+      'aria-hidden': true,
     })
   })
+})
 
-  // Contract: callers must supply a non-empty `alt` for interactive SVGs. The
-  // helper keeps button semantics here but cannot invent a name, so this input
-  // yields a nameless control. Making `onClick` render a keyboard-operable,
-  // name-required native <button> is tracked as a follow-up.
-  it('keeps button semantics for an interactive SVG but cannot name it without alt', () => {
-    expect(getInlineSvgA11yProps({ alt: '', interactive: true })).toEqual({
-      role: 'button',
-      'aria-label': '',
-    })
+describe('warnIfUnnamedInteractive', () => {
+  it('warns when an interactive SVG has no accessible name', () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    warnIfUnnamedInteractive({ alt: '', interactive: true })
+
+    expect(spy).toHaveBeenCalledOnce()
+    spy.mockRestore()
+  })
+
+  it('stays quiet for a named interactive SVG', () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    warnIfUnnamedInteractive({ alt: 'Open menu', interactive: true })
+
+    expect(spy).not.toHaveBeenCalled()
+    spy.mockRestore()
+  })
+
+  it('stays quiet for a decorative, non-interactive SVG', () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    warnIfUnnamedInteractive({ alt: '', interactive: false })
+
+    expect(spy).not.toHaveBeenCalled()
+    spy.mockRestore()
   })
 })
