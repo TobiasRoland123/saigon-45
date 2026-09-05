@@ -79,7 +79,9 @@ export const ProductCard: React.FC<BubbleTeaProductCardProps> = ({
         {name}
       </h3>
       {description && (
-        <p className="mt-2 text-sm leading-relaxed font-semibold text-outline">{description}</p>
+        <p className="mt-2 text-sm leading-relaxed font-semibold text-on-surface-variant">
+          {description}
+        </p>
       )}
     </article>
   )
