@@ -28,23 +28,37 @@ export const getInlineSvgA11yProps = ({
 }
 
 /**
- * Dev-only guard for the interactive case: a `<button>` whose only content is a
- * graphic has no visible text, so without `altOverride` it is announced as a bare
- * "button". TypeScript already requires `altOverride` alongside `onClick`/`href`,
- * but it cannot see that the value came from a Media record an editor left blank.
+ * Resolves the accessible name for a requested interactive SvgMedia, or null when it
+ * must not render as a control.
+ *
+ * A `<button>`/`<a>` whose only content is a graphic has no visible text, so it is
+ * named solely by its `aria-label`: a blank or whitespace-only name leaves assistive
+ * tech announcing a bare "button" (WCAG 4.1.2 Name, Role, Value). TypeScript already
+ * requires `altOverride` alongside `onClick`/`href`, but it cannot see that the value
+ * came from a Media record an editor left blank — so this also fails closed at
+ * runtime, in every environment: the caller falls back to a plain, static graphic
+ * rather than shipping a nameless control. Development additionally gets a console
+ * error naming the cause.
  */
-export const warnIfUnnamedInteractive = ({
+export const resolveInteractiveName = ({
   alt,
-  interactive,
+  requested,
 }: {
   alt: string
-  interactive: boolean
-}): void => {
-  if (process.env.NODE_ENV === 'production') return
-  if (!interactive || alt !== '') return
+  requested: boolean
+}): string | null => {
+  if (!requested) return null
 
-  console.error(
-    '[SvgMedia] A clickable SvgMedia has no accessible name. Pass a non-empty `altOverride`, ' +
-      'or set the `alt` field on the Media record.',
-  )
+  const label = alt.trim()
+  if (label !== '') return label
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(
+      '[SvgMedia] A clickable SvgMedia has no accessible name, so it rendered as a static ' +
+        'graphic instead. Pass a non-empty `altOverride`, or set the `alt` field on the ' +
+        'Media record.',
+    )
+  }
+
+  return null
 }

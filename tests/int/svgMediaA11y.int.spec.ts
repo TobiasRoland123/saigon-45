@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { getInlineSvgA11yProps, warnIfUnnamedInteractive } from '@/components/Media/SvgMedia/a11y'
+import { getInlineSvgA11yProps, resolveInteractiveName } from '@/components/Media/SvgMedia/a11y'
 
 describe('getInlineSvgA11yProps', () => {
   it('hides a decorative SVG (no alt, not interactive) from assistive tech', () => {
@@ -26,29 +26,37 @@ describe('getInlineSvgA11yProps', () => {
   })
 })
 
-describe('warnIfUnnamedInteractive', () => {
-  it('warns when an interactive SVG has no accessible name', () => {
-    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
-    warnIfUnnamedInteractive({ alt: '', interactive: true })
-
-    expect(spy).toHaveBeenCalledOnce()
-    spy.mockRestore()
+describe('resolveInteractiveName', () => {
+  it('returns null when no control was requested', () => {
+    expect(resolveInteractiveName({ alt: 'Company logo', requested: false })).toBeNull()
   })
 
-  it('stays quiet for a named interactive SVG', () => {
+  it('returns the name when a control was requested and named', () => {
+    expect(resolveInteractiveName({ alt: 'Open menu', requested: true })).toBe('Open menu')
+  })
+
+  it('trims the name so it is not padded in the accessibility tree', () => {
+    expect(resolveInteractiveName({ alt: '  Open menu  ', requested: true })).toBe('Open menu')
+  })
+
+  // Fails closed in every environment: a nameless control is a WCAG 4.1.2 failure, so
+  // the caller falls back to a static graphic rather than rendering one.
+  it.each([
+    ['empty', ''],
+    ['whitespace-only', '   '],
+  ])('refuses a %s name and reports why', (_label, alt) => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    warnIfUnnamedInteractive({ alt: 'Open menu', interactive: true })
+    expect(resolveInteractiveName({ alt, requested: true })).toBeNull()
+    expect(spy).toHaveBeenCalledOnce()
 
-    expect(spy).not.toHaveBeenCalled()
     spy.mockRestore()
   })
 
   it('stays quiet for a decorative, non-interactive SVG', () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    warnIfUnnamedInteractive({ alt: '', interactive: false })
+    expect(resolveInteractiveName({ alt: '', requested: false })).toBeNull()
 
     expect(spy).not.toHaveBeenCalled()
     spy.mockRestore()

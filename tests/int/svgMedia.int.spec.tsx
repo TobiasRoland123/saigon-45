@@ -83,14 +83,26 @@ describe('SvgMedia — interactive, mode="img"', () => {
     expect(button.querySelector('img')?.className).toBe('graphic')
   })
 
-  it('logs a dev-time error when the resolved name is empty', () => {
+  // The typed union forces callers to pass `altOverride`, but it cannot stop a blank
+  // string — which is exactly what a blank `alt` on a Media record yields. Rather than
+  // ship a nameless control, the component degrades to a static graphic.
+  it.each([
+    ['empty', ''],
+    ['whitespace-only', '   '],
+  ])('degrades to a static graphic when the name is %s', (_name, altOverride) => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    // The typed union forces callers to pass `altOverride`, but it cannot stop an
-    // empty string — which is exactly what a blank `alt` on a Media record yields.
-    render(<SvgMedia altOverride={''} onClick={vi.fn()} url={SVG_URL} />)
+    render(<SvgMedia altOverride={altOverride} onClick={vi.fn()} url={SVG_URL} />)
 
+    expect(screen.queryByRole('button')).toBeNull()
+    expect(document.querySelector('img')).not.toBeNull()
     expect(spy).toHaveBeenCalled()
+  })
+
+  it('trims the accessible name', () => {
+    render(<SvgMedia altOverride="  Open menu  " onClick={vi.fn()} url={SVG_URL} />)
+
+    expect(screen.getByRole('button', { name: 'Open menu' })).toBeDefined()
   })
 })
 

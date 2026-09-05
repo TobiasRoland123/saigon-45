@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { cn } from '@/utilities/ui'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import type { Media } from '@/payload-types'
-import { getInlineSvgA11yProps, warnIfUnnamedInteractive } from './a11y'
+import { getInlineSvgA11yProps, resolveInteractiveName } from './a11y'
 
 type SvgRenderMode = 'inline' | 'img'
 
@@ -126,7 +126,9 @@ const resolveSvgSource = (props: SvgMediaBaseProps): { alt: string; url: string 
   const media = resource && typeof resource === 'object' ? (resource as Media) : props
 
   return {
-    alt: altOverride ?? media.alt ?? '',
+    // Trimmed so a whitespace-only alt counts as absent everywhere downstream — it
+    // names neither a control nor a `role="img"` graphic.
+    alt: (altOverride ?? media.alt ?? '').trim(),
     url: getMediaUrl(media.url, media.updatedAt),
   }
 }
@@ -165,10 +167,15 @@ export const SvgMedia: React.FC<SvgMediaProps> = (props) => {
   const { className, href, imgClassName, mode = 'img', onClick, onLoad } = props
 
   const { alt, url } = resolveSvgSource(props)
-  const interactive = Boolean(onClick || href !== undefined)
   const svg = useInlineSvg(url, mode === 'inline')
 
-  warnIfUnnamedInteractive({ alt, interactive })
+  // Null when no handler was given, and also when one was but the control would have
+  // no accessible name — in that case we fall back to a static graphic.
+  const label = resolveInteractiveName({
+    alt,
+    requested: Boolean(onClick || href !== undefined),
+  })
+  const interactive = label !== null
 
   if (!url) return null
   if (mode === 'inline' && svg === null) return null
@@ -186,10 +193,10 @@ export const SvgMedia: React.FC<SvgMediaProps> = (props) => {
     />
   )
 
-  if (!interactive) return graphic
+  if (label === null) return graphic
 
   return (
-    <InteractiveWrapper className={className} href={href} label={alt} onClick={onClick}>
+    <InteractiveWrapper className={className} href={href} label={label} onClick={onClick}>
       {graphic}
     </InteractiveWrapper>
   )
