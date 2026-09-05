@@ -855,6 +855,21 @@ export interface FeatureHighlightsBlock {
       | 'quote';
     title: string;
     subtitle: string;
+    enableLink?: boolean | null;
+    link?: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+    };
     id?: string | null;
   }[];
   id?: string | null;
@@ -1620,6 +1635,15 @@ export interface FeatureHighlightsBlockSelect<T extends boolean = true> {
         icon?: T;
         title?: T;
         subtitle?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+            };
         id?: T;
       };
   id?: T;

@@ -28,6 +28,7 @@ import * as migration_20260723_200000_add_bubble_tea_menu_item_sizes from './202
 import * as migration_20260724_090000_menu_item_price_nullable from './20260724_090000_menu_item_price_nullable'
 import * as migration_20260724_100000_bubble_tea_display_mode from './20260724_100000_bubble_tea_display_mode'
 import * as migration_20260901_214900_add_feature_highlights_top_margin from './20260901_214900_add_feature_highlights_top_margin'
+import * as migration_20260905_120000_add_feature_highlight_links from './20260905_120000_add_feature_highlight_links'
 
 export const migrations = [
   {
@@ -179,5 +180,10 @@ export const migrations = [
     up: migration_20260901_214900_add_feature_highlights_top_margin.up,
     down: migration_20260901_214900_add_feature_highlights_top_margin.down,
     name: '20260901_214900_add_feature_highlights_top_margin',
+  },
+  {
+    up: migration_20260905_120000_add_feature_highlight_links.up,
+    down: migration_20260905_120000_add_feature_highlight_links.down,
+    name: '20260905_120000_add_feature_highlight_links',
   },
 ]
