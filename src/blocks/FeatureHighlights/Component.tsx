@@ -15,12 +15,12 @@ const FeatureHighlightItem: React.FC<HighlightItem> = (item) => {
   const className = 'flex items-center gap-5 md:justify-center'
   const content = (
     <>
-      <div className="grid size-12 shrink-0 place-items-center rounded-full bg-primary-foreground/10 text-primary-foreground">
+      <div className="grid size-12 shrink-0 place-items-center rounded-full bg-primary-foreground/10 text-primary-foreground transition-colors group-hover:bg-primary-foreground group-hover:text-primary">
         <Icon name={item.icon} className="size-5" />
       </div>
       <div>
         <p className="text-sm leading-tight font-semibold">{item.title}</p>
-        <p className="mt-1 text-xs leading-tight font-bold tracking-[0.16em] text-primary-foreground/70 uppercase">
+        <p className="mt-1 text-xs leading-5 font-bold tracking-[0.16em] text-primary-foreground/70 uppercase">
           {item.subtitle}
         </p>
       </div>
@@ -33,7 +33,7 @@ const FeatureHighlightItem: React.FC<HighlightItem> = (item) => {
         {...link}
         className={cn(
           className,
-          'rounded-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-primary-foreground',
+          'group rounded-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-primary-foreground',
         )}
       >
         {content}
