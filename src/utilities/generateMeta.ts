@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import type { Media, Page, Post, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
+import { getMediaUrl } from './getMediaUrl'
 import { getServerSideURL } from './getURL'
 import { collectionPrefixMap } from './generatePreviewPath'
 import {
@@ -52,7 +53,7 @@ const getOpenGraphImage = (
   return {
     alt: image.alt || DEFAULT_OG_IMAGE_ALT,
     height: source.height ?? undefined,
-    url: toAbsoluteURL(source.url),
+    url: toAbsoluteURL(getMediaUrl(source.url, image.updatedAt)),
     width: source.width ?? undefined,
   }
 }

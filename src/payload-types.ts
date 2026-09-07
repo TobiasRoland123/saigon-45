@@ -2272,7 +2272,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
-  media?: (number | null) | Media;
   navItems?:
     | {
         link: {
@@ -2494,7 +2493,6 @@ export interface BusinessInfo {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  media?: T;
   navItems?:
     | T
     | {
