@@ -4,7 +4,7 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0 shadow-[0_12px_36px_rgba(0,0,0,0.2)] transition-all hover:scale-[1.02]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-bold disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 aria-invalid:focus-visible:ring-0 shadow-[0_12px_36px_rgba(0,0,0,0.2)] transition-all hover:scale-[1.02] focus-visible:outline-blue-600 focus-visible:outline-offset-2 focus-visible:outline-2",
   {
     variants: {
       variant: {
@@ -43,6 +43,8 @@ const Button: React.FC<ButtonProps> = ({ asChild = false, className, size, varia
   return (
     <Comp
       data-slot="button"
+      tabIndex={0}
+      type="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
