@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 
 import { icon } from '@/fields/icon'
+import { link } from '@/fields/link'
 
 export const FeatureHighlights: Block = {
   slug: 'featureHighlights',
@@ -33,6 +34,21 @@ export const FeatureHighlights: Block = {
           type: 'text',
           required: true,
         },
+        {
+          name: 'enableLink',
+          type: 'checkbox',
+          defaultValue: false,
+          label: 'Enable link',
+        },
+        link({
+          appearances: false,
+          disableLabel: true,
+          overrides: {
+            admin: {
+              condition: (_data, siblingData) => Boolean(siblingData?.enableLink),
+            },
+          },
+        }),
       ],
       labels: {
         plural: 'Highlights',
