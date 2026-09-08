@@ -199,7 +199,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
           <div className="relative grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
             <div>
               {eyebrow && (
-                <h2 className="max-w-2xl text-5xl leading-[1.05] font-extrabold tracking-normal text-primary-fixed">
+                <h2 className="max-w-2xl text-4xl leading-[1.05] font-extrabold tracking-normal text-primary-fixed md:text-5xl">
                   {eyebrow}
                 </h2>
               )}
@@ -212,7 +212,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                     </div>
                     <div>
                       {ratingLabel && (
-                        <p className="text-2xl leading-tight font-bold text-primary-fixed">
+                        <p className="text-xl leading-tight font-bold text-primary-fixed md:text-2xl">
                           {ratingLabel}
                         </p>
                       )}
@@ -232,7 +232,7 @@ export const ReviewsBlock: React.FC<ReviewsBlockProps> = ({
                     </div>
                     <div>
                       {smileyTitle && (
-                        <p className="text-2xl leading-tight font-bold text-primary-fixed">
+                        <p className="text-xl leading-tight font-bold text-primary-fixed md:text-2xl">
                           {smileyTitle}
                         </p>
                       )}
