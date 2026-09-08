@@ -22,16 +22,16 @@ const ContactRow = ({
   label: string
   value: string
 }) => (
-  <div className="flex items-center gap-5">
-    <div className="grid size-16 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
-      <Icon name={icon} className="size-8" />
+  <div className="flex items-center gap-4 md:gap-5">
+    <div className="grid size-12 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground md:size-16">
+      <Icon name={icon} className="size-6 md:size-8" />
     </div>
-    <div>
-      <p className="text-sm font-extrabold tracking-[0.12em] text-on-surface-variant uppercase">
+    <div className="min-w-0">
+      <p className="text-xs font-extrabold tracking-[0.12em] text-on-surface-variant uppercase md:text-sm">
         {label}
       </p>
       <a
-        className="mt-1 inline-block text-xl font-bold text-on-primary-container hover:underline"
+        className="mt-1 inline-block max-w-full text-lg font-bold break-words text-on-primary-container hover:underline md:text-xl"
         href={href}
       >
         {value}
@@ -62,9 +62,9 @@ export const ContactBlock = async ({
       id={toAnchorId(heading)}
     >
       <div className="grid overflow-hidden rounded-4xl bg-surface-container-lowest shadow-[0_24px_60px_rgba(12,31,28,0.16)] lg:grid-cols-2 lg:rounded-[3rem]">
-        <div className="order-2 px-6 py-12 sm:px-10 md:px-16 md:py-16 lg:order-1 lg:px-20 lg:py-24">
+        <div className="order-2 min-w-0 px-6 py-12 sm:px-10 md:px-16 md:py-16 lg:order-1 lg:px-20 lg:py-24">
           <div className="max-w-xl">
-            <h2 className="text-4xl leading-tight font-extrabold text-primary md:text-5xl">
+            <h2 className="text-3xl leading-tight font-extrabold text-primary md:text-5xl">
               {heading}
             </h2>
             <p className="mt-7 text-lg leading-relaxed text-on-surface-variant md:text-xl">
