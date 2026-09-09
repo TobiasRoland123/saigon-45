@@ -1,0 +1,11 @@
+# Saigon 45
+
+> Asiatisk street food og bubble tea i Rødovre Centrum.
+
+Se de offentlige sider for den aktuelle menu, priser og åbningstider.
+
+## Sider
+
+- [Forside](/): Introduktion til restauranten, udvalgte retter og praktiske oplysninger.
+- [Menu](/menu): Mad, snacks og bubble tea.
+- [Om os](/om-os): Kontaktoplysninger og spørgsmål til restauranten.
