@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
+import { hasText } from '@payloadcms/richtext-lexical/shared'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
@@ -44,11 +45,11 @@ type Args = {
   }>
 }
 
-const shouldRemoveHomepageTopSpacing = (
-  slug: string,
-  heroType: RequiredDataFromCollectionSlug<'pages'>['hero']['type'],
-  firstBlockType?: string,
-) => slug === 'home' && heroType === 'none' && firstBlockType === 'splitContent'
+const hasVisibleHero = (hero: RequiredDataFromCollectionSlug<'pages'>['hero']) =>
+  hero.type !== 'none' && (hero.type !== 'lowImpact' || hasText(hero.richText))
+
+const shouldRemoveTopSpacing = (showHero: boolean, firstBlockType?: string) =>
+  !showHero && firstBlockType === 'splitContent'
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
@@ -72,22 +73,19 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   const { hero, layout } = page
-  const removeHomepageTopSpacing = shouldRemoveHomepageTopSpacing(
-    decodedSlug,
-    hero.type,
-    layout?.[0]?.blockType,
-  )
+  const showHero = hasVisibleHero(hero)
+  const removeTopSpacing = shouldRemoveTopSpacing(showHero, layout?.[0]?.blockType)
 
   return (
-    <article className={cn('pt-16', removeHomepageTopSpacing && 'pt-0')}>
+    <article className={cn('pt-16', removeTopSpacing && 'pt-0')}>
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} removeFirstBlockMargin={removeHomepageTopSpacing} />
+      {showHero && <RenderHero {...hero} />}
+      <RenderBlocks blocks={layout} removeFirstBlockMargin={removeTopSpacing} />
     </article>
   )
 }
