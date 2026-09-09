@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
+import { hasText } from '@payloadcms/richtext-lexical/shared'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
@@ -45,7 +46,7 @@ type Args = {
 }
 
 const hasVisibleHero = (hero: RequiredDataFromCollectionSlug<'pages'>['hero']) =>
-  hero.type !== 'none' && (hero.type !== 'lowImpact' || Boolean(hero.richText))
+  hero.type !== 'none' && (hero.type !== 'lowImpact' || hasText(hero.richText))
 
 const shouldRemoveTopSpacing = (showHero: boolean, firstBlockType?: string) =>
   !showHero && firstBlockType === 'splitContent'
