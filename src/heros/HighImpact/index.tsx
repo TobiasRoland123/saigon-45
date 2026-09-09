@@ -26,7 +26,7 @@ export const HighImpactHero = async ({ links, media, richText }: Page['hero']) =
           )}
           {richText && (
             <RichText
-              className="mb-8 max-w-none text-on-surface md:text-on-surface-variant [&_a]:text-on-surface [&_a]:underline [&_a]:decoration-on-surface-variant/50 [&_a]:decoration-2 [&_a]:underline-offset-2 [&_a]:hover:text-primary [&_a]:hover:decoration-primary md:[&_a]:text-on-surface-variant [&_h1]:mb-5 [&_h1]:max-w-[15ch] [&_h1]:text-4xl [&_h1]:leading-[1.05] [&_h1]:font-extrabold [&_h1]:tracking-normal md:[&_h1]:text-6xl [&_p]:max-w-156 [&_p]:text-lg [&_p]:leading-8 [&_p]:text-on-surface md:[&_p]:text-on-surface-variant"
+              className="mb-8 max-w-none text-on-surface [&_a]:text-on-surface [&_a]:underline [&_a]:decoration-on-surface-variant/50 [&_a]:decoration-2 [&_a]:underline-offset-2 [&_a]:hover:text-primary [&_a]:hover:decoration-primary [&_h1]:mb-5 [&_h1]:max-w-[15ch] [&_h1]:text-4xl [&_h1]:leading-[1.05] [&_h1]:font-extrabold [&_h1]:tracking-normal md:[&_h1]:text-6xl [&_p]:max-w-156 [&_p]:text-lg [&_p]:leading-8 [&_p]:text-on-surface"
               data={richText}
               enableGutter={false}
             />
@@ -60,7 +60,7 @@ export const HighImpactHero = async ({ links, media, richText }: Page['hero']) =
       {/* Scrim is a radial centred on the text block on mobile (text spans the
           full width) and left-to-right from md up (text sits in the left
           column). Both use the same stops. */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_115%_58%_at_50%_60%,rgba(255,255,255,0.88)_0%,rgba(255,255,255,0.64)_55%,rgba(255,255,255,0.18)_100%)] md:bg-[linear-gradient(90deg,rgba(255,255,255,0.88)_0%,rgba(255,255,255,0.64)_24%,rgba(255,255,255,0.18)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_115%_58%_at_50%_60%,rgba(255,255,255,0.92)_0%,rgba(255,255,255,0.78)_55%,rgba(255,255,255,0.55)_100%)] md:bg-[linear-gradient(90deg,rgba(255,255,255,0.92)_0%,rgba(255,255,255,0.78)_24%,rgba(255,255,255,0.55)_100%)]" />
       <div className="absolute inset-0 -z-10 hidden bg-[radial-gradient(circle_at_20%_55%,rgba(120,177,160,0.38),transparent_52%),linear-gradient(0deg,rgba(12,31,28,0.5),transparent_45%)] md:block" />
     </div>
   )
